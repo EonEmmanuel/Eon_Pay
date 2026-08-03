@@ -1,0 +1,22 @@
+# Dependencies and Vite caches
+node_modules/
+.vite/
+
+# Production and test output
+dist/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+*.tsbuildinfo
+
+# Local environment files
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Local tooling
+.idea/
+.vscode/
+*.log

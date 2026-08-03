@@ -1,0 +1,47 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Kotlin ###
+.kotlin/
+
+### Eclipse ###
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Android and Gradle ###
+.gradle/
+build/
+**/build/
+local.properties
+app/google-services.json
+*.jks
+*.keystore
+*.p12
+*.pfx
+captures/
+app/release/
+
+### Local IDE, operating-system and diagnostic files ###
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store
+Thumbs.db

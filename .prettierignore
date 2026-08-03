@@ -1,0 +1,11 @@
+node_modules/
+**/node_modules/
+**/dist/
+**/coverage/
+**/test-results/
+**/playwright-report/
+.npm-cache/
+server/drizzle/*.sql
+server/scripts/*.sql
+frontend/ATTRIBUTIONS.md
+device-agent/**

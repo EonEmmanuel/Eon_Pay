@@ -1,0 +1,39 @@
+# Dependencies and package-manager caches
+node_modules/
+.npm-cache/
+
+# Generated application output
+**/dist/
+**/coverage/
+**/*.tsbuildinfo
+
+# Local configuration and secrets
+**/.env
+**/.env.*
+!**/.env.example
+!frontend/.env.test
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.pfx
+**/*.pem
+**/*.key
+
+# Test and browser artifacts
+**/test-results/
+**/playwright-report/
+**/blob-report/
+
+# Editors and operating systems
+.idea/
+**/*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+*.orig
+*.bak
+*.tmp

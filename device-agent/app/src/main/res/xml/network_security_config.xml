@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Host-specific primary and backup pins are enforced by OkHttp from
+         DPC_API_CERT_PINS. Keeping them outside this static resource allows one
+         white-label APK to be built safely for different backend hosts. -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

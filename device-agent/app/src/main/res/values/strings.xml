@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EonPay Device Security</string>
+    <string name="device_admin_label">EonPay device security</string>
+    <string name="device_admin_description">Keeps this EonPay-financed device synchronized with its payment policy.</string>
+
+    <string name="lock_title">This phone is temporarily locked</string>
+    <string name="lock_message">A payment is overdue. You can pay now, contact support, or make an emergency call.</string>
+    <string name="amount_due_label">Amount due</string>
+    <string name="amount_due_value">%1$s %2$s</string>
+    <plurals name="days_overdue">
+        <item quantity="one">%d day overdue</item>
+        <item quantity="other">%d days overdue</item>
+    </plurals>
+    <string name="pay_now">Pay now</string>
+    <string name="emergency_call">Emergency call</string>
+    <string name="contact_support">Contact support</string>
+    <string name="checking_status">Checking payment status…</string>
+    <string name="offline_status">Offline — showing last verified status</string>
+    <string name="last_updated">Last updated %1$s</string>
+    <string name="payment_app_unavailable">The payment app is unavailable. Please connect to the internet or contact support.</string>
+    <string name="support_unavailable">The support number is not configured for this retailer.</string>
+    <string name="action_unavailable">This action is not available on this device.</string>
+
+    <string name="warning_channel_name">Payment reminders</string>
+    <string name="warning_channel_description">Persistent reminders about an upcoming or overdue installment.</string>
+    <string name="warning_notification_title">Payment reminder</string>
+    <string name="warning_notification_text">%1$s %2$s due · %3$d days overdue</string>
+
+    <string name="status_title">Device policy status</string>
+    <string name="status_active">Your phone is active.</string>
+    <string name="status_warning">A payment reminder is active. Your phone remains fully usable.</string>
+    <string name="status_soft_lock">This phone has limited access until the payment status is resolved.</string>
+    <string name="status_hard_lock">This phone is temporarily locked because a payment is overdue.</string>
+    <string name="status_expired">The last verified policy expired. Limited access is active until the phone reconnects.</string>
+    <string name="status_unavailable">No verified device policy is available yet.</string>
+    <string name="status_unenrolled">This device has not completed managed-device enrollment.</string>
+    <string name="sync_now">Check status now</string>
+    <string name="open_payment_app">Open payment app</string>
+    <string name="open_messages">Open messages</string>
+    <string name="provisioning_complete">Device setup is complete.</string>
+    <string name="provisioning_error">Device setup could not be completed.</string>
+</resources>

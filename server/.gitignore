@@ -1,0 +1,24 @@
+# Dependencies and compiled output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Runtime secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+
+# Local tooling and logs
+.idea/
+.vscode/
+*.log
+*.orig
+*.bak
+*.tmp

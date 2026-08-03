@@ -1,0 +1,174 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1785165763810,
+      "tag": "0000_tan_magdalene",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1785165763811,
+      "tag": "0001_security_and_rls",
+      "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1785170159003,
+      "tag": "0002_shallow_killmonger",
+      "breakpoints": false
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1785170159004,
+      "tag": "0003_operational_integrity",
+      "breakpoints": false
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1785335582586,
+      "tag": "0004_pretty_miek",
+      "breakpoints": false
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1785344141719,
+      "tag": "0005_uneven_mister_sinister",
+      "breakpoints": false
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1785352052230,
+      "tag": "0006_contract_analytics_semantics",
+      "breakpoints": false
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1785408452310,
+      "tag": "0007_platform_admin_rbac",
+      "breakpoints": false
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1785414664025,
+      "tag": "0008_pink_marvel_apes",
+      "breakpoints": false
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1785428198246,
+      "tag": "0009_fix_tenant_invitation_acceptance",
+      "breakpoints": false
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1785497264077,
+      "tag": "0010_retailer_onboarding_states",
+      "breakpoints": false
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1785497264078,
+      "tag": "0011_retailer_business_profile",
+      "breakpoints": false
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1785502191019,
+      "tag": "0012_retailer_kyb_workflow",
+      "breakpoints": false
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1785510637301,
+      "tag": "0013_giant_sentry",
+      "breakpoints": false
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1785517753999,
+      "tag": "0014_familiar_tigra",
+      "breakpoints": false
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1785521716723,
+      "tag": "0015_nasty_screwball",
+      "breakpoints": false
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1785587883904,
+      "tag": "0016_fix_platform_notification_tenant_uuid",
+      "breakpoints": false
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1785588884230,
+      "tag": "0017_notify_retailers_of_platform_kyb_decisions",
+      "breakpoints": false
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1785600000000,
+      "tag": "0018_split_inventory_permissions",
+      "breakpoints": false
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1785603600000,
+      "tag": "0019_fix_cross_enum_status_transition",
+      "breakpoints": false
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1785607200000,
+      "tag": "0020_fix_cross_table_integrity_trigger",
+      "breakpoints": false
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1785610800000,
+      "tag": "0021_kyc_development_sync_and_resume",
+      "breakpoints": false
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1785614400000,
+      "tag": "0022_link_applications_to_customers",
+      "breakpoints": false
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1785618000000,
+      "tag": "0023_first_party_device_enrollment",
+      "breakpoints": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+# Copy the non-SDK entries into local.properties. Never commit real deployment values.
+# sdk.dir=C\:\\Users\\you\\AppData\\Local\\Android\\Sdk
+DPC_BACKEND_BASE_URL=https://api.example.invalid/
+DPC_POLICY_PUBLIC_KEY=BASE64_RAW_32_BYTE_ED25519_PUBLIC_KEY
+DPC_API_CERT_PINS=sha256/PRIMARY_PIN,sha256/BACKUP_PIN
+DPC_PLAY_INTEGRITY_CLOUD_PROJECT_NUMBER=
+# Comma-separated packages that must remain available in soft-lock mode.
+DPC_ALLOWED_PACKAGES=com.android.dialer,com.google.android.dialer,com.android.messaging,com.google.android.apps.messaging

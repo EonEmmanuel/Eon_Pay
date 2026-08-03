@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sécurité de l’appareil EonPay</string>
+    <string name="device_admin_label">Sécurité de l’appareil EonPay</string>
+    <string name="device_admin_description">Synchronise cet appareil financé par EonPay avec sa politique de paiement.</string>
+
+    <string name="lock_title">Ce téléphone est temporairement verrouillé</string>
+    <string name="lock_message">Un paiement est en retard. Vous pouvez payer maintenant, contacter l’assistance ou passer un appel d’urgence.</string>
+    <string name="amount_due_label">Montant dû</string>
+    <string name="amount_due_value">%1$s %2$s</string>
+    <plurals name="days_overdue">
+        <item quantity="one">%d jour de retard</item>
+        <item quantity="other">%d jours de retard</item>
+    </plurals>
+    <string name="pay_now">Payer maintenant</string>
+    <string name="emergency_call">Appel d’urgence</string>
+    <string name="contact_support">Contacter l’assistance</string>
+    <string name="checking_status">Vérification du paiement…</string>
+    <string name="offline_status">Hors ligne — dernier état vérifié affiché</string>
+    <string name="last_updated">Dernière mise à jour : %1$s</string>
+    <string name="payment_app_unavailable">L’application de paiement est indisponible. Connectez-vous à Internet ou contactez l’assistance.</string>
+    <string name="support_unavailable">Le numéro d’assistance n’est pas configuré pour ce revendeur.</string>
+    <string name="action_unavailable">Cette action n’est pas disponible sur cet appareil.</string>
+
+    <string name="warning_channel_name">Rappels de paiement</string>
+    <string name="warning_channel_description">Rappels persistants concernant une échéance à venir ou en retard.</string>
+    <string name="warning_notification_title">Rappel de paiement</string>
+    <string name="warning_notification_text">%1$s %2$s dus · %3$d jours de retard</string>
+
+    <string name="status_title">État de la politique de l’appareil</string>
+    <string name="status_active">Votre téléphone est actif.</string>
+    <string name="status_warning">Un rappel de paiement est actif. Votre téléphone reste entièrement utilisable.</string>
+    <string name="status_soft_lock">L’accès à ce téléphone est limité jusqu’à la régularisation du paiement.</string>
+    <string name="status_hard_lock">Ce téléphone est temporairement verrouillé en raison d’un retard de paiement.</string>
+    <string name="status_expired">La dernière politique vérifiée a expiré. L’accès reste limité jusqu’à la reconnexion du téléphone.</string>
+    <string name="status_unavailable">Aucune politique vérifiée n’est encore disponible.</string>
+    <string name="status_unenrolled">Cet appareil n’a pas terminé son inscription comme appareil géré.</string>
+    <string name="sync_now">Vérifier maintenant</string>
+    <string name="open_payment_app">Ouvrir l’application de paiement</string>
+    <string name="open_messages">Ouvrir les messages</string>
+    <string name="provisioning_complete">La configuration de l’appareil est terminée.</string>
+    <string name="provisioning_error">La configuration de l’appareil n’a pas pu être terminée.</string>
+</resources>

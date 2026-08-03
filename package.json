@@ -1,0 +1,37 @@
+{
+  "name": "investor-ready-financial-dashboard",
+  "private": true,
+  "version": "0.0.1",
+  "packageManager": "npm@10.9.8",
+  "workspaces": [
+    "frontend",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "dev:server": "npm run dev --workspace=server",
+    "build": "npm run build --workspace=frontend",
+    "build:server": "npm run build --workspace=server",
+    "typecheck:server": "npm run typecheck --workspace=server",
+    "typecheck:frontend": "npm run typecheck --workspace=frontend",
+    "test:server": "npm run test --workspace=server",
+    "test:e2e": "npm run test:e2e --workspace=frontend",
+    "db:check": "npm run db:check --workspace=server",
+    "db:check:migration": "npm run db:check:migration --workspace=server",
+    "db:check:analytics": "npm run db:check:analytics --workspace=server",
+    "db:verify": "npm run db:verify --workspace=server",
+    "db:generate": "npm run db:generate --workspace=server",
+    "db:migrate": "npm run db:migrate --workspace=server",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
+    "js-yaml": "^5.2.2",
+    "prettier": "^3.9.6"
+  },
+  "overrides": {
+    "js-yaml": "$js-yaml"
+  }
+}

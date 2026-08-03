@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_default">#2457C5</color>
+    <color name="brand_on_default">#FFFFFF</color>
+    <color name="surface_default">#FAF8FF</color>
+    <color name="on_surface_default">#1B1B1F</color>
+    <color name="warning_default">#9A6700</color>
+    <color name="error_default">#BA1A1A</color>
+</resources>
