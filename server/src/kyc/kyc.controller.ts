@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -20,6 +21,7 @@ import {
 import type { AuthorizationContext } from "../common/request-context.js";
 import { IdParamDto } from "../common/validation.js";
 import { StartKycSessionDto } from "./kyc.dto.js";
+import { diditSessionKind } from "./didit-webhook.js";
 import { KycService } from "./kyc.service.js";
 import { RetailerKybService } from "./retailer-kyb.service.js";
 import { ReviewRetailerKybDto, StartRetailerKybDto } from "./retailer-kyb.dto.js";
@@ -148,6 +150,23 @@ export class KycController {
     @Param() params: IdParamDto,
   ) {
     return this.kyc.sync(context, params.id);
+  }
+
+  @Public()
+  @Post("webhooks/didit")
+  diditWebhook(
+    @Body() payload: Record<string, unknown>,
+    @Headers("x-signature-v2") signature: string | undefined,
+    @Headers("x-timestamp") timestamp: string | undefined,
+  ) {
+    const sessionKind = diditSessionKind(payload);
+    if (sessionKind === "kyb") {
+      return this.retailerKyb.handleWebhook(payload, signature, timestamp);
+    }
+    if (sessionKind === "kyc") {
+      return this.kyc.handleDiditWebhook(payload, signature, timestamp);
+    }
+    throw new BadRequestException("Didit webhook session kind is unsupported.");
   }
 
   @Public()
