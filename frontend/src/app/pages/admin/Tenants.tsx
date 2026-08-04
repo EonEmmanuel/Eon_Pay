@@ -65,6 +65,7 @@ export function Tenants() {
   const tenants = useQuery({
     queryKey: platformTenantsQueryKey,
     queryFn: listPlatformTenants,
+    refetchInterval: 15_000,
   });
 
   const createTenant = useMutation({

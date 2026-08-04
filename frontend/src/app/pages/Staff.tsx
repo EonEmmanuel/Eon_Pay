@@ -69,10 +69,15 @@ export function Staff() {
   const invitationKey = staffInvitationQueryKey(auth.tenantId);
   const roleKey = staffRoleQueryKey(auth.tenantId);
   const branchesKey = branchQueryKey(auth.tenantId);
-  const staff = useQuery({ queryKey: memberKey, queryFn: getStaff });
+  const staff = useQuery({
+    queryKey: memberKey,
+    queryFn: getStaff,
+    refetchInterval: 15_000,
+  });
   const invitations = useQuery({
     queryKey: invitationKey,
     queryFn: getStaffInvitations,
+    refetchInterval: 15_000,
   });
   const roles = useQuery({ queryKey: roleKey, queryFn: getStaffRoles });
   const branches = useQuery({ queryKey: branchesKey, queryFn: getBranches });

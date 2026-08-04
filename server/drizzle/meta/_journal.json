@@ -169,6 +169,13 @@
       "when": 1785618000000,
       "tag": "0023_first_party_device_enrollment",
       "breakpoints": false
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1785621600000,
+      "tag": "0024_notify_invitation_acceptance",
+      "breakpoints": false
     }
   ]
 }

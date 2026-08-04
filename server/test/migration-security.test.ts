@@ -69,6 +69,10 @@ const retailerKybDecisionNotifications = await readFile(
   ),
   "utf8",
 );
+const invitationAcceptanceNotifications = await readFile(
+  resolve(currentDirectory, "../drizzle/0024_notify_invitation_acceptance.sql"),
+  "utf8",
+);
 const splitInventoryPermissions = await readFile(
   resolve(currentDirectory, "../drizzle/0018_split_inventory_permissions.sql"),
   "utf8",
@@ -188,6 +192,13 @@ test("notifications are recipient-isolated, branch-targeted, and delivered from 
   );
   assert.match(retailerKybDecisionNotifications, /platform\.kyb\.request_resubmission/);
   assert.match(retailerKybDecisionNotifications, /'\/business-profile'/);
+  assert.match(invitationAcceptanceNotifications, /membership\.invitation_accepted/);
+  assert.match(invitationAcceptanceNotifications, /platform\.invitation\.accepted/);
+  assert.match(invitationAcceptanceNotifications, /invitation\.invited_by/);
+  assert.match(
+    invitationAcceptanceNotifications,
+    /ON CONFLICT \(audit_event_id, user_id\) DO NOTHING/,
+  );
 });
 
 test("tenant invitations are RLS-protected and accepted atomically", () => {

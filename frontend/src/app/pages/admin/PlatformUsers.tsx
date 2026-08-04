@@ -74,6 +74,7 @@ export function PlatformUsers() {
   const users = useQuery({
     queryKey: platformUsersQueryKey,
     queryFn: getPlatformUsers,
+    refetchInterval: 15_000,
   });
   const roles = useQuery({
     queryKey: platformRolesQueryKey,
@@ -82,6 +83,7 @@ export function PlatformUsers() {
   const invitations = useQuery({
     queryKey: platformInvitationsQueryKey,
     queryFn: getPlatformInvitations,
+    refetchInterval: 15_000,
   });
 
   const refresh = async () => {
