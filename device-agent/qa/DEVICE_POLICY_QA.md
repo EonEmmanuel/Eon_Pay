@@ -12,6 +12,8 @@ Do not release until each item has evidence (device model, OS/build, timestamp, 
 - [ ] Package uninstall and app-info disable controls cannot remove/disable the DPC.
 - [ ] `READ_PHONE_STATE` and notification permission grants are applied without a customer prompt.
 - [ ] Reboot before first unlock reasserts the cached policy.
+- [ ] Enterprise FRP accepts every configured corporate Google numeric `userId` after an untrusted reset.
+- [ ] FRP recovery documentation confirms that the device must be provisioned again after reset.
 
 ## Signed state and offline behavior
 
@@ -24,6 +26,10 @@ Do not release until each item has evidence (device model, OS/build, timestamp, 
 - [ ] SIM removal and SIM replacement are included in the next successful check-in.
 - [ ] Primary certificate pin works; the backup pin works after a controlled certificate rotation.
 - [ ] A host with a valid public certificate but no configured pin is rejected.
+- [ ] Offline timeout preserves the original signed payload and records a distinct local reason.
+- [ ] Offline timeout never exceeds `soft_lock` and is cancelled/replaced after a successful check-in.
+- [ ] The network-independent offline guard still runs after process death, reboot, and Doze delay.
+- [ ] A backend outage does not remove internet, support, payment, SMS, or emergency recovery actions.
 
 ## Emergency calling — release blocker
 
@@ -40,8 +46,11 @@ Do not release until each item has evidence (device model, OS/build, timestamp, 
 - [ ] Offline UI shows the token's `issuedAt` as the last-updated time.
 - [ ] Tenant name, logo, color, support number, language, currency, and payment link render correctly.
 - [ ] Pay Now opens only the explicitly configured/allowed payment package.
-- [ ] FCM `unlock_confirmed` policy exits lock task and dismisses the lock screen in under 5 seconds.
+- [ ] An FCM refresh hint triggers authenticated check-in; the resulting signed `active` policy exits lock task in under 5 seconds.
 - [ ] WorkManager check-in unlocks after an intentionally dropped FCM message.
+- [ ] Internet settings are reachable from both soft and hard lock, then returning restores policy UI.
+- [ ] A backend `release` command unlocks a contract-derived hard lock and remains effective on later check-ins.
+- [ ] A later restrict/lock command clears the release override and reapplies signed backend policy.
 - [ ] Back, Home, Recents, notification shade, task kill, and reboot do not bypass `hard_lock`.
 
 ## OEM matrix — release blocker

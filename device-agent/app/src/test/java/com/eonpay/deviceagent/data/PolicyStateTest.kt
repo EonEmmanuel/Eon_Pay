@@ -30,6 +30,32 @@ class PolicyStateTest {
     }
 
     @Test
+    fun offlineGracePreservesTheLastSignedTierUntilTheDeadline() {
+        val state = PolicyState.OfflineGrace(
+            signedToken = "token",
+            payload = payload,
+            lastSuccessfulCheckIn = Instant.parse("2026-07-24T12:00:00Z"),
+            enforcementDeadline = Instant.parse("2026-07-26T12:00:00Z"),
+        )
+
+        assertEquals(PolicyTier.ACTIVE, state.effectiveTier)
+        assertEquals(payload, state.payloadOrNull)
+    }
+    @Test
+    fun offlinePolicyPreservesSignedPayloadAndUsesRecoverableSoftLock() {
+        val state = PolicyState.Offline(
+            signedToken = "token",
+            payload = payload,
+            lastSuccessfulCheckIn = Instant.parse("2026-07-22T12:00:00Z"),
+            enforcementDeadline = Instant.parse("2026-07-24T12:00:00Z"),
+        )
+
+        assertEquals(PolicyTier.SOFT_LOCK, state.effectiveTier)
+        assertEquals(PolicyTier.ACTIVE, state.payload.policyTier)
+        assertEquals(payload, state.payloadOrNull)
+    }
+
+    @Test
     fun missingOrInvalidPolicyFailsSafeToSoftLock() {
         assertEquals(PolicyTier.SOFT_LOCK, PolicyState.Missing.effectiveTier)
         assertEquals(PolicyTier.SOFT_LOCK, PolicyState.Invalid("tampered").effectiveTier)

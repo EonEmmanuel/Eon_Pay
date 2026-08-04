@@ -43,7 +43,15 @@ const environmentSchema = z
     DPC_APK_DOWNLOAD_URL: z.string().url().optional(),
     DPC_APK_SIGNATURE_CHECKSUM: z.string().min(20).optional(),
     DPC_ENROLLMENT_TTL_MINUTES: z.coerce.number().int().min(5).max(1440).default(15),
-    DPC_POLICY_TTL_MINUTES: z.coerce.number().int().min(5).max(1440).default(30),
+    DPC_POLICY_TTL_MINUTES: z.coerce.number().int().min(5).max(1440).default(360),
+    DPC_OFFLINE_GRACE_HOURS: z.coerce.number().int().min(1).max(720).default(48),
+    FIREBASE_SERVICE_ACCOUNT_BASE64: z.string().min(100).optional(),
+    PLAY_INTEGRITY_ENABLED: booleanFromString,
+    PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64: z.string().min(100).optional(),
+    DPC_ANDROID_PACKAGE_NAME: z
+      .string()
+      .regex(/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/)
+      .default("com.eonpay.deviceagent"),
     MTN_MOMO_WEBHOOK_SECRET: z.string().min(16).optional(),
     ORANGE_MONEY_WEBHOOK_SECRET: z.string().min(16).optional(),
     CORS_ORIGINS: z.string().default("http://localhost:5173"),
@@ -66,6 +74,16 @@ const environmentSchema = z
         code: "custom",
         path: ["DIDIT_KYC_POLLING_FALLBACK_ENABLED"],
         message: "The Didit KYC polling fallback cannot be enabled in production.",
+      });
+    }
+    if (
+      value.PLAY_INTEGRITY_ENABLED &&
+      value.PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64 === undefined
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64"],
+        message: "Required when PLAY_INTEGRITY_ENABLED is true.",
       });
     }
     const groups = [

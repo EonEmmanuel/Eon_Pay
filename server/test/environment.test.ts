@@ -96,6 +96,17 @@ test("Didit KYC polling fallback is restricted to non-production environments", 
   assert.equal(development.DIDIT_KYC_POLLING_FALLBACK_ENABLED, true);
 });
 
+test("Play Integrity cannot be enabled without verifier credentials", () => {
+  assert.throws(
+    () =>
+      validateEnvironment({
+        DATABASE_URL: "postgresql://runtime:secret@localhost:5432/postgres",
+        SUPABASE_URL: "https://project.supabase.co",
+        PLAY_INTEGRITY_ENABLED: "true",
+      }),
+    /PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64/,
+  );
+});
 test("notification email delivery requires complete Resend configuration", () => {
   assert.throws(
     () =>

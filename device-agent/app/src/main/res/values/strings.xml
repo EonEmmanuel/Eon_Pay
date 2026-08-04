@@ -33,11 +33,14 @@
     <string name="status_soft_lock">This phone has limited access until the payment status is resolved.</string>
     <string name="status_hard_lock">This phone is temporarily locked because a payment is overdue.</string>
     <string name="status_expired">The last verified policy expired. Limited access is active until the phone reconnects.</string>
+    <string name="status_offline_grace">Offline grace period; connect to refresh policy</string>
+    <string name="status_offline_limited">This phone has been offline beyond its allowed grace period. Connect to the internet and check status to restore access.</string>
     <string name="status_unavailable">No verified device policy is available yet.</string>
     <string name="status_unenrolled">This device has not completed managed-device enrollment.</string>
     <string name="sync_now">Check status now</string>
     <string name="open_payment_app">Open payment app</string>
     <string name="open_messages">Open messages</string>
+    <string name="open_connectivity_settings">Connect to the internet</string>
     <string name="provisioning_complete">Device setup is complete.</string>
     <string name="provisioning_error">Device setup could not be completed.</string>
 </resources>

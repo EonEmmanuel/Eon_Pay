@@ -16,15 +16,30 @@ DPC_POLICY_PUBLIC_KEY=base64-raw-Ed25519-public-key-or-PEM-body
 DPC_API_CERT_PINS=sha256/primary-pin,sha256/backup-pin
 DPC_PLAY_INTEGRITY_CLOUD_PROJECT_NUMBER=123456789012
 DPC_ALLOWED_PACKAGES=com.oem.dialer,com.oem.messaging,com.yourco.payment
+DPC_FRP_ACCOUNT_IDS=google-people-api-numeric-user-id
 ```
+
+`DPC_FRP_ACCOUNT_IDS` is optional. Each value must be the numeric Google `userId` returned in
+`people/[userId]` by People API `people.get("people/me")`; an email address is not accepted by the
+custom DPC API. When the list is empty, the agent does not override Android's consumer FRP policy.
+Enterprise FRP authorizes recovery after an untrusted reset but does not reinstall the APK or
+restore Device Owner enrollment.
 
 The build accepts the same names as Gradle properties or environment variables. API construction
 fails closed unless the URL is HTTPS and both a primary and backup `sha256/` certificate pin are
 present.
 
+For repeatable release signing, configure all four `DPC_RELEASE_STORE_FILE`,
+`DPC_RELEASE_STORE_PASSWORD`, `DPC_RELEASE_KEY_ALIAS`, and `DPC_RELEASE_KEY_PASSWORD` values in
+ignored `local.properties` or protected CI secrets. Partial signing configuration fails the Gradle
+configuration instead of silently using the wrong identity. Preserve the keystore and passwords in
+an offline recovery backup: Android upgrades must remain signed by the same key.
+
 Place the production `google-services.json` at `app/google-services.json`. The Google Services and
 Crashlytics Gradle plugins are applied only when that file exists, preventing an accidental build
-against an invented Firebase project.
+against an invented Firebase project. The agent reports both its Firebase Installation ID and its
+legacy registration token. FCM messages are wake-up hints only: the agent performs an authenticated
+backend check-in and treats the resulting signed policy as authoritative.
 
 ## Backend enrollment protocol
 
@@ -89,8 +104,16 @@ disabled.
   from the cached, re-verified signed token.
 - Before Device Owner enrollment is recorded, absent policy state is `Unenrolled` and does not
   trigger restrictions. After enrollment, missing or invalid policy fails closed to `soft_lock`.
-- Expired token: the local repository changes the effective tier to `soft_lock`; a one-time
-  WorkManager expiry guard and boot receiver reassert it even without a network.
+- Expired token: when a signed offline policy and a successful check-in exist, the last signed tier
+  remains effective only until the signed offline deadline. Without that safe grace context, expiry
+  falls back to `soft_lock`. WorkManager and the boot receiver re-evaluate both deadlines.
+- Offline timeout: the backend signs an offline grace period. A separate network-independent
+  WorkManager guard applies only a recoverable `soft_lock`; it never mutates the signed payload or
+  converts an offline device into a locally invented hard lock.
+- Soft and hard lock screens keep internet settings, payment, support, emergency calling, and
+  authenticated status refresh paths available. A signed `active` policy immediately exits lock
+  task. The backend `release` command creates an explicit signed-policy override, so support can
+  recover a device even when its contract-derived state would otherwise remain hard locked.
 
 The periodic check-in cadence is 15 minutes, Android's WorkManager minimum. FCM data messages and
 expedited one-time check-ins provide the near-live path.
@@ -105,6 +128,26 @@ gradlew.bat :app:assembleDebug
 
 An APK installed outside Device Owner provisioning is useful only for UI development. Use a
 factory-reset test device or Android's supported test provisioning commands for policy QA.
+
+## Backend production configuration
+
+The server must use the matching Ed25519 private key and the final signed APK:
+
+```text
+DPC_POLICY_PRIVATE_KEY_BASE64=base64-pkcs8-ed25519-private-key
+DPC_APK_DOWNLOAD_URL=https://controlled-host/eonpay-device-agent.apk
+DPC_APK_SIGNATURE_CHECKSUM=android-provisioning-signature-checksum
+DPC_POLICY_TTL_MINUTES=360
+DPC_OFFLINE_GRACE_HOURS=48
+FIREBASE_SERVICE_ACCOUNT_BASE64=base64-firebase-service-account-json
+PLAY_INTEGRITY_ENABLED=true
+PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64=base64-play-integrity-service-account-json
+DPC_ANDROID_PACKAGE_NAME=com.eonpay.deviceagent
+```
+
+The FCM service account needs only permission to send messages. The Play Integrity account needs
+permission to decode integrity tokens. Keep both JSON files out of Git and store only their Base64
+representations in the protected server environment.
 
 ## Production prerequisites
 

@@ -5,6 +5,7 @@ import android.os.UserManager
 import com.eonpay.deviceagent.admin.PolicyEnforcer
 import com.eonpay.deviceagent.data.PolicyRepository
 import com.eonpay.deviceagent.data.PolicyState
+import com.eonpay.deviceagent.security.SecureKeyStore
 import com.eonpay.deviceagent.sync.PolicySyncScheduler
 import com.eonpay.deviceagent.util.Telemetry
 import kotlinx.coroutines.CoroutineScope
@@ -24,8 +25,18 @@ class DpcApplication : Application() {
         applicationScope.launch {
             repository.policyState.collectLatest { state ->
                 policyEnforcer.enforce(state)
-                if (state is PolicyState.Verified) {
-                    PolicySyncScheduler.scheduleExpiryGuard(this@DpcApplication, state.payload.expiresAtInstant())
+                state.payloadOrNull?.let { payload ->
+                    PolicySyncScheduler.scheduleExpiryGuard(
+                        this@DpcApplication,
+                        payload.expiresAtInstant(),
+                    )
+                    PolicySyncScheduler.scheduleOfflineGuard(
+                        context = this@DpcApplication,
+                        lastSuccessfulCheckInMillis = SecureKeyStore.get(this@DpcApplication)
+                            .lastSuccessfulCheckIn(),
+                        enabled = payload.offlinePolicy.enabled,
+                        gracePeriodSeconds = payload.offlinePolicy.gracePeriodSeconds,
+                    )
                 }
             }
         }

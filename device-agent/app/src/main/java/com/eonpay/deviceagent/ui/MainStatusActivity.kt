@@ -44,6 +44,17 @@ class MainStatusActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.action_unavailable, Toast.LENGTH_LONG).show()
             }
         }
+        binding.connectivityButton.setOnClickListener {
+            if (!PolicyActions.openConnectivitySettings(this)) {
+                Toast.makeText(this, R.string.action_unavailable, Toast.LENGTH_LONG).show()
+            }
+        }
+        binding.supportButton.setOnClickListener {
+            val branding = currentState.payloadOrNull?.brandingConfig ?: return@setOnClickListener
+            if (!PolicyActions.callSupport(this, branding)) {
+                Toast.makeText(this, R.string.support_unavailable, Toast.LENGTH_LONG).show()
+            }
+        }
         binding.emergencyButton.setOnClickListener {
             if (!PolicyActions.openEmergencyDialer(this)) {
                 Toast.makeText(this, R.string.action_unavailable, Toast.LENGTH_LONG).show()
@@ -81,6 +92,8 @@ class MainStatusActivity : AppCompatActivity() {
         binding.status.setText(
             when (state) {
                 is PolicyState.Expired -> R.string.status_expired
+                is PolicyState.OfflineGrace -> R.string.status_offline_grace
+                is PolicyState.Offline -> R.string.status_offline_limited
                 is PolicyState.Invalid, PolicyState.Missing -> R.string.status_unavailable
                 PolicyState.Unenrolled -> R.string.status_unenrolled
                 is PolicyState.Verified -> when (state.payload.policyTier) {
@@ -100,6 +113,13 @@ class MainStatusActivity : AppCompatActivity() {
             }
         binding.messagesButton.visibility =
             if (isSoftLocked && canOpenMessages()) View.VISIBLE else View.GONE
+        binding.connectivityButton.visibility = if (isSoftLocked) View.VISIBLE else View.GONE
+        binding.supportButton.visibility =
+            if (isSoftLocked && state.payloadOrNull?.brandingConfig?.supportPhone != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         binding.emergencyButton.visibility = if (isSoftLocked) View.VISIBLE else View.GONE
         if (isSoftLocked) lockTaskManager.startFor(this)
     }

@@ -55,6 +55,11 @@ export class AgentCheckInDto {
   @MaxLength(4_096)
   fcmToken?: string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(256)
+  firebaseInstallationId?: string;
+
   @IsBoolean()
   simChanged!: boolean;
 

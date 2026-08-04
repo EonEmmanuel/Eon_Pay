@@ -69,6 +69,7 @@ class PolicyRepository private constructor(
             require(expiresAt.isAfter(now)) {
                 "The received policy has already expired."
             }
+            validateOfflinePolicy(payload.offlinePolicy)
             payload.policyVersion?.let { version ->
                 require(version >= 0) { "The policyVersion cannot be negative." }
             }
@@ -97,21 +98,6 @@ class PolicyRepository private constructor(
             return
         }
 
-        // PERSISTENCE: Check for "Dead Man's Switch" (Offline Lock)
-        val lastCheckIn = secureKeyStore.lastSuccessfulCheckIn()
-        val nowMillis = System.currentTimeMillis()
-        if (lastCheckIn > 0 && (nowMillis - lastCheckIn) > MAX_OFFLINE_DURATION_MILLIS) {
-            // Force a lock state if the device has been offline too long to prevent bypass by disabling Wi-Fi
-            val cachedPayload = signedToken?.let { runCatching { verifier.verify(it).getOrNull() }.getOrNull() }
-            if (cachedPayload != null) {
-                mutablePolicyState.value = PolicyState.Verified(
-                    signedToken,
-                    cachedPayload.copy(policyTier = PolicyTier.HARD_LOCK)
-                )
-                return
-            }
-        }
-
         if (signedToken.isNullOrBlank()) {
             mutablePolicyState.value = PolicyState.Missing
             return
@@ -125,8 +111,31 @@ class PolicyRepository private constructor(
             require(payload.deviceId == provisionedDeviceId) {
                 "The cached policy was issued for a different device."
             }
+            validateOfflinePolicy(payload.offlinePolicy)
+            val now = Instant.now(clock)
             val expiresAt = payload.expiresAtInstant()
-            if (!expiresAt.isAfter(Instant.now(clock))) {
+            val lastCheckInMillis = secureKeyStore.lastSuccessfulCheckIn()
+            if (payload.offlinePolicy.enabled && lastCheckInMillis > 0) {
+                val lastCheckIn = Instant.ofEpochMilli(lastCheckInMillis)
+                val deadline = lastCheckIn.plusSeconds(payload.offlinePolicy.gracePeriodSeconds)
+                if (!now.isBefore(deadline)) {
+                    return@runCatching PolicyState.Offline(
+                        signedToken = signedToken,
+                        payload = payload,
+                        lastSuccessfulCheckIn = lastCheckIn,
+                        enforcementDeadline = deadline,
+                    )
+                }
+                if (!expiresAt.isAfter(now)) {
+                    return@runCatching PolicyState.OfflineGrace(
+                        signedToken = signedToken,
+                        payload = payload,
+                        lastSuccessfulCheckIn = lastCheckIn,
+                        enforcementDeadline = deadline,
+                    )
+                }
+            }
+            if (!expiresAt.isAfter(now)) {
                 PolicyState.Expired(payload, expiresAt)
             } else {
                 PolicyState.Verified(signedToken, payload)
@@ -139,8 +148,21 @@ class PolicyRepository private constructor(
 
     companion object {
         private const val EXPIRY_RECHECK_MILLIS = 30_000L
-        private const val MAX_OFFLINE_DURATION_MILLIS = 172_800_000L // 48 Hours
         private val MAX_ISSUED_AT_CLOCK_SKEW: Duration = Duration.ofMinutes(5)
+        private val MIN_OFFLINE_GRACE: Duration = Duration.ofHours(1)
+        private val MAX_OFFLINE_GRACE: Duration = Duration.ofDays(30)
+
+        private fun validateOfflinePolicy(policy: OfflinePolicyConfig) {
+            if (!policy.enabled) return
+            require(policy.enforcementTier == PolicyTier.SOFT_LOCK) {
+                "Offline enforcement is limited to a recoverable soft lock."
+            }
+            require(
+                policy.gracePeriodSeconds in MIN_OFFLINE_GRACE.seconds..MAX_OFFLINE_GRACE.seconds,
+            ) {
+                "The offline grace period must be between 1 hour and 30 days."
+            }
+        }
 
         @Volatile
         private var instance: PolicyRepository? = null

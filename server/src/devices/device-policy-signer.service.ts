@@ -18,6 +18,11 @@ export interface DevicePolicyPayload {
   issuedAt: string;
   expiresAt: string;
   policyVersion: number;
+  offlinePolicy: {
+    enabled: boolean;
+    gracePeriodSeconds: number;
+    enforcementTier: "soft_lock";
+  };
 }
 
 @Injectable()
@@ -36,6 +41,15 @@ export class DevicePolicySigner {
     const payloadBytes = Buffer.from(JSON.stringify(payload), "utf8");
     const signature = sign(null, payloadBytes, this.key());
     return `${payloadBytes.toString("base64url")}.${signature.toString("base64url")}`;
+  }
+
+  offlinePolicy(): DevicePolicyPayload["offlinePolicy"] {
+    const graceHours = this.config.get("DPC_OFFLINE_GRACE_HOURS", { infer: true });
+    return {
+      enabled: true,
+      gracePeriodSeconds: graceHours * 60 * 60,
+      enforcementTier: "soft_lock",
+    };
   }
 
   policyExpiresAt(now: Date): string {

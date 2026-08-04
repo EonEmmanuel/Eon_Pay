@@ -21,6 +21,7 @@ import {
   type FinancingContract,
   type Installment,
 } from "../domain/index.js";
+import { DevicePushService } from "../devices/device-push.service.js";
 import type {
   ActivateContractDto,
   CreateContractDto,
@@ -29,7 +30,10 @@ import type {
 
 @Injectable()
 export class ContractsService {
-  constructor(private readonly database: DatabaseService) {}
+  constructor(
+    private readonly database: DatabaseService,
+    private readonly devicePush: DevicePushService,
+  ) {}
 
   list(context: AuthorizationContext) {
     const tenantId = tenantIdFrom(context);
@@ -354,13 +358,13 @@ export class ContractsService {
     );
   }
 
-  transition(
+  async transition(
     context: AuthorizationContext,
     contractId: string,
     input: TransitionContractDto,
   ) {
     const tenantId = tenantIdFrom(context);
-    return this.database.withTenantTransaction(
+    const contract = await this.database.withTenantTransaction(
       context.user.id,
       tenantId,
       ["contracts.transition"],
@@ -414,6 +418,31 @@ export class ContractsService {
         return contract;
       },
     );
+    const pushTargets = await this.database.withTenantTransaction(
+      context.user.id,
+      tenantId,
+      ["contracts.transition"],
+      (transaction) =>
+        transaction
+          .select({ providerState: managedDevices.providerState })
+          .from(managedDevices)
+          .where(
+            and(
+              eq(managedDevices.tenantId, tenantId),
+              eq(managedDevices.contractId, contractId),
+              eq(managedDevices.provider, "first_party_dpc"),
+            ),
+          ),
+    );
+    await Promise.all(
+      pushTargets.map(({ providerState }) =>
+        this.devicePush.requestPolicyRefresh(
+          providerState,
+          `contract_status_${contract.status}`,
+        ),
+      ),
+    );
+    return contract;
   }
 
   private generateSchedule(

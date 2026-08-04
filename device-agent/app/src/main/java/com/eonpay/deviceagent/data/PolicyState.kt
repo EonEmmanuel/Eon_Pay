@@ -17,6 +17,20 @@ sealed interface PolicyState {
         val expiredAt: Instant,
     ) : PolicyState
 
+    data class OfflineGrace(
+        val signedToken: String,
+        val payload: PolicyPayload,
+        val lastSuccessfulCheckIn: Instant,
+        val enforcementDeadline: Instant,
+    ) : PolicyState
+
+    data class Offline(
+        val signedToken: String,
+        val payload: PolicyPayload,
+        val lastSuccessfulCheckIn: Instant,
+        val enforcementDeadline: Instant,
+    ) : PolicyState
+
     data class Invalid(
         val reason: String,
     ) : PolicyState
@@ -25,6 +39,8 @@ sealed interface PolicyState {
         get() = when (this) {
             is Verified -> payload
             is Expired -> payload
+            is OfflineGrace -> payload
+            is Offline -> payload
             is Invalid, Missing, Unenrolled -> null
         }
 
@@ -32,6 +48,8 @@ sealed interface PolicyState {
         get() = when (this) {
             is Verified -> payload.policyTier
             is Expired -> PolicyTier.SOFT_LOCK
+            is OfflineGrace -> payload.policyTier
+            is Offline -> PolicyTier.SOFT_LOCK
             is Invalid, Missing -> PolicyTier.SOFT_LOCK
             Unenrolled -> null
         }

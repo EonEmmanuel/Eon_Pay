@@ -16,6 +16,7 @@ import { DatabaseService } from "../database/database.service.js";
 import { financingContracts, managedDevices, mdmCommands } from "../database/schema.js";
 import { EsperMdmProvider } from "../providers/esper.provider.js";
 import type { EnrollManagedDeviceDto, IssueMdmCommandDto } from "./devices.dto.js";
+import { DevicePushService } from "./device-push.service.js";
 
 const publicManagedDeviceColumns = {
   id: managedDevices.id,
@@ -40,6 +41,7 @@ export class DevicesService {
   constructor(
     private readonly database: DatabaseService,
     private readonly esper: EsperMdmProvider,
+    private readonly devicePush: DevicePushService,
   ) {}
 
   list(context: AuthorizationContext) {
@@ -240,7 +242,7 @@ export class DevicesService {
       return prepared.command;
     }
     if (prepared.device.provider === "first_party_dpc") {
-      return this.database.withTenantTransaction(
+      const command = await this.database.withTenantTransaction(
         context.user.id,
         tenantId,
         ["devices.manage"],
@@ -251,9 +253,15 @@ export class DevicesService {
               : input.kind === "release"
                 ? "active"
                 : prepared.device.status;
+          const nextProviderState =
+            input.kind === "release"
+              ? sql`${managedDevices.providerState} || '{"policyOverride":"active"}'::jsonb`
+              : input.kind === "restrict" || input.kind === "lock"
+                ? sql`${managedDevices.providerState} - 'policyOverride'`
+                : managedDevices.providerState;
           await transaction
             .update(managedDevices)
-            .set({ status: nextStatus })
+            .set({ status: nextStatus, providerState: nextProviderState })
             .where(
               and(
                 eq(managedDevices.tenantId, tenantId),
@@ -271,6 +279,11 @@ export class DevicesService {
           return prepared.command;
         },
       );
+      await this.devicePush.requestPolicyRefresh(
+        prepared.device.providerState,
+        `device_command_${input.kind}`,
+      );
+      return command;
     }
 
     try {

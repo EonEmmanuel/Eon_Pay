@@ -176,6 +176,13 @@
       "when": 1785621600000,
       "tag": "0024_notify_invitation_acceptance",
       "breakpoints": false
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1785880800000,
+      "tag": "0025_recoverable_device_policy",
+      "breakpoints": false
     }
   ]
 }

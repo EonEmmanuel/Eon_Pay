@@ -6,6 +6,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.google.firebase.installations.FirebaseInstallations
+import com.eonpay.deviceagent.BuildConfig
 import com.eonpay.deviceagent.api.ApiClient
 import com.eonpay.deviceagent.data.CheckInRequest
 import com.eonpay.deviceagent.data.CommandAcknowledgementRequest
@@ -16,9 +18,9 @@ import com.eonpay.deviceagent.security.DeviceIntegrityChecker
 import com.eonpay.deviceagent.security.SecureKeyStore
 import com.eonpay.deviceagent.telephony.SimStateMonitor
 import com.eonpay.deviceagent.util.Telemetry
+import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
 import java.io.IOException
-import java.time.Instant
 
 class PolicyCheckInWorker(
     appContext: Context,
@@ -36,7 +38,11 @@ class PolicyCheckInWorker(
                 .getPackageInfo(applicationContext.packageName, 0)
                 .versionName
                 .orEmpty()
-            val integrityMaterial = "$deviceId|${Instant.now()}|${simIdentity.iccid.orEmpty()}"
+            val deviceCredential = secureStore.deviceCredential()
+            val authenticationCredential = deviceCredential
+                ?: secureStore.enrollmentCredential()
+                ?: error("The device authentication credential is unavailable.")
+            val integrityMaterial = "$deviceId|$authenticationCredential"
             val integrityToken = DeviceIntegrityChecker(applicationContext)
                 .requestToken(integrityMaterial)
                 .getOrNull()
@@ -47,11 +53,11 @@ class PolicyCheckInWorker(
                 connectivityState = connectivityState(applicationContext),
                 appVersion = appVersion,
                 fcmToken = secureStore.fcmToken(),
+                firebaseInstallationId = firebaseInstallationId(),
                 simChanged = secureStore.simChanged(),
                 integrityToken = integrityToken,
             )
             val api = ApiClient.instance.service
-            val deviceCredential = secureStore.deviceCredential()
             val response = if (deviceCredential == null) {
                 val enrollmentCredential = secureStore.enrollmentCredential()
                     ?: error("The one-time enrollment credential is unavailable.")
@@ -79,10 +85,17 @@ class PolicyCheckInWorker(
             val repository = PolicyRepository.get(applicationContext)
             val payload = repository.cacheVerified(response.signedPolicyToken).getOrThrow()
 
-            secureStore.recordSuccessfulCheckIn(System.currentTimeMillis())
+            val successfulCheckInAt = System.currentTimeMillis()
+            secureStore.recordSuccessfulCheckIn(successfulCheckInAt)
             secureStore.setSimChanged(false)
             simIdentity.stableHash()?.let(secureStore::setSimIdentityHash)
             PolicySyncScheduler.scheduleExpiryGuard(applicationContext, payload.expiresAtInstant())
+            PolicySyncScheduler.scheduleOfflineGuard(
+                context = applicationContext,
+                lastSuccessfulCheckInMillis = successfulCheckInAt,
+                enabled = payload.offlinePolicy.enabled,
+                gracePeriodSeconds = payload.offlinePolicy.gracePeriodSeconds,
+            )
             PolicyApplicationCoordinator.enforceCurrent(applicationContext)
             acknowledgeCommands(deviceId, secureStore, response.commands)
             Result.success()
@@ -120,6 +133,11 @@ class PolicyCheckInWorker(
                 ),
             )
         }
+    }
+
+    private suspend fun firebaseInstallationId(): String? {
+        if (!BuildConfig.FIREBASE_CONFIGURED) return null
+        return runCatching { FirebaseInstallations.getInstance().id.await() }.getOrNull()
     }
 
     private fun connectivityState(context: Context): String {

@@ -18,6 +18,7 @@ object PolicySyncScheduler {
     private const val PERIODIC_WORK_NAME = "finance_dpc_periodic_check_in"
     private const val IMMEDIATE_WORK_NAME = "finance_dpc_immediate_check_in"
     private const val EXPIRY_WORK_NAME = "finance_dpc_policy_expiry_guard"
+    private const val OFFLINE_WORK_NAME = "finance_dpc_offline_policy_guard"
 
     fun schedulePeriodic(context: Context) {
         val constraints = Constraints.Builder()
@@ -53,6 +54,29 @@ object PolicySyncScheduler {
         WorkManager.getInstance(context).enqueueUniqueWork(
             IMMEDIATE_WORK_NAME,
             ExistingWorkPolicy.KEEP,
+            request,
+        )
+    }
+
+    fun scheduleOfflineGuard(
+        context: Context,
+        lastSuccessfulCheckInMillis: Long,
+        enabled: Boolean,
+        gracePeriodSeconds: Long,
+    ) {
+        if (!enabled || lastSuccessfulCheckInMillis <= 0 || gracePeriodSeconds <= 0) {
+            WorkManager.getInstance(context).cancelUniqueWork(OFFLINE_WORK_NAME)
+            return
+        }
+        val deadline = Instant.ofEpochMilli(lastSuccessfulCheckInMillis)
+            .plusSeconds(gracePeriodSeconds)
+        val delay = Duration.between(Instant.now(), deadline).coerceAtLeast(Duration.ZERO)
+        val request = OneTimeWorkRequestBuilder<OfflinePolicyWorker>()
+            .setInitialDelay(delay.toMillis(), TimeUnit.MILLISECONDS)
+            .build()
+        WorkManager.getInstance(context).enqueueUniqueWork(
+            OFFLINE_WORK_NAME,
+            ExistingWorkPolicy.REPLACE,
             request,
         )
     }

@@ -6,3 +6,10 @@ DPC_API_CERT_PINS=sha256/PRIMARY_PIN,sha256/BACKUP_PIN
 DPC_PLAY_INTEGRITY_CLOUD_PROJECT_NUMBER=
 # Comma-separated packages that must remain available in soft-lock mode.
 DPC_ALLOWED_PACKAGES=com.android.dialer,com.google.android.dialer,com.android.messaging,com.google.android.apps.messaging
+# Optional comma-separated Google People API numeric userIds for enterprise FRP recovery.
+DPC_FRP_ACCOUNT_IDS=
+# Optional unattended release signing. Keep passwords only in ignored local.properties or CI secrets.
+# DPC_RELEASE_STORE_FILE=C:\\secure-path\\eonpay-device-agent-release.jks
+# DPC_RELEASE_STORE_PASSWORD=
+# DPC_RELEASE_KEY_ALIAS=eonpay-device-agent
+# DPC_RELEASE_KEY_PASSWORD=

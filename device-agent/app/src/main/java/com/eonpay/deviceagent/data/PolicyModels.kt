@@ -32,6 +32,13 @@ data class BrandingConfig(
 )
 
 @JsonClass(generateAdapter = false)
+data class OfflinePolicyConfig(
+    val enabled: Boolean = false,
+    val gracePeriodSeconds: Long = 0,
+    val enforcementTier: PolicyTier = PolicyTier.SOFT_LOCK,
+)
+
+@JsonClass(generateAdapter = false)
 data class PolicyPayload(
     val deviceId: String,
     val tenantId: String,
@@ -42,6 +49,7 @@ data class PolicyPayload(
     val issuedAt: String,
     val expiresAt: String,
     val policyVersion: Long? = null,
+    val offlinePolicy: OfflinePolicyConfig = OfflinePolicyConfig(),
 ) {
     fun issuedAtInstant(): Instant = PolicyTime.parse(issuedAt)
 

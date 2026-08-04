@@ -33,11 +33,14 @@
     <string name="status_soft_lock">L’accès à ce téléphone est limité jusqu’à la régularisation du paiement.</string>
     <string name="status_hard_lock">Ce téléphone est temporairement verrouillé en raison d’un retard de paiement.</string>
     <string name="status_expired">La dernière politique vérifiée a expiré. L’accès reste limité jusqu’à la reconnexion du téléphone.</string>
+    <string name="status_offline_grace">D&#233;lai hors ligne actif ; connectez-vous pour actualiser la politique</string>
+    <string name="status_offline_limited">Ce t&#233;l&#233;phone est rest&#233; hors ligne au-del&#224; du d&#233;lai autoris&#233;. Connectez-le &#224; Internet et v&#233;rifiez son statut pour restaurer l&#8217;acc&#232;s.</string>
     <string name="status_unavailable">Aucune politique vérifiée n’est encore disponible.</string>
     <string name="status_unenrolled">Cet appareil n’a pas terminé son inscription comme appareil géré.</string>
     <string name="sync_now">Vérifier maintenant</string>
     <string name="open_payment_app">Ouvrir l’application de paiement</string>
     <string name="open_messages">Ouvrir les messages</string>
+    <string name="open_connectivity_settings">Se connecter &#224; Internet</string>
     <string name="provisioning_complete">La configuration de l’appareil est terminée.</string>
     <string name="provisioning_error">La configuration de l’appareil n’a pas pu être terminée.</string>
 </resources>

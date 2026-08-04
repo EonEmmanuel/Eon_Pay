@@ -3,6 +3,8 @@ package com.eonpay.deviceagent.ui
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.provider.Telephony
 import com.eonpay.deviceagent.data.BrandingConfig
 
@@ -33,6 +35,18 @@ object PolicyActions {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return startSafely(context, emergencyIntent)
+    }
+
+    fun openConnectivitySettings(context: Context): Boolean {
+        val action = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Settings.Panel.ACTION_INTERNET_CONNECTIVITY
+        } else {
+            Settings.ACTION_WIRELESS_SETTINGS
+        }
+        return startSafely(
+            context,
+            Intent(action).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) },
+        )
     }
 
     fun callSupport(context: Context, branding: BrandingConfig): Boolean {

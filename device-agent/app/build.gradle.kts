@@ -26,6 +26,30 @@ val policyPublicKey = configuredValue("DPC_POLICY_PUBLIC_KEY")
 val apiCertificatePins = configuredValue("DPC_API_CERT_PINS")
 val playIntegrityCloudProjectNumber = configuredValue("DPC_PLAY_INTEGRITY_CLOUD_PROJECT_NUMBER")
 val configuredAllowedPackages = configuredValue("DPC_ALLOWED_PACKAGES")
+val configuredFrpAccountIds = configuredValue("DPC_FRP_ACCOUNT_IDS")
+val releaseStoreFile = configuredValue("DPC_RELEASE_STORE_FILE")
+val releaseStorePassword = configuredValue("DPC_RELEASE_STORE_PASSWORD")
+val releaseKeyAlias = configuredValue("DPC_RELEASE_KEY_ALIAS")
+val releaseKeyPassword = configuredValue("DPC_RELEASE_KEY_PASSWORD")
+val releaseSigningValues = listOf(
+    releaseStoreFile,
+    releaseStorePassword,
+    releaseKeyAlias,
+    releaseKeyPassword,
+)
+val releaseSigningConfigured = releaseSigningValues.all(String::isNotBlank)
+require(releaseSigningValues.all(String::isBlank) || releaseSigningConfigured) {
+    "Release signing is partially configured. Set all DPC_RELEASE_* values or none of them."
+}
+if (configuredFrpAccountIds.isNotBlank()) {
+    require(
+        configuredFrpAccountIds.split(',')
+            .map(String::trim)
+            .all { it.matches(Regex("^[0-9]+$")) },
+    ) {
+        "DPC_FRP_ACCOUNT_IDS must contain comma-separated numeric Google userIds."
+    }
+}
 val hasFirebaseConfiguration = rootProject.file("app/google-services.json").exists()
 
 android {
@@ -52,6 +76,11 @@ android {
             "CONFIGURED_ALLOWED_PACKAGES",
             quotedBuildConfig(configuredAllowedPackages),
         )
+        buildConfigField(
+            "String",
+            "FRP_ACCOUNT_IDS",
+            quotedBuildConfig(configuredFrpAccountIds),
+        )
         buildConfigField("boolean", "FIREBASE_CONFIGURED", hasFirebaseConfiguration.toString())
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,12 +92,26 @@ android {
         viewBinding = true
     }
 
+    signingConfigs {
+        if (releaseSigningConfigured) {
+            create("release") {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
         }
         release {
             isMinifyEnabled = true
+            if (releaseSigningConfigured) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -126,6 +169,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-installations")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     implementation("io.coil-kt:coil:2.7.0")

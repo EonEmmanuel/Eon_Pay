@@ -9,6 +9,7 @@ data class CheckInRequest(
     val connectivityState: String,
     val appVersion: String,
     val fcmToken: String?,
+    val firebaseInstallationId: String?,
     val simChanged: Boolean,
     val integrityToken: String?,
 )

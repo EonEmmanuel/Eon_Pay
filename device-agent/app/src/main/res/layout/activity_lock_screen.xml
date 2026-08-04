@@ -120,6 +120,16 @@
             app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/connectivityButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/open_connectivity_settings"
+            android:textAllCaps="false"
+            app:cornerRadius="16dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/emergencyButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"

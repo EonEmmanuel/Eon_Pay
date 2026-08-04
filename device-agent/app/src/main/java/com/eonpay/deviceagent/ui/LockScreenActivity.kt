@@ -57,6 +57,11 @@ class LockScreenActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.payment_app_unavailable, Toast.LENGTH_LONG).show()
             }
         }
+        binding.connectivityButton.setOnClickListener {
+            if (!PolicyActions.openConnectivitySettings(this)) {
+                Toast.makeText(this, R.string.action_unavailable, Toast.LENGTH_LONG).show()
+            }
+        }
         binding.emergencyButton.setOnClickListener {
             if (!PolicyActions.openEmergencyDialer(this)) {
                 Toast.makeText(this, R.string.action_unavailable, Toast.LENGTH_LONG).show()
@@ -132,6 +137,8 @@ class LockScreenActivity : AppCompatActivity() {
         binding.title.setTextColor(color)
         binding.retailerName.setTextColor(color)
         binding.amountCard.strokeColor = color
+        binding.connectivityButton.strokeColor = ColorStateList.valueOf(color)
+        binding.connectivityButton.setTextColor(color)
         binding.emergencyButton.strokeColor = ColorStateList.valueOf(color)
         binding.emergencyButton.setTextColor(color)
         binding.supportButton.setTextColor(color)

@@ -15,12 +15,22 @@ class FcmMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         val signedToken = message.data["signedPolicyToken"]
             ?: message.data["signed_policy_token"]
-            ?: return
+        if (signedToken == null) {
+            PolicySyncScheduler.enqueueImmediate(this, "fcm_policy_refresh")
+            return
+        }
 
         PolicyRepository.get(this).cacheVerified(signedToken)
             .onSuccess { payload ->
-                SecureKeyStore.get(this).recordSuccessfulCheckIn(System.currentTimeMillis())
+                val successfulCheckInAt = System.currentTimeMillis()
+                SecureKeyStore.get(this).recordSuccessfulCheckIn(successfulCheckInAt)
                 PolicySyncScheduler.scheduleExpiryGuard(this, payload.expiresAtInstant())
+                PolicySyncScheduler.scheduleOfflineGuard(
+                    context = this,
+                    lastSuccessfulCheckInMillis = successfulCheckInAt,
+                    enabled = payload.offlinePolicy.enabled,
+                    gracePeriodSeconds = payload.offlinePolicy.gracePeriodSeconds,
+                )
                 PolicyApplicationCoordinator.enforceCurrent(this)
             }
             .onFailure { Telemetry.record(this, it, "fcm_policy_verification") }

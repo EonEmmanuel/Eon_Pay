@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.UserManager
+import com.eonpay.deviceagent.BuildConfig
 import com.eonpay.deviceagent.data.PolicyState
 import com.eonpay.deviceagent.data.PolicyTier
 import com.eonpay.deviceagent.data.BrandingConfig
@@ -57,16 +58,26 @@ class PolicyEnforcer private constructor(context: Context) {
         safeBaselineCall("disallow_physical_media") {
             policyManager.addUserRestriction(admin, UserManager.DISALLOW_MOUNT_PHYSICAL_MEDIA)
         }
-        safeBaselineCall("enable_frp") {
+        safeBaselineCall("configure_enterprise_frp") {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                // This ensures that even if wiped, the device remains locked to the management state.
-                // In production, you would provide a specific authorized Google Account ID here.
-                policyManager.setFactoryResetProtectionPolicy(
-                    admin,
-                    android.app.admin.FactoryResetProtectionPolicy.Builder()
-                        .setFactoryResetProtectionEnabled(true)
-                        .build(),
-                )
+                val accountIds = BuildConfig.FRP_ACCOUNT_IDS
+                    .split(',')
+                    .map(String::trim)
+                    .filter(String::isNotBlank)
+                if (accountIds.isNotEmpty()) {
+                    // Enterprise FRP authorizes recovery after an untrusted reset; it does not
+                    // reinstall this DPC or restore Device Owner enrollment.
+                    policyManager.setFactoryResetProtectionPolicy(
+                        admin,
+                        android.app.admin.FactoryResetProtectionPolicy.Builder()
+                            .setFactoryResetProtectionAccounts(accountIds)
+                            .setFactoryResetProtectionEnabled(true)
+                            .build(),
+                    )
+                    applicationContext.sendBroadcast(
+                        Intent(ACTION_FRP_CONFIG_CHANGED).setPackage(GMSCORE_PACKAGE),
+                    )
+                }
             }
         }
         safeBaselineCall("grant_phone_state") {
@@ -120,6 +131,10 @@ class PolicyEnforcer private constructor(context: Context) {
     }
 
     companion object {
+        private const val ACTION_FRP_CONFIG_CHANGED =
+            "com.google.android.gms.auth.FRP_CONFIG_CHANGED"
+        private const val GMSCORE_PACKAGE = "com.google.android.gms"
+
         @Volatile
         private var instance: PolicyEnforcer? = null
 

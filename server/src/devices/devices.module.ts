@@ -6,6 +6,8 @@ import {
 } from "./device-enrollment.controller.js";
 import { DeviceEnrollmentService } from "./device-enrollment.service.js";
 import { DevicePolicySigner } from "./device-policy-signer.service.js";
+import { DevicePushService } from "./device-push.service.js";
+import { PlayIntegrityService } from "./play-integrity.service.js";
 import { DevicesController } from "./devices.controller.js";
 import { DevicesService } from "./devices.service.js";
 
@@ -16,6 +18,9 @@ import { DevicesService } from "./devices.service.js";
     DeviceEnrollmentService,
     DeviceAgentGatewayService,
     DevicePolicySigner,
+    DevicePushService,
+    PlayIntegrityService,
   ],
+  exports: [DevicePushService],
 })
 export class DevicesModule {}

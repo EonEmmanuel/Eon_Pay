@@ -10,6 +10,10 @@ const migration = readFileSync(
   new URL("../drizzle/0023_first_party_device_enrollment.sql", import.meta.url),
   "utf8",
 );
+const recoverableMigration = readFileSync(
+  new URL("../drizzle/0025_recoverable_device_policy.sql", import.meta.url),
+  "utf8",
+);
 const enrollmentService = readFileSync(
   new URL("../src/devices/device-enrollment.service.ts", import.meta.url),
   "utf8",
@@ -18,13 +22,22 @@ const contractsService = readFileSync(
   new URL("../src/contracts/contracts.service.ts", import.meta.url),
   "utf8",
 );
+const devicesService = readFileSync(
+  new URL("../src/devices/devices.service.ts", import.meta.url),
+  "utf8",
+);
+const deviceGateway = readFileSync(
+  new URL("../src/devices/device-agent-gateway.service.ts", import.meta.url),
+  "utf8",
+);
 
 test("device policies are Ed25519 signed and verifiable by the Android wire format", () => {
   const pair = generateKeyPairSync("ed25519");
   const privateKey = pair.privateKey.export({ format: "der", type: "pkcs8" });
   const config = new ConfigService<Environment, true>({
     DPC_POLICY_PRIVATE_KEY_BASE64: privateKey.toString("base64"),
-    DPC_POLICY_TTL_MINUTES: 30,
+    DPC_POLICY_TTL_MINUTES: 360,
+    DPC_OFFLINE_GRACE_HOURS: 48,
   } as Environment);
   const signer = new DevicePolicySigner(config);
   const token = signer.sign({
@@ -42,6 +55,7 @@ test("device policies are Ed25519 signed and verifiable by the Android wire form
     issuedAt: new Date().toISOString(),
     expiresAt: new Date(Date.now() + 60_000).toISOString(),
     policyVersion: 1,
+    offlinePolicy: signer.offlinePolicy(),
   });
   const [payload, signature] = token.split(".");
   assert.ok(payload);
@@ -89,4 +103,21 @@ test("active legacy contracts can retrofit only their already-financed inventory
     /unit.status === "financed" && unit.contractId === contract.id/,
   );
   assert.match(enrollmentService, /isPreActivation && unit.status === "available"/);
+});
+
+test("recoverable device policy returns signed context without public execution", () => {
+  assert.match(recoverableMigration, /app_check_in_first_party_device_v2/);
+  assert.match(recoverableMigration, /provider_state jsonb/);
+  assert.match(recoverableMigration, /SECURITY DEFINER/);
+  assert.match(
+    recoverableMigration,
+    /REVOKE ALL ON FUNCTION public\.app_check_in_first_party_device_v2/,
+  );
+});
+
+test("backend release remains an authoritative recovery path", () => {
+  assert.match(devicesService, /policyOverride.*active/s);
+  assert.match(devicesService, /providerState.*- 'policyOverride'/s);
+  assert.match(deviceGateway, /providerState\?\.\["policyOverride"\] === "active"/);
+  assert.match(deviceGateway, /app_check_in_first_party_device_v2/);
 });

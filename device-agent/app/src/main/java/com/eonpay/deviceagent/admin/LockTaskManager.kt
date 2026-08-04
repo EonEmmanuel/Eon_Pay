@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.provider.Telephony
 import android.telecom.TelecomManager
 import com.eonpay.deviceagent.BuildConfig
@@ -22,7 +23,7 @@ class LockTaskManager private constructor(context: Context) {
     private val admin = FinanceDeviceAdminReceiver.componentName(applicationContext)
 
     fun enterHardLock(branding: BrandingConfig) {
-        configureAllowlist(branding)
+        configureAllowlist(branding, includeConnectivitySettings = true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             policyManager.setLockTaskFeatures(admin, DevicePolicyManager.LOCK_TASK_FEATURE_NONE)
         }
@@ -38,7 +39,7 @@ class LockTaskManager private constructor(context: Context) {
     }
 
     fun enterSoftLock(branding: BrandingConfig) {
-        configureAllowlist(branding)
+        configureAllowlist(branding, includeConnectivitySettings = true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             policyManager.setLockTaskFeatures(
                 admin,
@@ -86,7 +87,10 @@ class LockTaskManager private constructor(context: Context) {
         }
     }
 
-    fun allowedPackages(branding: BrandingConfig): Set<String> {
+    fun allowedPackages(
+        branding: BrandingConfig,
+        includeConnectivitySettings: Boolean = false,
+    ): Set<String> {
         val configured = BuildConfig.CONFIGURED_ALLOWED_PACKAGES
             .split(',')
             .map(String::trim)
@@ -101,11 +105,25 @@ class LockTaskManager private constructor(context: Context) {
                 .defaultDialerPackage
                 ?.let(::add)
             resolvePackage(Intent(Intent.ACTION_DIAL, Uri.parse("tel:112")))?.let(::add)
+            if (includeConnectivitySettings) {
+                val settingsAction = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    Settings.Panel.ACTION_INTERNET_CONNECTIVITY
+                } else {
+                    Settings.ACTION_WIRELESS_SETTINGS
+                }
+                resolvePackage(Intent(settingsAction))?.let(::add)
+            }
         }
     }
 
-    private fun configureAllowlist(branding: BrandingConfig) {
-        policyManager.setLockTaskPackages(admin, allowedPackages(branding).toTypedArray())
+    private fun configureAllowlist(
+        branding: BrandingConfig,
+        includeConnectivitySettings: Boolean,
+    ) {
+        policyManager.setLockTaskPackages(
+            admin,
+            allowedPackages(branding, includeConnectivitySettings).toTypedArray(),
+        )
     }
 
     private fun resolvePackage(intent: Intent): String? =
