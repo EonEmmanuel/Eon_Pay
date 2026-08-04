@@ -57,6 +57,18 @@ class PolicyEnforcer private constructor(context: Context) {
         safeBaselineCall("disallow_physical_media") {
             policyManager.addUserRestriction(admin, UserManager.DISALLOW_MOUNT_PHYSICAL_MEDIA)
         }
+        safeBaselineCall("enable_frp") {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // This ensures that even if wiped, the device remains locked to the management state.
+                // In production, you would provide a specific authorized Google Account ID here.
+                policyManager.setFactoryResetProtectionPolicy(
+                    admin,
+                    android.app.admin.FactoryResetProtectionPolicy.Builder()
+                        .setFactoryResetProtectionEnabled(true)
+                        .build(),
+                )
+            }
+        }
         safeBaselineCall("grant_phone_state") {
             grantRuntimePermission(Manifest.permission.READ_PHONE_STATE)
         }

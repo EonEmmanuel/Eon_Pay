@@ -96,6 +96,22 @@ class PolicyRepository private constructor(
             mutablePolicyState.value = PolicyState.Unenrolled
             return
         }
+
+        // PERSISTENCE: Check for "Dead Man's Switch" (Offline Lock)
+        val lastCheckIn = secureKeyStore.lastSuccessfulCheckIn()
+        val nowMillis = System.currentTimeMillis()
+        if (lastCheckIn > 0 && (nowMillis - lastCheckIn) > MAX_OFFLINE_DURATION_MILLIS) {
+            // Force a lock state if the device has been offline too long to prevent bypass by disabling Wi-Fi
+            val cachedPayload = signedToken?.let { runCatching { verifier.verify(it).getOrNull() }.getOrNull() }
+            if (cachedPayload != null) {
+                mutablePolicyState.value = PolicyState.Verified(
+                    signedToken,
+                    cachedPayload.copy(policyTier = PolicyTier.HARD_LOCK)
+                )
+                return
+            }
+        }
+
         if (signedToken.isNullOrBlank()) {
             mutablePolicyState.value = PolicyState.Missing
             return
@@ -123,6 +139,7 @@ class PolicyRepository private constructor(
 
     companion object {
         private const val EXPIRY_RECHECK_MILLIS = 30_000L
+        private const val MAX_OFFLINE_DURATION_MILLIS = 172_800_000L // 48 Hours
         private val MAX_ISSUED_AT_CLOCK_SKEW: Duration = Duration.ofMinutes(5)
 
         @Volatile

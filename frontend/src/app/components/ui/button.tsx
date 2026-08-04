@@ -56,21 +56,27 @@ const Button = React.forwardRef<
     },
     ref,
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const sharedProps = {
+      "data-slot": "button",
+      className: cn(buttonVariants({ variant, size, className })),
+      "aria-busy": busy || undefined,
+      ...props,
+      "aria-label": busy && busyLabel !== undefined ? busyLabel : props["aria-label"],
+    };
+
+    if (asChild) {
+      return (
+        <Slot ref={ref} {...sharedProps}>
+          {children}
+        </Slot>
+      );
+    }
 
     return (
-      <Comp
-        ref={ref}
-        data-slot="button"
-        className={cn(buttonVariants({ variant, size, className }))}
-        disabled={disabled || busy}
-        aria-busy={busy || undefined}
-        {...props}
-        aria-label={busy && busyLabel !== undefined ? busyLabel : props["aria-label"]}
-      >
+      <button ref={ref} {...sharedProps} disabled={disabled || busy}>
         {busy && <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />}
         {children}
-      </Comp>
+      </button>
     );
   },
 );
