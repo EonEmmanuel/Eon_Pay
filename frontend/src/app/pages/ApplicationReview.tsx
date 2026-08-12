@@ -238,6 +238,7 @@ export function ApplicationReview() {
         actions={
           <div className="flex flex-wrap items-center gap-2">
             {auth.tenantPermissions.includes("kyc.manage") &&
+              ["submitted", "kyc_review"].includes(application.status) &&
               ["not_started", "needs_correction", "failed"].includes(
                 application.kycStatus,
               ) && (
@@ -250,6 +251,7 @@ export function ApplicationReview() {
                 </Button>
               )}
             {auth.tenantPermissions.includes("kyc.manage") &&
+              ["submitted", "kyc_review"].includes(application.status) &&
               application.kycStatus === "pending" &&
               kycState.data?.session?.verificationUrl && (
                 <Button
@@ -266,6 +268,7 @@ export function ApplicationReview() {
                 </Button>
               )}
             {kycState.data?.pollingFallbackEnabled &&
+              ["submitted", "kyc_review"].includes(application.status) &&
               kycState.data.session !== null &&
               application.kycStatus !== "verified" && (
                 <Button

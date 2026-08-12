@@ -317,26 +317,43 @@ export class KycService {
               eq(kycVerificationSessions.id, current.session.id),
             ),
           );
-        const appResult = await transaction
-          .update(financingApplications)
-          .set({
-            kycStatus: outcome.kycStatus,
-            status: status === "approved" ? "credit_review" : undefined,
-            version: sql`${financingApplications.version} + 1`,
-          })
+        const [app] = await transaction
+          .select({ status: financingApplications.status })
+          .from(financingApplications)
           .where(
             and(
               eq(financingApplications.tenantId, tenantId),
               eq(financingApplications.id, applicationId),
-              inArray(financingApplications.status, ["submitted", "kyc_review"]),
             ),
           )
-          .returning({ id: financingApplications.id });
-        if (appResult.length === 0) {
-          this.logger.warn(
-            `KYC sync did not update application ${applicationId} — it may have already progressed past kyc_review.`,
-          );
+          .limit(1);
+
+        if (app !== undefined) {
+          const canAdvance =
+            status === "approved" &&
+            ["submitted", "kyc_review"].includes(app.status);
+
+          await transaction
+            .update(financingApplications)
+            .set({
+              kycStatus: outcome.kycStatus,
+              status: canAdvance ? "credit_review" : undefined,
+              version: sql`${financingApplications.version} + 1`,
+            })
+            .where(
+              and(
+                eq(financingApplications.tenantId, tenantId),
+                eq(financingApplications.id, applicationId),
+              ),
+            );
+          
+          if (status === "approved" && !canAdvance) {
+            this.logger.warn(
+              `KYC sync updated kycStatus for application ${applicationId}, but it did not advance to credit_review because its current status is "${app.status}".`,
+            );
+          }
         }
+
         await recordAudit(
           transaction,
           context,
@@ -454,25 +471,42 @@ export class KycService {
           throw new ConflictException("Didit session disappeared during processing.");
         }
         const kycStatus = kycApplicationOutcome(status).kycStatus;
-        const appResult = await transaction
-          .update(financingApplications)
-          .set({
-            kycStatus,
-            status: status === "approved" ? "credit_review" : undefined,
-            version: sql`${financingApplications.version} + 1`,
-          })
+        
+        const [app] = await transaction
+          .select({ status: financingApplications.status })
+          .from(financingApplications)
           .where(
             and(
               eq(financingApplications.tenantId, tenantId),
               eq(financingApplications.id, session.applicationId),
-              inArray(financingApplications.status, ["submitted", "kyc_review"]),
             ),
           )
-          .returning({ id: financingApplications.id });
-        if (appResult.length === 0) {
-          this.logger.warn(
-            `KYC webhook did not update application ${session.applicationId} — it may have already progressed past kyc_review.`,
-          );
+          .limit(1);
+
+        if (app !== undefined) {
+          const canAdvance =
+            status === "approved" &&
+            ["submitted", "kyc_review"].includes(app.status);
+
+          await transaction
+            .update(financingApplications)
+            .set({
+              kycStatus,
+              status: canAdvance ? "credit_review" : undefined,
+              version: sql`${financingApplications.version} + 1`,
+            })
+            .where(
+              and(
+                eq(financingApplications.tenantId, tenantId),
+                eq(financingApplications.id, session.applicationId),
+              ),
+            );
+
+          if (status === "approved" && !canAdvance) {
+            this.logger.warn(
+              `KYC webhook updated kycStatus for application ${session.applicationId}, but it did not advance to credit_review because its current status is "${app.status}".`,
+            );
+          }
         }
         const now = new Date().toISOString();
         await transaction
