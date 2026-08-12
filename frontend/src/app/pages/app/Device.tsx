@@ -34,7 +34,7 @@ export function Device() {
   return (
     <section>
       <h1 className="text-xl">My device</h1>
-      <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="mt-5 rounded-2xl border border-border bg-muted/50 p-5">
         <div className="flex items-center justify-between">
           {device.status === "active" ? (
             <ShieldCheck className="size-9 text-primary" aria-hidden="true" />

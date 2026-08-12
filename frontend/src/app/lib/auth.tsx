@@ -421,7 +421,7 @@ function FullPageStatus({
       aria-live="polite"
     >
       <div
-        className="max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center"
+        className="max-w-md rounded-2xl border border-border bg-muted/50 p-6 text-center"
         role={error ? "alert" : "status"}
       >
         {!error && (

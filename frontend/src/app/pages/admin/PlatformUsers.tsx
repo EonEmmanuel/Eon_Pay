@@ -247,7 +247,7 @@ export function PlatformUsers() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[840px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">User</th>
                   <th className="px-5 py-3">Roles</th>
                   <th className="px-5 py-3">Status</th>
@@ -255,13 +255,13 @@ export function PlatformUsers() {
                   <th className="px-5 py-3 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((user) => (
                   <tr key={user.id}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="size-9">
-                          <AvatarFallback className="bg-white/8 text-xs">
+                          <AvatarFallback className="bg-muted text-xs">
                             {initials(user.displayName ?? user.email ?? "User")}
                           </AvatarFallback>
                         </Avatar>
@@ -332,7 +332,7 @@ export function PlatformUsers() {
             <div className="scroll-slim overflow-x-auto">
               <table className="w-full min-w-[850px] text-sm">
                 <thead>
-                  <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <th className="px-5 py-3">Recipient</th>
                     <th className="px-5 py-3">Role</th>
                     <th className="px-5 py-3">Invitation</th>
@@ -340,7 +340,7 @@ export function PlatformUsers() {
                     <th className="px-5 py-3 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/6">
+                <tbody className="divide-y divide-border">
                   {(invitations.data ?? []).map((invitation) => (
                     <InvitationRow
                       key={invitation.id}
@@ -405,11 +405,11 @@ export function PlatformUsers() {
               </div>
               <div>
                 <Label>Assigned roles</Label>
-                <div className="mt-1 flex flex-wrap gap-2 rounded-lg border border-white/8 bg-white/[0.03] p-3">
+                <div className="mt-1 flex flex-wrap gap-2 rounded-lg border border-border bg-muted/50 p-3">
                   {target.roles.map((role) => (
                     <span
                       key={role.roleId}
-                      className="inline-flex items-center gap-1 rounded-full bg-white/8 px-2.5 py-1 text-xs"
+                      className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-xs"
                     >
                       {role.roleName}
                       {canManageRoles && target.id !== auth.session?.user.id && (
@@ -464,7 +464,7 @@ export function PlatformUsers() {
                   </div>
                 </div>
               )}
-              <div className="rounded-lg border border-white/8 bg-white/[0.03] p-3 text-sm">
+              <div className="rounded-lg border border-border bg-muted/50 p-3 text-sm">
                 <div className="text-muted-foreground">Account</div>
                 <div>{target.email ?? target.id}</div>
               </div>

@@ -86,11 +86,26 @@ export function ApplicationReview() {
     queryKey: ["application", id],
     enabled: id !== undefined,
     queryFn: () => apiRequest<FinancingApplication>(`/applications/${id ?? ""}`),
+    refetchInterval: (currentQuery) => {
+      const app = currentQuery.state.data;
+      return app !== undefined && app.kycStatus === "pending" ? 8_000 : false;
+    },
   });
   const kycState = useQuery({
     queryKey: ["application", id, "kyc-status"],
     enabled: id !== undefined && auth.tenantPermissions.includes("kyc.read"),
     queryFn: () => apiRequest<KycState>(`/applications/${id ?? ""}/kyc/status`),
+    refetchInterval: (currentQuery) => {
+      const state = currentQuery.state.data;
+      return state !== null &&
+        state !== undefined &&
+        state.session !== null &&
+        !["approved", "declined", "abandoned", "expired", "failed"].includes(
+          state.session?.status ?? "",
+        )
+        ? 8_000
+        : false;
+    },
   });
   const mutation = useMutation({
     mutationFn: async () => {

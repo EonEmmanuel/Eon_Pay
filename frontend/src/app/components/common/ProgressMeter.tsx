@@ -13,13 +13,13 @@ export function ProgressMeter({
 }) {
   const grad =
     tone === "gold"
-      ? "linear-gradient(90deg, oklch(0.83 0.13 85), oklch(0.88 0.1 95))"
+      ? "var(--gold)"
       : tone === "danger"
-        ? "linear-gradient(90deg, oklch(0.6 0.2 20), oklch(0.7 0.18 30))"
-        : "linear-gradient(90deg, oklch(0.72 0.15 168), oklch(0.74 0.13 205))";
+        ? "var(--danger)"
+        : "var(--primary)";
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-white/8">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted">
         <div
           className="absolute inset-y-0 left-0 rounded-full"
           style={{

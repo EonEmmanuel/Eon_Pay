@@ -41,19 +41,19 @@ export function PaymentCountdown({ dueDate }: { dueDate: string }) {
 
   return (
     <div>
-      <div className="mb-1.5 text-[11px] text-white/70">
+      <div className="mb-1.5 text-[11px] text-foreground/70">
         {t.overdue ? "Payment overdue by" : "Time until next payment"}
       </div>
       <div className="grid grid-cols-4 gap-1.5">
         {units.map((u) => (
           <div
             key={u.label}
-            className="rounded-xl border border-white/10 bg-white/[0.06] py-1.5 text-center backdrop-blur"
+            className="rounded-xl border border-border bg-accent py-1.5 text-center backdrop-blur"
           >
             <div className="font-mono text-lg font-semibold leading-none tabular-nums">
               {String(u.value).padStart(2, "0")}
             </div>
-            <div className="mt-0.5 text-[9px] uppercase tracking-wide text-white/60">
+            <div className="mt-0.5 text-[9px] uppercase tracking-wide text-foreground/60">
               {u.label}
             </div>
           </div>

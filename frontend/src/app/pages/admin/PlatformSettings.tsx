@@ -165,7 +165,7 @@ export function PlatformSettings() {
           </div>
         </SectionCard>
         <SectionCard title="Platform controls" bodyClassName="p-0">
-          <div className="divide-y divide-white/6">
+          <div className="divide-y divide-border">
             {Object.entries(form.toggles).map(([key, enabled]) => {
               const metadata = toggleLabels[key] ?? {
                 label: key,
@@ -187,7 +187,7 @@ export function PlatformSettings() {
                     disabled={!canManage}
                     className={cn(
                       "relative h-6 w-11 shrink-0 rounded-full",
-                      enabled ? "bg-primary" : "bg-white/12",
+                      enabled ? "bg-primary" : "bg-muted",
                     )}
                   >
                     <span

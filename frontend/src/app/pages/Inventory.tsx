@@ -322,7 +322,7 @@ export function Inventory() {
                       <img
                         src={item.imageUrl}
                         alt={item.brand + " " + item.model}
-                        className="size-16 shrink-0 rounded-xl bg-white/5 object-contain p-1"
+                        className="size-16 shrink-0 rounded-xl bg-muted/60 object-contain p-1"
                         loading="lazy"
                       />
                     ) : (
@@ -343,7 +343,7 @@ export function Inventory() {
                     {item.availableUnits} available
                   </StatusBadge>
                 </div>
-                <div className="mt-4 flex justify-between border-t border-white/8 pt-4">
+                <div className="mt-4 flex justify-between border-t border-border pt-4">
                   <span className="font-mono text-lg">{money(item.cashPrice)}</span>
                   <div className="flex flex-wrap items-center justify-end gap-2">
                     <span className="text-xs text-muted-foreground">
@@ -391,7 +391,7 @@ export function Inventory() {
                     {stock.map((row) => (
                       <div
                         key={row.id}
-                        className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.03] px-3 py-2 text-xs"
+                        className="flex items-center justify-between gap-3 rounded-lg bg-muted/50 px-3 py-2 text-xs"
                       >
                         <span className="min-w-0">
                           <span className="font-mono">{row.imei}</span>
@@ -506,7 +506,7 @@ export function Inventory() {
                 <img
                   src={productImagePreview}
                   alt="New product preview"
-                  className="mt-3 h-32 w-full rounded-xl bg-white/5 object-contain p-2"
+                  className="mt-3 h-32 w-full rounded-xl bg-muted/60 object-contain p-2"
                 />
               )}
             </div>
@@ -646,7 +646,7 @@ export function Inventory() {
                     ? "Selected product image preview"
                     : imageProduct?.brand + " " + imageProduct?.model
                 }
-                className="mt-3 h-52 w-full rounded-xl bg-white/5 object-contain p-2"
+                className="mt-3 h-52 w-full rounded-xl bg-muted/60 object-contain p-2"
               />
             )}
           </div>
@@ -690,7 +690,7 @@ export function Inventory() {
             {soleBranch ? (
               <div>
                 <Label>Branch</Label>
-                <div className="mt-1 rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm">
+                <div className="mt-1 rounded-md border border-border bg-muted/50 px-3 py-2 text-sm">
                   {soleBranch.name}
                   <span className="ml-2 text-xs text-muted-foreground">
                     Your assigned branch
@@ -789,7 +789,7 @@ export function Inventory() {
                 editUnit.mutate(editingUnit);
               }}
             >
-              <div className="rounded-lg bg-white/[0.03] p-3 text-sm">
+              <div className="rounded-lg bg-muted/50 p-3 text-sm">
                 <p>{editingUnit.productName}</p>
                 <p className="text-xs text-muted-foreground">
                   Branch: {editingUnit.branchName}

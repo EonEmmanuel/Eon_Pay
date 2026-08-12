@@ -21,7 +21,7 @@ export class AuthController {
   constructor(
     private readonly auth: AuthService,
     private readonly invitationsService: InvitationsService,
-  ) {}
+  ) { }
 
   @Get("me")
   me(@CurrentUser() user: AuthenticatedUser): AuthenticatedUser {

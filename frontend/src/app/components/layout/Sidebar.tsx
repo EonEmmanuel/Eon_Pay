@@ -149,9 +149,9 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
     "/collections": analytics.data?.collections.length ?? 0,
   };
   return (
-    <aside className="flex h-full w-[260px] flex-col border-r border-white/8 bg-sidebar">
+    <aside className="flex h-full w-[260px] flex-col border-r border-border bg-sidebar">
       <div className="flex items-center gap-2.5 px-5 py-5">
-        <div className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-[oklch(0.78_0.15_168)] to-[oklch(0.72_0.13_205)] text-[oklch(0.18_0.03_264)]">
+        <div className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground">
           <Zap className="size-5" strokeWidth={2.5} />
         </div>
         <div className="leading-tight">
@@ -177,8 +177,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     cn(
                       "group relative flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all",
                       isActive
-                        ? "bg-white/[0.06] text-foreground"
-                        : "text-muted-foreground hover:bg-white/[0.03] hover:text-foreground",
+                        ? "bg-accent text-foreground"
+                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
                     )
                   }
                 >
@@ -208,12 +208,12 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </nav>
       {analytics.data !== undefined && (
-        <div className="m-3 rounded-xl border border-white/8 bg-white/[0.03] p-3">
+        <div className="m-3 rounded-xl border border-border bg-muted/50 p-3">
           <div className="text-xs font-medium">Portfolio collection rate</div>
           <div className="mt-1 font-mono text-lg text-primary">
             {analytics.data.summary.collectionRate.toFixed(1)}%
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/8">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-primary"
               style={{

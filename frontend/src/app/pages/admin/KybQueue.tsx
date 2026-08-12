@@ -71,7 +71,7 @@ export function KybQueue() {
         />
       </div>
       <GlassCard className="overflow-hidden">
-        <div className="flex flex-col gap-3 border-b border-white/8 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="font-semibold">Verification cases</h2>
             <p className="text-sm text-muted-foreground">
@@ -98,7 +98,7 @@ export function KybQueue() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[920px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wider text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
                   <th className="px-5 py-3">Retailer</th>
                   <th className="px-5 py-3">Registration</th>
                   <th className="px-5 py-3">Decision</th>
@@ -107,11 +107,11 @@ export function KybQueue() {
                   <th className="px-5 py-3 text-right">Review</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {cases.map((item) => (
                   <tr
                     key={item.id}
-                    className="transition-colors hover:bg-white/[0.025]"
+                    className="transition-colors hover:bg-accent/60"
                   >
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">

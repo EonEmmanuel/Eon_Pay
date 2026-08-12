@@ -154,12 +154,12 @@ export class DiditProvider {
 
   private callbackConfiguration(
     kind: "kyc" | "kyb",
-  ): { callback: string; callback_method: "both" } | Record<string, never> {
+  ): { callback: string; callback_method: "POST" } | Record<string, never> {
     const callback = this.config.get(
       kind === "kyb" ? "DIDIT_KYB_CALLBACK_URL" : "DIDIT_CALLBACK_URL",
       { infer: true },
     );
-    return callback === undefined ? {} : { callback, callback_method: "both" };
+    return callback === undefined ? {} : { callback, callback_method: "POST" };
   }
 
   private async authorizedRequest(

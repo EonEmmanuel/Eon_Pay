@@ -83,7 +83,7 @@ export function SystemHealth() {
             </StatusBadge>
           </GlassCard>
           <SectionCard title="Services" bodyClassName="p-0">
-            <div className="divide-y divide-white/6">
+            <div className="divide-y divide-border">
               {data.services.map((service) => (
                 <div key={service.name} className="flex items-center gap-3 px-5 py-4">
                   <Server className="size-4 text-muted-foreground" />

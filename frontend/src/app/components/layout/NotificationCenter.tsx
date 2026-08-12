@@ -161,7 +161,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[min(24rem,calc(100vw-1rem))] p-0">
-        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <div>
             <div className="font-semibold">
               {platform ? "Platform alerts" : "Notifications"}
@@ -190,7 +190,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
           </div>
         </div>
         {settingsOpen && currentPreferences !== undefined && (
-          <div className="space-y-4 border-b border-white/8 bg-white/[0.025] p-4 text-sm">
+          <div className="space-y-4 border-b border-border bg-muted/50 p-4 text-sm">
             <PreferenceRow
               label="Sound alerts"
               detail="Warning and critical alerts by default"
@@ -223,7 +223,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
             <label className="block text-xs text-muted-foreground">
               Minimum sound severity
               <select
-                className="mt-1 h-9 w-full rounded-md border border-white/10 bg-background px-2 text-sm text-foreground"
+                className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-sm text-foreground"
                 value={currentPreferences.soundMinimumSeverity}
                 onChange={(event) =>
                   savePreference({
@@ -240,7 +240,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
             <label className="block text-xs text-muted-foreground">
               Minimum email severity
               <select
-                className="mt-1 h-9 w-full rounded-md border border-white/10 bg-background px-2 text-sm text-foreground"
+                className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-sm text-foreground"
                 value={currentPreferences.emailMinimumSeverity}
                 onChange={(event) =>
                   savePreference({
@@ -276,7 +276,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                     Starts
                     <input
                       type="time"
-                      className="mt-1 h-9 w-full rounded-md border border-white/10 bg-background px-2 text-foreground"
+                      className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-foreground"
                       value={currentPreferences.quietHoursStart}
                       onChange={(event) =>
                         savePreference({ quietHoursStart: event.target.value })
@@ -287,7 +287,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                     Ends
                     <input
                       type="time"
-                      className="mt-1 h-9 w-full rounded-md border border-white/10 bg-background px-2 text-foreground"
+                      className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-foreground"
                       value={currentPreferences.quietHoursEnd}
                       onChange={(event) =>
                         savePreference({ quietHoursEnd: event.target.value })
@@ -315,7 +315,7 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
             notifications.data?.items.map((item) => (
               <div
                 key={item.id}
-                className={`border-b border-white/6 p-3 last:border-0 ${item.readAt === null ? "bg-primary/[0.045]" : ""}`}
+                className={`border-b border-border p-3 last:border-0 ${item.readAt === null ? "bg-primary/[0.045]" : ""}`}
               >
                 <div className="flex gap-3">
                   <span

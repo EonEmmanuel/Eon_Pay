@@ -19,7 +19,7 @@ export function SectionCard({
   return (
     <GlassCard className={cn("p-0 overflow-hidden", className)}>
       {(title || action) && (
-        <div className="flex items-center justify-between gap-3 border-b border-white/8 px-5 py-4">
+        <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
           <div>
             {title && <h3 className="font-semibold text-foreground">{title}</h3>}
             {subtitle && (

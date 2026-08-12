@@ -118,7 +118,7 @@ export function PlatformMfa() {
 
   return (
     <main className="app-ambient grid min-h-screen place-items-center p-6 text-foreground">
-      <section className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl">
+      <section className="w-full max-w-md rounded-2xl border border-border bg-muted/50 p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="mb-3 grid size-11 place-items-center rounded-xl bg-primary/15 text-primary">
@@ -160,7 +160,7 @@ export function PlatformMfa() {
                   />
                 </div>
                 {setup.secret !== undefined && (
-                  <details className="rounded-lg border border-white/8 p-3 text-sm">
+                  <details className="rounded-lg border border-border p-3 text-sm">
                     <summary className="cursor-pointer text-muted-foreground">
                       Cannot scan the QR code?
                     </summary>

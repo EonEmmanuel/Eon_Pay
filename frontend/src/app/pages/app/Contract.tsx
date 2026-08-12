@@ -65,7 +65,7 @@ export function Contract() {
           {contract.status}
         </StatusBadge>
       </div>
-      <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="mt-5 rounded-2xl border border-border bg-muted/50 p-5">
         <h2 className="font-medium">
           {contract.device.brand} {contract.device.model}
         </h2>
@@ -85,7 +85,7 @@ export function Contract() {
         {(schedule.data ?? []).map((installment) => (
           <li
             key={installment.id}
-            className="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.03] p-3 text-sm"
+            className="flex items-center justify-between rounded-xl border border-border bg-muted/50 p-3 text-sm"
           >
             <div>
               <span className="font-medium">#{installment.sequence}</span>

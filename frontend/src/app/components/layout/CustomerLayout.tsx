@@ -28,7 +28,7 @@ function DesktopSwitcher() {
             "flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-all",
             o.active
               ? "border-primary/40 bg-primary/12 text-primary"
-              : "border-white/8 bg-white/[0.03] text-muted-foreground hover:text-foreground",
+              : "border-border bg-muted/50 text-muted-foreground hover:text-foreground",
           )}
         >
           <o.icon className="size-4" /> {o.label}

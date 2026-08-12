@@ -187,7 +187,7 @@ export function Tenants() {
         }
       />
 
-      <div className="mb-4 flex flex-col gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-3 sm:flex-row sm:items-center">
+      <div className="mb-4 flex flex-col gap-3 rounded-xl border border-border bg-muted/50 p-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search
             className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
@@ -202,7 +202,7 @@ export function Tenants() {
           />
         </div>
         <div
-          className="flex items-center gap-1 rounded-lg border border-white/8 bg-white/[0.03] p-1"
+          className="flex items-center gap-1 rounded-lg border border-border bg-muted/50 p-1"
           aria-label="Retailer status filter"
         >
           {filters.map((value) => (
@@ -241,7 +241,7 @@ export function Tenants() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[1080px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3 font-medium">Retailer</th>
                   <th className="px-5 py-3 font-medium">Slug</th>
                   <th className="px-5 py-3 font-medium">Status</th>
@@ -250,7 +250,7 @@ export function Tenants() {
                   <th className="px-5 py-3 font-medium">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((tenant) => (
                   <tr key={tenant.id}>
                     <td className="px-5 py-4 font-medium">{tenant.name}</td>

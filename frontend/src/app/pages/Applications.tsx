@@ -116,11 +116,11 @@ export function Applications() {
         </GlassCard>
       </div>
 
-      <section className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]">
-        <div className="flex flex-col gap-3 border-b border-white/8 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <section className="overflow-hidden rounded-2xl border border-border bg-muted/50">
+        <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-base">Application queue</h2>
           <div
-            className="flex items-center gap-1 rounded-lg border border-white/8 bg-white/[0.03] p-1"
+            className="flex items-center gap-1 rounded-lg border border-border bg-muted/50 p-1"
             role="tablist"
             aria-label="Application status"
           >
@@ -154,7 +154,7 @@ export function Applications() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Applicant</th>
                   <th className="px-5 py-3">Device</th>
                   <th className="px-5 py-3">Plan</th>
@@ -162,7 +162,7 @@ export function Applications() {
                   <th className="px-5 py-3 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((application) => (
                   <tr key={application.id}>
                     <td className="px-5 py-3">

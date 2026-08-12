@@ -47,7 +47,7 @@ export function PlatformSwitcher({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div
-      className="mx-3 mt-3 grid gap-1 rounded-xl border border-white/8 bg-white/[0.03] p-1"
+      className="mx-3 mt-3 grid gap-1 rounded-xl border border-border bg-muted/50 p-1"
       style={{
         gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))`,
       }}

@@ -227,10 +227,10 @@ export function NewApplication() {
                       <img
                         src={selected.imageUrl}
                         alt={selected.brand + " " + selected.model}
-                        className="size-20 rounded-xl bg-white/5 object-contain p-1"
+                        className="size-20 rounded-xl bg-muted/60 object-contain p-1"
                       />
                     ) : (
-                      <span className="grid size-20 shrink-0 place-items-center rounded-xl bg-white/5 text-muted-foreground">
+                      <span className="grid size-20 shrink-0 place-items-center rounded-xl bg-muted/60 text-muted-foreground">
                         <Smartphone className="size-8" aria-hidden="true" />
                       </span>
                     )}

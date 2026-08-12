@@ -32,8 +32,8 @@ export function KpiCard({
           <div className="flex items-center gap-2 text-muted-foreground">
             <span
               className={cn(
-                "grid size-8 place-items-center rounded-lg border border-white/10",
-                accent === "gold" ? "text-[oklch(0.86_0.12_85)]" : "text-primary",
+                "grid size-8 place-items-center rounded-lg border border-border",
+                accent === "gold" ? "text-gold" : "text-primary",
               )}
               style={{ background: `color-mix(in oklch, ${color} 14%, transparent)` }}
             >

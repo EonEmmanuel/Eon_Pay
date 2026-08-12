@@ -102,7 +102,7 @@ export function CustomerProfile() {
               </a>
             </Button>
           </div>
-          <div className="mt-4 space-y-2 border-t border-white/8 pt-4 text-left text-sm">
+          <div className="mt-4 space-y-2 border-t border-border pt-4 text-left text-sm">
             <div className="flex gap-2">
               <Phone className="mt-0.5 size-4 text-muted-foreground" />
               <span>{customer.phone}</span>
@@ -119,7 +119,7 @@ export function CustomerProfile() {
 
         <div className="xl:col-span-2">
           <Tabs defaultValue="contracts">
-            <TabsList className="mb-4 flex-wrap bg-white/[0.03]">
+            <TabsList className="mb-4 flex-wrap bg-muted/50">
               <TabsTrigger value="contracts">Contracts</TabsTrigger>
               <TabsTrigger value="payments">Payments</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
@@ -130,12 +130,12 @@ export function CustomerProfile() {
                 {contracts.length === 0 ? (
                   <Empty label="No contracts recorded." />
                 ) : (
-                  <div className="divide-y divide-white/6">
+                  <div className="divide-y divide-border">
                     {contracts.map((contract) => (
                       <button
                         key={contract.id}
                         onClick={() => navigate(`/contracts/${contract.id}`)}
-                        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left hover:bg-white/[0.03]"
+                        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left hover:bg-accent/60"
                       >
                         <div>
                           <div className="font-medium">
@@ -166,7 +166,7 @@ export function CustomerProfile() {
                 {payments.length === 0 ? (
                   <Empty label="No payments recorded." />
                 ) : (
-                  <div className="divide-y divide-white/6">
+                  <div className="divide-y divide-border">
                     {payments.map((payment) => (
                       <div
                         key={payment.id}
@@ -262,7 +262,7 @@ function initials(name: string) {
 }
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-white/8 bg-white/[0.03] p-3">
+    <div className="rounded-lg border border-border bg-muted/50 p-3">
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="font-mono">{value}</div>
     </div>

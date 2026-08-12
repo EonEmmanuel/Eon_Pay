@@ -20,7 +20,7 @@ export function AdminLayout() {
       </div>
 
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-[260px] border-white/8 bg-sidebar p-0">
+        <SheetContent side="left" className="w-[260px] border-border bg-sidebar p-0">
           <AdminSidebar onNavigate={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>

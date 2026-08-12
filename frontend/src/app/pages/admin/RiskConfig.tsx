@@ -114,7 +114,7 @@ export function RiskConfig() {
               </div>
             </div>
           </div>
-          <div className="mt-4 flex justify-between border-t border-white/8 pt-4 text-sm">
+          <div className="mt-4 flex justify-between border-t border-border pt-4 text-sm">
             <span className="text-muted-foreground">Active rules</span>
             <span className="font-mono">
               {form.rules.filter((rule) => rule.enabled).length} / {form.rules.length}
@@ -129,13 +129,13 @@ export function RiskConfig() {
           {form.rules.length === 0 ? (
             <EmptyState label="No risk rules are configured." />
           ) : (
-            <div className="divide-y divide-white/6">
+            <div className="divide-y divide-border">
               {form.rules.map((rule) => (
                 <div
                   key={rule.id}
                   className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center"
                 >
-                  <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.03] text-muted-foreground">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-border bg-muted/50 text-muted-foreground">
                     <SlidersHorizontal className="size-4" />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -165,7 +165,7 @@ export function RiskConfig() {
                     disabled={!canManage}
                     className={cn(
                       "relative h-6 w-11 shrink-0 rounded-full",
-                      rule.enabled ? "bg-primary" : "bg-white/12",
+                      rule.enabled ? "bg-primary" : "bg-muted",
                     )}
                   >
                     <span

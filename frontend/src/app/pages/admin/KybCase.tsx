@@ -191,7 +191,7 @@ export function KybCase() {
                     href={item.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.025] p-3 transition hover:border-primary/30 hover:bg-primary/5"
+                    className="group flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-3 transition hover:border-primary/30 hover:bg-primary/5"
                   >
                     <span className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
                       <FileText className="size-4" />
@@ -209,7 +209,7 @@ export function KybCase() {
             title="Provider decision snapshot"
             subtitle="Immutable evidence captured when the signed webhook was processed."
           >
-            <div className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-white/[0.025] p-4">
+            <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/50 p-4">
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">
                   Current status
@@ -243,7 +243,7 @@ export function KybCase() {
             subtitle="A platform decision is required after the Didit result."
           >
             <div className="space-y-4">
-              <div className="rounded-xl border border-white/8 bg-white/[0.025] p-4">
+              <div className="rounded-xl border border-border bg-muted/50 p-4">
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">
                   Decision reason
                 </div>

@@ -64,7 +64,7 @@ export function Topbar({ onMenu }: { onMenu?: () => void }) {
     setSearch("");
   }
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/8 bg-[oklch(0.17_0.028_264/0.72)] px-4 backdrop-blur-xl lg:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-[oklch(0.17_0.028_264/0.72)] px-4 backdrop-blur-xl lg:px-6">
       <Button
         variant="ghost"
         size="icon"
@@ -82,13 +82,13 @@ export function Topbar({ onMenu }: { onMenu?: () => void }) {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search customers, contracts, devices..."
-          className="h-10 w-full rounded-xl border border-white/8 bg-white/[0.04] pl-9 pr-16 text-sm outline-none focus:border-primary/40"
+          className="h-10 w-full rounded-xl border border-border bg-muted/50 pl-9 pr-16 text-sm outline-none focus:border-primary/40"
         />
-        <kbd className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+        <kbd className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
           <Command className="size-2.5" />K
         </kbd>
         {search.trim().length >= 2 && (
-          <div className="absolute left-0 right-0 top-12 overflow-hidden rounded-xl border border-white/10 bg-sidebar shadow-2xl">
+          <div className="absolute left-0 right-0 top-12 overflow-hidden rounded-xl border border-border bg-sidebar shadow-2xl">
             {results.length === 0 ? (
               <div className="p-4 text-sm text-muted-foreground">
                 No accessible records found.
@@ -98,7 +98,7 @@ export function Topbar({ onMenu }: { onMenu?: () => void }) {
                 <button
                   key={result.key}
                   onClick={() => openResult(result.to)}
-                  className="block w-full border-b border-white/6 px-4 py-3 text-left last:border-0 hover:bg-white/[0.04]"
+                  className="block w-full border-b border-border px-4 py-3 text-left last:border-0 hover:bg-accent/60"
                 >
                   <div className="text-sm font-medium">{result.label}</div>
                   <div className="text-xs text-muted-foreground">{result.detail}</div>

@@ -217,8 +217,8 @@ export function Payments() {
         }
       />
 
-      <section className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]">
-        <h2 className="border-b border-white/8 p-4 text-base">Payment transactions</h2>
+      <section className="overflow-hidden rounded-2xl border border-border bg-muted/50">
+        <h2 className="border-b border-border p-4 text-base">Payment transactions</h2>
         {payments.isLoading ? (
           <LoadingState label="Loading payments…" />
         ) : payments.isError ? (
@@ -231,7 +231,7 @@ export function Payments() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Transaction</th>
                   <th className="px-5 py-3">Customer</th>
                   <th className="px-5 py-3">Channel</th>
@@ -239,7 +239,7 @@ export function Payments() {
                   <th className="px-5 py-3 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {(payments.data ?? []).map((payment) => (
                   <tr key={payment.id}>
                     <td className="px-5 py-3">

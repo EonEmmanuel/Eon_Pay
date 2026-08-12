@@ -144,7 +144,7 @@ export function Pay() {
                 className={`rounded-xl border p-4 text-sm ${
                   channel === provider
                     ? "border-primary bg-primary/10 text-primary"
-                    : "border-white/10 bg-white/[0.03]"
+                    : "border-border bg-muted/50"
                 }`}
               >
                 <Smartphone className="mx-auto mb-2 size-5" aria-hidden="true" />
