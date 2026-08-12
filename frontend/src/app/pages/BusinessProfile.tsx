@@ -223,7 +223,7 @@ export function BusinessProfile() {
       </div>
 
       {profileQuery.data.profile !== null && (
-        <div className="mb-5 overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.12] via-white/[0.04] to-transparent p-5 shadow-[0_24px_80px_-40px_oklch(0.78_0.15_168/0.6)]">
+        <div className="mb-5 overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.12] via-foreground/5 to-transparent p-5 shadow-[0_24px_80px_-40px_oklch(0.78_0.15_168/0.6)]">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex gap-4">
               <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary/15 text-primary ring-1 ring-primary/20">

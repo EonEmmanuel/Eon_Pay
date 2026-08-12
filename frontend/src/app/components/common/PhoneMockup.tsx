@@ -19,7 +19,7 @@ export function PhoneMockup({
 }) {
   return (
     <div className={cn("relative mx-auto w-[190px]", className)}>
-      <div className="relative rounded-[2.2rem] border border-white/12 bg-gradient-to-b from-white/10 to-white/[0.02] p-2 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)]">
+      <div className="relative rounded-[2.2rem] border border-border bg-gradient-to-b from-foreground/10 to-foreground/5 p-2 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)]">
         <div className="relative aspect-[9/19] overflow-hidden rounded-[1.7rem] bg-slate-900">
           <ImageWithFallback
             src={image}
@@ -29,7 +29,7 @@ export function PhoneMockup({
           {/* notch */}
           <div className="absolute left-1/2 top-2 h-1.5 w-16 -translate-x-1/2 rounded-full bg-black/60" />
           {/* status bar */}
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-3 text-[10px] text-white/80">
+          <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-3 text-[10px] text-foreground/80">
             <span className="font-mono">9:41</span>
             <div className="flex items-center gap-1">
               {online ? <Wifi className="size-3" /> : <WifiOff className="size-3" />}

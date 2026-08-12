@@ -16,8 +16,8 @@ export function TrendChip({
       className={cn(
         "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs font-semibold tabular-nums",
         good
-          ? "bg-[oklch(0.76_0.15_162/0.14)] text-[oklch(0.82_0.15_162)]"
-          : "bg-[oklch(0.65_0.2_20/0.14)] text-[oklch(0.74_0.19_20)]",
+          ? "bg-success/15 text-success"
+          : "bg-danger/15 text-danger",
       )}
     >
       {up ? <ArrowUpRight className="size-3" /> : <ArrowDownRight className="size-3" />}

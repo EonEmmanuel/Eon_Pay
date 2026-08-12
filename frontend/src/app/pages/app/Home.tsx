@@ -85,7 +85,7 @@ export function Home() {
           <p className="mt-3 text-sm text-muted-foreground">
             {verification.description}
           </p>
-          <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-sm">
+          <div className="mt-4 flex items-center justify-between border-t border-border pt-4 text-sm">
             <span className="text-muted-foreground">Application status</span>
             <span>{customerApplicationStatus(application.status)}</span>
           </div>
@@ -116,7 +116,7 @@ export function Home() {
           <span className="text-muted-foreground">Paid</span>
           <span className="font-mono">{money(settled)}</span>
         </div>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
           <div
             className="h-full bg-primary"
             style={{

@@ -117,9 +117,9 @@ export function AdminSidebar({ onNavigate }: { onNavigate?: () => void }) {
     health.data?.services.some((service) => service.status === "not_configured") ??
     false;
   return (
-    <aside className="flex h-full w-[260px] flex-col border-r border-white/8 bg-sidebar">
+    <aside className="flex h-full w-[260px] flex-col border-r border-border bg-sidebar">
       <div className="flex items-center gap-2.5 px-5 pt-5">
-        <div className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-[oklch(0.83_0.13_85)] to-[oklch(0.72_0.13_205)] text-[oklch(0.18_0.03_264)]">
+        <div className="grid size-9 place-items-center rounded-xl bg-gold text-gold-foreground">
           <Hexagon className="size-5" strokeWidth={2.5} />
         </div>
         <div className="leading-tight">
@@ -150,25 +150,25 @@ export function AdminSidebar({ onNavigate }: { onNavigate?: () => void }) {
                       cn(
                         "group relative flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all",
                         isActive
-                          ? "bg-white/[0.06] text-foreground"
-                          : "text-muted-foreground hover:bg-white/[0.03] hover:text-foreground",
+                          ? "bg-accent text-foreground"
+                          : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
                       )
                     }
                   >
                     {({ isActive }) => (
                       <>
                         {isActive && (
-                          <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-[oklch(0.83_0.13_85)]" />
+                          <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-gold" />
                         )}
                         <item.icon
                           className={cn(
                             "size-[18px] shrink-0",
-                            isActive && "text-[oklch(0.86_0.12_85)]",
+                            isActive && "text-gold",
                           )}
                         />
                         <span className="flex-1">{item.label}</span>
                         {item.to === "/admin/tenants" && tenants.data !== undefined && (
-                          <span className="rounded-full bg-[oklch(0.83_0.13_85/0.15)] px-1.5 py-0.5 font-mono text-[10px] text-[oklch(0.86_0.12_85)]">
+                          <span className="rounded-full bg-gold/15 px-1.5 py-0.5 font-mono text-[10px] text-gold">
                             {tenants.data.length}
                           </span>
                         )}
@@ -183,7 +183,7 @@ export function AdminSidebar({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
       {canReadHealth && (
         <div
-          className="m-3 rounded-xl border border-white/8 bg-white/[0.03] p-3"
+          className="m-3 rounded-xl border border-border bg-muted/50 p-3"
           aria-live="polite"
         >
           {health.isPending ? (
@@ -218,7 +218,7 @@ export function AdminSidebar({ onNavigate }: { onNavigate?: () => void }) {
           ) : (
             <>
               <div
-                className={`flex items-center gap-2 text-xs font-medium ${down ? "text-destructive" : incomplete ? "text-[oklch(0.86_0.13_85)]" : "text-primary"}`}
+                className={`flex items-center gap-2 text-xs font-medium ${down ? "text-destructive" : incomplete ? "text-gold" : "text-primary"}`}
               >
                 <span className="size-1.5 rounded-full bg-current" />
                 {down

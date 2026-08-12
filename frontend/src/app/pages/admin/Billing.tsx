@@ -58,9 +58,9 @@ export function Billing() {
           </Button>
         }
       />
-      <GlassCard className="mb-4 border-[oklch(0.83_0.14_82/0.25)] bg-[oklch(0.83_0.14_82/0.06)] p-4">
+      <GlassCard className="mb-4 border-warning/25 bg-warning/5 p-4">
         <div className="flex items-start gap-3">
-          <AlertCircle className="mt-0.5 size-5 text-[oklch(0.86_0.13_85)]" />
+          <AlertCircle className="mt-0.5 size-5 text-gold" />
           <div>
             <div className="font-medium">Subscription billing is not configured</div>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -109,7 +109,7 @@ export function Billing() {
             <div className="scroll-slim overflow-x-auto">
               <table className="w-full min-w-[880px] text-sm">
                 <thead>
-                  <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <th className="px-5 py-3">Retailer</th>
                     <th className="px-5 py-3 text-right">Customers</th>
                     <th className="px-5 py-3 text-right">Contracts</th>
@@ -119,7 +119,7 @@ export function Billing() {
                     <th className="px-5 py-3">State</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/6">
+                <tbody className="divide-y divide-border">
                   {data.tenants.map((tenant) => (
                     <tr key={tenant.id}>
                       <td className="px-5 py-3">

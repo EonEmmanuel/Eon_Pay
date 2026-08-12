@@ -12,7 +12,7 @@ export function AppActivityIndicator() {
       aria-live="polite"
       aria-label="Saving changes"
     >
-      <div className="h-full w-1/2 animate-pulse rounded-full bg-primary shadow-[0_0_12px_oklch(0.72_0.17_250)]" />
+      <div className="h-full w-1/2 animate-pulse rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
       <span className="sr-only">Your request is being processed.</span>
     </div>
   );

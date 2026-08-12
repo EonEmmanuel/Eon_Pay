@@ -23,8 +23,8 @@ import { money } from "../lib/format";
 
 const tabs = ["Monthly", "Aging", "Models", "Branches"] as const;
 const tooltipStyle = {
-  background: "oklch(0.2 0.03 264)",
-  border: "1px solid oklch(1 0 0 / 8%)",
+  background: "var(--popover)",
+  border: "1px solid var(--border)", color: "var(--popover-foreground)",
   borderRadius: 8,
   fontSize: 12,
 };
@@ -134,7 +134,7 @@ export function Reports() {
             />
           </div>
           <div
-            className="mb-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-lg border border-white/8 bg-white/[0.03] p-1"
+            className="mb-4 flex w-fit max-w-full items-center gap-1 overflow-x-auto rounded-lg border border-border bg-muted/50 p-1"
             role="tablist"
           >
             {tabs.map((value) => (
@@ -267,7 +267,7 @@ function ChartAxes({ dataKey = "month" }: { dataKey?: string }) {
     <>
       <CartesianGrid
         strokeDasharray="3 3"
-        stroke="oklch(1 0 0 / 6%)"
+        stroke="var(--border)"
         vertical={false}
       />
       <XAxis

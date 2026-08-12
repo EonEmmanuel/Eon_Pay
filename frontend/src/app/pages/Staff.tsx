@@ -300,7 +300,7 @@ export function Staff() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[900px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Staff member</th>
                   <th className="px-5 py-3">Roles</th>
                   <th className="px-5 py-3">Branch access</th>
@@ -308,13 +308,13 @@ export function Staff() {
                   <th className="px-5 py-3 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((member) => (
                   <tr key={member.id}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="size-9">
-                          <AvatarFallback className="bg-white/8 text-xs">
+                          <AvatarFallback className="bg-muted text-xs">
                             {initials(member.displayName ?? member.email ?? "Staff")}
                           </AvatarFallback>
                         </Avatar>
@@ -390,7 +390,7 @@ export function Staff() {
             <div className="scroll-slim overflow-x-auto">
               <table className="w-full min-w-[900px] text-sm">
                 <thead>
-                  <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <th className="px-5 py-3">Recipient</th>
                     <th className="px-5 py-3">Role</th>
                     <th className="px-5 py-3">Branch access</th>
@@ -399,7 +399,7 @@ export function Staff() {
                     <th className="px-5 py-3 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/6">
+                <tbody className="divide-y divide-border">
                   {invitations.data.map((invitation) => (
                     <InvitationRow
                       key={invitation.id}
@@ -512,7 +512,7 @@ export function Staff() {
           </DialogHeader>
           {target !== undefined && (
             <div className="space-y-5">
-              <div className="rounded-xl border border-white/8 bg-white/[0.03] p-4 text-sm">
+              <div className="rounded-xl border border-border bg-muted/50 p-4 text-sm">
                 <div className="font-medium">
                   {target.displayName ?? "Unnamed staff member"}
                 </div>
@@ -522,11 +522,11 @@ export function Staff() {
               </div>
               <div>
                 <Label>Assigned roles</Label>
-                <div className="mt-1 flex flex-wrap gap-2 rounded-xl border border-white/8 bg-white/[0.03] p-3">
+                <div className="mt-1 flex flex-wrap gap-2 rounded-xl border border-border bg-muted/50 p-3">
                   {target.roles.map((role) => (
                     <span
                       key={role.id}
-                      className="inline-flex items-center gap-1 rounded-full bg-white/8 px-2.5 py-1 text-xs"
+                      className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-xs"
                     >
                       {role.name}
                       {(!role.key.includes("owner") || canManageOwners) && (
@@ -654,7 +654,7 @@ function AccessEditor({
   const tenantWideRequired = policy === "tenant_wide";
   const branchRequired = policy === "branch_required";
   return (
-    <fieldset className="space-y-3 rounded-xl border border-white/8 bg-white/[0.03] p-4">
+    <fieldset className="space-y-3 rounded-xl border border-border bg-muted/50 p-4">
       <legend className="px-1 text-sm font-medium">Branch access</legend>
       <div className="grid grid-cols-2 gap-2">
         <Button
@@ -678,7 +678,7 @@ function AccessEditor({
         </Button>
       </div>
       {!allBranches && (
-        <div className="grid max-h-40 gap-2 overflow-y-auto rounded-lg border border-white/8 p-3 sm:grid-cols-2">
+        <div className="grid max-h-40 gap-2 overflow-y-auto rounded-lg border border-border p-3 sm:grid-cols-2">
           {branches.length === 0 ? (
             <p className="text-sm text-muted-foreground">
               No active branches are available.
@@ -691,7 +691,7 @@ function AccessEditor({
               >
                 <input
                   type="checkbox"
-                  className="size-4 accent-[oklch(0.78_0.15_168)]"
+                  className="size-4 accent-primary"
                   checked={branchIds.includes(branch.id)}
                   onChange={(event) =>
                     setBranchIds(

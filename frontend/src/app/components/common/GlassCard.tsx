@@ -21,7 +21,7 @@ export function GlassCard({
         "glass-panel rounded-2xl p-5",
         glow === "emerald" && "glow-emerald",
         glow === "gold" && "glow-gold",
-        hover && "transition-colors duration-300 hover:border-white/15",
+        hover && "transition-colors duration-300 hover:border-primary/30",
         className,
       )}
       {...props}

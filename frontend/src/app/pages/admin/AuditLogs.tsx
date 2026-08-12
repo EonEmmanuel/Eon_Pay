@@ -81,8 +81,8 @@ export function AuditLogs() {
           </StatusBadge>
         )}
       </GlassCard>
-      <section className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]">
-        <h2 className="border-b border-white/8 p-4 text-base">Events</h2>
+      <section className="overflow-hidden rounded-2xl border border-border bg-muted/50">
+        <h2 className="border-b border-border p-4 text-base">Events</h2>
         {events.isLoading ? (
           <LoadingState label="Loading audit events…" />
         ) : events.isError ? (
@@ -95,7 +95,7 @@ export function AuditLogs() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[900px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Time</th>
                   <th className="px-5 py-3">Activity</th>
                   <th className="px-5 py-3">Resource</th>
@@ -103,7 +103,7 @@ export function AuditLogs() {
                   <th className="px-5 py-3">Hash</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {(events.data ?? []).map((event) => (
                   <tr key={event.id}>
                     <td className="px-5 py-3 text-muted-foreground">

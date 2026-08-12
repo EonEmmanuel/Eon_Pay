@@ -3,6 +3,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -32,6 +33,8 @@ type KycSessionStatus =
 
 @Injectable()
 export class KycService {
+  private readonly logger = new Logger(KycService.name);
+
   constructor(
     private readonly database: DatabaseService,
     private readonly didit: DiditProvider,
@@ -314,7 +317,7 @@ export class KycService {
               eq(kycVerificationSessions.id, current.session.id),
             ),
           );
-        await transaction
+        const appResult = await transaction
           .update(financingApplications)
           .set({
             kycStatus: outcome.kycStatus,
@@ -327,7 +330,13 @@ export class KycService {
               eq(financingApplications.id, applicationId),
               inArray(financingApplications.status, ["submitted", "kyc_review"]),
             ),
+          )
+          .returning({ id: financingApplications.id });
+        if (appResult.length === 0) {
+          this.logger.warn(
+            `KYC sync did not update application ${applicationId} — it may have already progressed past kyc_review.`,
           );
+        }
         await recordAudit(
           transaction,
           context,
@@ -384,13 +393,46 @@ export class KycService {
           return { accepted: true, replay: true };
         }
         const status = this.mapStatus(providerStatus);
-        const terminal = [
+        const terminalStatuses = [
           "approved",
           "declined",
           "abandoned",
           "expired",
           "failed",
-        ].includes(status);
+        ];
+        const terminal = terminalStatuses.includes(status);
+
+        // Guard: look up current session and prevent status regression
+        const [currentSession] = await transaction
+          .select()
+          .from(kycVerificationSessions)
+          .where(
+            and(
+              eq(kycVerificationSessions.tenantId, tenantId),
+              eq(kycVerificationSessions.providerSessionId, sessionId),
+            ),
+          )
+          .limit(1);
+        if (currentSession === undefined) {
+          throw new ConflictException("Didit session disappeared during processing.");
+        }
+        if (terminalStatuses.includes(currentSession.status)) {
+          // Session already reached a terminal state — skip update to prevent regression
+          this.logger.warn(
+            `Ignoring Didit webhook for session ${sessionId}: already in terminal state "${currentSession.status}".`,
+          );
+          const now = new Date().toISOString();
+          await transaction
+            .update(paymentProviderEvents)
+            .set({
+              status: "processed",
+              processingAttempts: 1,
+              processedAt: now,
+            })
+            .where(eq(paymentProviderEvents.id, inserted[0].id));
+          return { accepted: true, replay: false, skipped: true };
+        }
+
         const [session] = await transaction
           .update(kycVerificationSessions)
           .set({
@@ -412,7 +454,7 @@ export class KycService {
           throw new ConflictException("Didit session disappeared during processing.");
         }
         const kycStatus = kycApplicationOutcome(status).kycStatus;
-        await transaction
+        const appResult = await transaction
           .update(financingApplications)
           .set({
             kycStatus,
@@ -423,11 +465,15 @@ export class KycService {
             and(
               eq(financingApplications.tenantId, tenantId),
               eq(financingApplications.id, session.applicationId),
-              status === "approved"
-                ? inArray(financingApplications.status, ["submitted", "kyc_review"])
-                : undefined,
+              inArray(financingApplications.status, ["submitted", "kyc_review"]),
             ),
+          )
+          .returning({ id: financingApplications.id });
+        if (appResult.length === 0) {
+          this.logger.warn(
+            `KYC webhook did not update application ${session.applicationId} — it may have already progressed past kyc_review.`,
           );
+        }
         const now = new Date().toISOString();
         await transaction
           .update(paymentProviderEvents)

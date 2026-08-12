@@ -32,8 +32,8 @@ import { getPlatformAnalytics, platformAnalyticsQueryKey } from "../../lib/analy
 import { dateTime, money } from "../../lib/format";
 
 const tooltipStyle = {
-  background: "oklch(0.2 0.03 264)",
-  border: "1px solid oklch(1 0 0 / 8%)",
+  background: "var(--popover)",
+  border: "1px solid var(--border)", color: "var(--popover-foreground)",
   borderRadius: 8,
   fontSize: 12,
 };
@@ -141,7 +141,7 @@ export function AdminOverview() {
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="oklch(1 0 0 / 6%)"
+                    stroke="var(--border)"
                     vertical={false}
                   />
                   <XAxis
@@ -208,7 +208,7 @@ export function AdminOverview() {
               <div className="scroll-slim overflow-x-auto">
                 <table className="w-full min-w-[920px] text-sm">
                   <thead>
-                    <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                    <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                       <th className="px-5 py-3">Retailer</th>
                       <th className="px-5 py-3">Status</th>
                       <th className="px-5 py-3 text-right">Customers</th>
@@ -218,14 +218,14 @@ export function AdminOverview() {
                       <th className="px-5 py-3 text-right">Devices</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/6">
+                  <tbody className="divide-y divide-border">
                     {[...data.tenants]
                       .sort((left, right) => right.financedVolume - left.financedVolume)
                       .map((tenant) => (
                         <tr
                           key={tenant.id}
                           onClick={() => navigate(`/admin/tenants/${tenant.id}`)}
-                          className="cursor-pointer hover:bg-white/[0.03]"
+                          className="cursor-pointer hover:bg-accent/60"
                         >
                           <td className="px-5 py-3">
                             <div className="font-medium">{tenant.name}</div>

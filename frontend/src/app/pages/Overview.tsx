@@ -30,8 +30,8 @@ import { getTenantAnalytics, tenantAnalyticsQueryKey } from "../lib/analytics";
 import { dateTime, money } from "../lib/format";
 
 const tooltipStyle = {
-  background: "oklch(0.2 0.03 264)",
-  border: "1px solid oklch(1 0 0 / 8%)",
+  background: "var(--popover)",
+  border: "1px solid var(--border)", color: "var(--popover-foreground)",
   borderRadius: 8,
   fontSize: 12,
 };
@@ -166,7 +166,7 @@ export function Overview() {
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="oklch(1 0 0 / 6%)"
+                    stroke="var(--border)"
                     vertical={false}
                   />
                   <XAxis
@@ -208,7 +208,7 @@ export function Overview() {
               {data.branches.length === 0 ? (
                 <EmptyState label="No branches are registered." />
               ) : (
-                <div className="divide-y divide-white/6">
+                <div className="divide-y divide-border">
                   {data.branches.slice(0, 6).map((branch) => (
                     <div key={branch.id} className="px-5 py-3">
                       <div className="flex justify-between gap-3">
@@ -246,7 +246,7 @@ export function Overview() {
               {data.payments.length === 0 ? (
                 <EmptyState label="No payments have been recorded." />
               ) : (
-                <div className="divide-y divide-white/6">
+                <div className="divide-y divide-border">
                   {data.payments.slice(0, 6).map((payment) => (
                     <div
                       key={payment.id}
@@ -282,7 +282,7 @@ export function Overview() {
               {data.activity.length === 0 ? (
                 <EmptyState label="No audit events are available." />
               ) : (
-                <div className="divide-y divide-white/6">
+                <div className="divide-y divide-border">
                   {data.activity.slice(0, 6).map((event) => (
                     <div key={event.id} className="px-5 py-3 text-sm">
                       <div className="font-medium">{event.message}</div>

@@ -50,7 +50,7 @@ export function Customers() {
           </Button>
         }
       />
-      <div className="mb-4 flex flex-col gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-3 sm:flex-row">
+      <div className="mb-4 flex flex-col gap-3 rounded-xl border border-border bg-muted/50 p-3 sm:flex-row">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -61,7 +61,7 @@ export function Customers() {
             aria-label="Search customers"
           />
         </div>
-        <div className="flex items-center gap-1 rounded-lg border border-white/8 bg-white/[0.03] p-1">
+        <div className="flex items-center gap-1 rounded-lg border border-border bg-muted/50 p-1">
           {filters.map((value) => (
             <button
               key={value}
@@ -91,7 +91,7 @@ export function Customers() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[880px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Customer</th>
                   <th className="px-5 py-3">KYC</th>
                   <th className="px-5 py-3">Status</th>
@@ -100,12 +100,12 @@ export function Customers() {
                   <th className="px-5 py-3 text-right">Outstanding</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((customer) => (
                   <tr
                     key={customer.id}
                     onClick={() => navigate(`/customers/${customer.id}`)}
-                    className="cursor-pointer hover:bg-white/[0.03]"
+                    className="cursor-pointer hover:bg-accent/60"
                   >
                     <td className="px-5 py-3">
                       <div className="font-medium">{customer.fullName}</div>

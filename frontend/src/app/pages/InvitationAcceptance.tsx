@@ -158,7 +158,7 @@ export function InvitationAcceptance() {
             {invitations.data.map((invitation) => (
               <section
                 key={invitation.id}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                className="rounded-2xl border border-border bg-muted/50 p-5"
               >
                 <div className="flex items-start gap-3">
                   <span className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary">

@@ -94,6 +94,20 @@ export function Onboarding() {
       }),
     onSuccess: (application) => setApplicationId(application.id),
   });
+  const [kycStarted, setKycStarted] = useState(false);
+  const kycStatus = useQuery({
+    queryKey: ["onboarding-kyc-status", applicationId],
+    enabled: applicationId !== undefined && kycStarted,
+    queryFn: () =>
+      apiRequest<{
+        kycStatus: string;
+        session: { status: string } | null;
+      }>(`/applications/${applicationId ?? ""}/kyc/status`),
+    refetchInterval: (currentQuery) => {
+      const data = currentQuery.state.data;
+      return data !== undefined && data.kycStatus === "pending" ? 8_000 : false;
+    },
+  });
   const startKyc = useMutation({
     mutationFn: () =>
       apiRequest<{
@@ -107,7 +121,8 @@ export function Onboarding() {
         }),
       }),
     onSuccess: ({ verificationUrl }) => {
-      window.location.assign(verificationUrl);
+      setKycStarted(true);
+      window.open(verificationUrl, "_blank", "noopener,noreferrer");
     },
   });
 
@@ -127,6 +142,44 @@ export function Onboarding() {
   }
 
   if (applicationId !== undefined) {
+    const resolvedKycStatus = kycStatus.data?.kycStatus;
+    const isKycComplete =
+      resolvedKycStatus === "verified" || resolvedKycStatus === "failed";
+
+    if (kycStarted && resolvedKycStatus !== undefined) {
+      return (
+        <main className="app-ambient min-h-screen p-5 text-foreground">
+          <div className="mx-auto max-w-xl space-y-5">
+            <div className="rounded-2xl border border-border bg-muted/50 p-6 text-center">
+              <ShieldCheck
+                className={`mx-auto size-10 ${resolvedKycStatus === "verified" ? "text-primary" : resolvedKycStatus === "failed" ? "text-destructive" : "animate-pulse text-muted-foreground"}`}
+                aria-hidden="true"
+              />
+              <h1 className="mt-4 text-2xl">
+                {resolvedKycStatus === "verified"
+                  ? "Verification complete"
+                  : resolvedKycStatus === "failed"
+                    ? "Verification unsuccessful"
+                    : "Verification in progress"}
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {resolvedKycStatus === "verified"
+                  ? "Your identity has been verified. Your application is now under review."
+                  : resolvedKycStatus === "failed"
+                    ? "Identity verification was unsuccessful. Please contact support."
+                    : "Please complete the verification in the Didit tab. This page will update automatically."}
+              </p>
+              {!isKycComplete && (
+                <p className="mt-4 text-xs text-muted-foreground animate-pulse">
+                  Checking status…
+                </p>
+              )}
+            </div>
+          </div>
+        </main>
+      );
+    }
+
     return (
       <main className="app-ambient min-h-screen p-5 text-foreground">
         <div className="mx-auto max-w-xl">
@@ -161,7 +214,7 @@ export function Onboarding() {
               onDone={() => setUploaded((current) => [...current, "proof_of_address"])}
             />
           </section>
-          <label className="mt-6 flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm">
+          <label className="mt-6 flex items-start gap-3 rounded-xl border border-border bg-muted/50 p-4 text-sm">
             <input
               type="checkbox"
               className="mt-1 size-4"
@@ -202,7 +255,7 @@ export function Onboarding() {
     <main className="app-ambient min-h-screen p-5 text-foreground">
       <form
         onSubmit={submit}
-        className="mx-auto max-w-xl space-y-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        className="mx-auto max-w-xl space-y-5 rounded-2xl border border-border bg-muted/50 p-5"
       >
         <div>
           <h1 className="text-2xl">Apply for device financing</h1>
@@ -286,10 +339,10 @@ export function Onboarding() {
                 <img
                   src={selectedProduct.imageUrl}
                   alt={selectedProduct.brand + " " + selectedProduct.model}
-                  className="size-20 rounded-xl bg-white/5 object-contain p-1"
+                  className="size-20 rounded-xl bg-muted/60 object-contain p-1"
                 />
               ) : (
-                <span className="grid size-20 shrink-0 place-items-center rounded-xl bg-white/5 text-muted-foreground">
+                <span className="grid size-20 shrink-0 place-items-center rounded-xl bg-muted/60 text-muted-foreground">
                   <Smartphone className="size-8" aria-hidden="true" />
                 </span>
               )}
@@ -435,7 +488,7 @@ function DocumentPicker({
   });
   const id = `document-${category}`;
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+    <div className="rounded-xl border border-border bg-muted/50 p-4">
       <div className="flex items-center justify-between gap-3">
         <Label htmlFor={id}>{label}</Label>
         {done && (
@@ -447,7 +500,7 @@ function DocumentPicker({
       {!done && (
         <label
           htmlFor={id}
-          className="mt-3 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-white/15 p-4 text-sm hover:border-primary"
+          className="mt-3 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border p-4 text-sm hover:border-primary"
         >
           <Upload className="size-4" aria-hidden="true" />
           {mutation.isPending ? "Uploading…" : "Choose file"}

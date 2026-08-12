@@ -38,7 +38,7 @@ export function Login() {
     <main className="app-ambient grid min-h-screen place-items-center p-6 text-foreground">
       <form
         onSubmit={submit}
-        className="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl"
+        className="w-full max-w-sm rounded-2xl border border-border bg-muted/50 p-6 shadow-2xl"
       >
         <h1 className="text-2xl">Sign in</h1>
         <p className="mt-1 text-sm text-muted-foreground">

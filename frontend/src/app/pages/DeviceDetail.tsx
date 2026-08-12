@@ -154,7 +154,7 @@ export function DeviceDetail() {
               {device.commands.map((command) => (
                 <li
                   key={command.id}
-                  className="rounded-xl border border-white/8 bg-white/[0.03] p-4"
+                  className="rounded-xl border border-border bg-muted/50 p-4"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-medium">{command.kind}</span>

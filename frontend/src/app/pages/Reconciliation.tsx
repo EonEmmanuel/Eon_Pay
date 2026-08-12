@@ -115,7 +115,7 @@ export function Reconciliation() {
           </Button>
         }
       />
-      <section className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]">
+      <section className="overflow-hidden rounded-2xl border border-border bg-muted/50">
         {runs.isPending ? (
           <LoadingState label="Loading reconciliation runs..." />
         ) : runs.isError ? (
@@ -126,18 +126,18 @@ export function Reconciliation() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
                   <th className="px-5 py-3">Provider / period</th>
                   <th className="px-5 py-3">Status</th>
                   <th className="px-5 py-3 text-right">Matched</th>
                   <th className="px-5 py-3 text-right">Exceptions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {(runs.data ?? []).map((run) => (
                   <tr
                     key={run.id}
-                    className="cursor-pointer hover:bg-white/[0.03]"
+                    className="cursor-pointer hover:bg-accent/60"
                     onClick={() => setSelectedId(run.id)}
                   >
                     <td className="px-5 py-3">
@@ -187,14 +187,14 @@ export function Reconciliation() {
             <div className="max-h-[55vh] overflow-auto">
               <table className="w-full min-w-[620px] text-sm">
                 <thead>
-                  <tr className="border-b border-white/8 text-left text-xs uppercase text-muted-foreground">
+                  <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
                     <th className="py-2">Reference</th>
                     <th>Status</th>
                     <th className="text-right">Internal</th>
                     <th className="text-right">Provider</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/6">
+                <tbody className="divide-y divide-border">
                   {(detail.data?.items ?? []).map((item) => (
                     <tr key={item.id}>
                       <td className="py-3 font-mono text-xs">

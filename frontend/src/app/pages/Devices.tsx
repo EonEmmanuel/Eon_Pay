@@ -181,8 +181,8 @@ export function Devices() {
           </div>
         </GlassCard>
       </div>
-      <section className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]">
-        <h2 className="border-b border-white/8 p-4 text-base">Managed devices</h2>
+      <section className="overflow-hidden rounded-2xl border border-border bg-muted/50">
+        <h2 className="border-b border-border p-4 text-base">Managed devices</h2>
         {query.isLoading ? (
           <LoadingState label="Loading devices..." />
         ) : query.isError ? (
@@ -195,7 +195,7 @@ export function Devices() {
           <div className="scroll-slim overflow-x-auto">
             <table className="w-full min-w-[740px] text-sm">
               <thead>
-                <tr className="border-b border-white/8 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <th className="px-5 py-3">Device</th>
                   <th className="px-5 py-3">Contract</th>
                   <th className="px-5 py-3">Management</th>
@@ -203,7 +203,7 @@ export function Devices() {
                   <th className="px-5 py-3">State</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6">
+              <tbody className="divide-y divide-border">
                 {rows.map((device) => (
                   <tr key={device.id}>
                     <td className="px-5 py-3">

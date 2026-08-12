@@ -1,5 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { UnauthorizedException } from "@nestjs/common";
+import { Logger, UnauthorizedException } from "@nestjs/common";
+
+const logger = new Logger("ProviderSecurity");
 
 function constantTimeHexEqual(actual: string, expected: string): boolean {
   if (!/^[a-f0-9]{64}$/i.test(actual) || !/^[a-f0-9]{64}$/i.test(expected)) {
@@ -52,6 +54,10 @@ export function verifyTimestamp(
     !Number.isSafeInteger(value) ||
     Math.abs(now - value) > windowSeconds
   ) {
+    const drift = Number.isSafeInteger(value) ? Math.abs(now - value) : "N/A";
+    logger.warn(
+      `Webhook timestamp rejected — received: ${timestamp ?? "missing"}, server: ${now}, drift: ${drift}s, window: ${windowSeconds}s`,
+    );
     throw new UnauthorizedException("Webhook timestamp is missing or stale.");
   }
 }

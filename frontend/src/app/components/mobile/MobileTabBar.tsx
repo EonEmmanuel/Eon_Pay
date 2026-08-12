@@ -12,7 +12,7 @@ const tabs = [
 
 export function MobileTabBar() {
   return (
-    <nav className="shrink-0 border-t border-white/8 bg-[oklch(0.17_0.028_264/0.9)] px-2 pb-2 pt-1.5 backdrop-blur-xl">
+    <nav className="shrink-0 border-t border-border bg-background/90 px-2 pb-2 pt-1.5 backdrop-blur-xl">
       <div className="flex items-center justify-between">
         {tabs.map((t) => (
           <NavLink

@@ -5,14 +5,14 @@ export type StatusTone = "success" | "warning" | "danger" | "info" | "gold" | "n
 
 const toneMap: Record<StatusTone, string> = {
   success:
-    "bg-[oklch(0.76_0.15_162/0.15)] text-[oklch(0.82_0.15_162)] border-[oklch(0.76_0.15_162/0.3)]",
+    "bg-success/15 text-success border-success/30",
   warning:
-    "bg-[oklch(0.83_0.14_82/0.15)] text-[oklch(0.86_0.13_85)] border-[oklch(0.83_0.14_82/0.3)]",
+    "bg-warning/15 text-warning border-warning/30",
   danger:
-    "bg-[oklch(0.65_0.2_20/0.15)] text-[oklch(0.74_0.19_20)] border-[oklch(0.65_0.2_20/0.32)]",
-  info: "bg-[oklch(0.72_0.13_220/0.15)] text-[oklch(0.78_0.12_220)] border-[oklch(0.72_0.13_220/0.3)]",
-  gold: "bg-[oklch(0.83_0.13_85/0.14)] text-[oklch(0.86_0.12_85)] border-[oklch(0.83_0.13_85/0.3)]",
-  neutral: "bg-white/5 text-muted-foreground border-white/10",
+    "bg-danger/15 text-danger border-danger/30",
+  info: "bg-info/15 text-info border-info/30",
+  gold: "bg-gold/15 text-gold border-gold/30",
+  neutral: "bg-muted/60 text-muted-foreground border-border",
 };
 
 export function StatusBadge({

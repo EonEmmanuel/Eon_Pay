@@ -25,7 +25,7 @@ export function Profile() {
   return (
     <section>
       <h1 className="text-xl">Profile</h1>
-      <dl className="mt-5 space-y-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-sm">
+      <dl className="mt-5 space-y-3 rounded-2xl border border-border bg-muted/50 p-5 text-sm">
         <Row label="Full name" value={profile.fullName} />
         <Row label="Phone" value={profile.phone} />
         <Row label="Email" value={profile.email ?? "Not provided"} />
