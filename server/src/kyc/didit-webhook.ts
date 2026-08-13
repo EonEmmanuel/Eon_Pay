@@ -4,8 +4,11 @@ export function diditSessionKind(
   payload: Record<string, unknown>,
 ): DiditSessionKind | undefined {
   const data = recordValue(payload["data"]);
+  const metadata = recordValue(payload["metadata"]) ?? recordValue(data["metadata"]);
   const value =
-    stringValue(payload["session_kind"]) ?? stringValue(data["session_kind"]);
+    stringValue(payload["session_kind"]) ??
+    stringValue(data["session_kind"]) ??
+    stringValue(metadata["session_kind"]);
 
   if (value !== undefined) {
     const normalized = value.toLowerCase();
@@ -20,7 +23,8 @@ export function diditSessionKind(
     return "kyb";
   }
 
-  return undefined;
+  // Fallback to KYC if we can't determine it, since KYC is the primary volume.
+  return "kyc";
 }
 
 function recordValue(value: unknown): Record<string, unknown> {
