@@ -181,10 +181,11 @@ export function ApplicationReview() {
           language: "en",
           consentAccepted: true,
           consentVersion: "retailer-assisted-v1",
+          callbackUrl: window.location.href,
         }),
       }),
     onSuccess: async ({ verificationUrl }) => {
-      window.open(verificationUrl, "_blank", "noopener,noreferrer");
+      window.location.href = verificationUrl;
       await Promise.all([query.refetch(), kycState.refetch()]);
     },
     onError: (error) => toast.error(error.message),
@@ -256,13 +257,11 @@ export function ApplicationReview() {
               kycState.data?.session?.verificationUrl && (
                 <Button
                   variant="outline"
-                  onClick={() =>
-                    window.open(
-                      kycState.data?.session?.verificationUrl ?? "",
-                      "_blank",
-                      "noopener,noreferrer",
-                    )
-                  }
+                  onClick={() => {
+                    if (kycState.data?.session?.verificationUrl) {
+                      window.location.href = kycState.data.session.verificationUrl;
+                    }
+                  }}
                 >
                   <ExternalLink className="size-4" /> Resume assisted KYC
                 </Button>

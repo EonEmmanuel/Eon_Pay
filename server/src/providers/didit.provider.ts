@@ -1,5 +1,6 @@
 import {
   Injectable,
+  Logger,
   ServiceUnavailableException,
   UnauthorizedException,
 } from "@nestjs/common";
@@ -14,6 +15,7 @@ export interface DiditSessionRequest {
   language: "en" | "fr";
   metadata: Record<string, string>;
   kind?: "kyc" | "kyb";
+  callbackUrl?: string;
 }
 
 export interface DiditSessionResponse {
@@ -24,6 +26,8 @@ export interface DiditSessionResponse {
 
 @Injectable()
 export class DiditProvider {
+  private readonly logger = new Logger(DiditProvider.name);
+
   constructor(private readonly config: ConfigService<Environment, true>) {}
 
   get configured(): boolean {
@@ -70,12 +74,23 @@ export class DiditProvider {
           send_notification_emails: input.email !== undefined,
           email_lang: input.language,
         },
-        ...this.callbackConfiguration(input.kind ?? "kyc"),
+        ...this.callbackConfiguration(input.kind ?? "kyc", input.callbackUrl),
       }),
       signal: AbortSignal.timeout(15_000),
     });
 
     if (!response.ok) {
+      let errorBody = "(could not read body)";
+      try {
+        errorBody = JSON.stringify(await response.json());
+      } catch {
+        try {
+          errorBody = await response.text();
+        } catch { /* ignore */ }
+      }
+      this.logger.error(
+        `Didit session creation failed — status: ${response.status}, body: ${errorBody}`,
+      );
       throw new ServiceUnavailableException(
         `Didit session creation failed with status ${response.status}.`,
       );
@@ -154,12 +169,18 @@ export class DiditProvider {
 
   private callbackConfiguration(
     kind: "kyc" | "kyb",
-  ): { callback: string; callback_method: "POST" } | Record<string, never> {
-    const callback = this.config.get(
-      kind === "kyb" ? "DIDIT_KYB_CALLBACK_URL" : "DIDIT_CALLBACK_URL",
-      { infer: true },
-    );
-    return callback === undefined ? {} : { callback, callback_method: "POST" };
+    dynamicCallbackUrl?: string,
+  ): { callback: string; callback_method: "completer" } | Record<string, never> {
+    const callback =
+      dynamicCallbackUrl ??
+      this.config.get(
+        kind === "kyb" ? "DIDIT_KYB_CALLBACK_URL" : "DIDIT_CALLBACK_URL",
+        { infer: true },
+      );
+    // "completer" = only the tab/device that finishes the KYC flow redirects.
+    // Since we open Didit in a new tab, this ensures only that tab redirects
+    // after completion, not the original tab that initiated the session.
+    return callback === undefined ? {} : { callback, callback_method: "completer" };
   }
 
   private async authorizedRequest(

@@ -1,4 +1,4 @@
-import { Equals, IsBoolean, IsEnum, IsString, MaxLength } from "class-validator";
+import { Equals, IsBoolean, IsEnum, IsOptional, IsString, MaxLength, IsUrl } from "class-validator";
 
 export class StartKycSessionDto {
   @IsEnum(["en", "fr"])
@@ -11,4 +11,8 @@ export class StartKycSessionDto {
   @IsString()
   @MaxLength(80)
   consentVersion!: string;
+
+  @IsOptional()
+  @IsUrl({ require_tld: false })
+  callbackUrl?: string;
 }
