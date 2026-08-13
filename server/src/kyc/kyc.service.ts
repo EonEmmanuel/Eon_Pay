@@ -376,10 +376,11 @@ export class KycService {
     timestamp: string | undefined,
   ) {
     this.didit.verifyWebhook(payload, signature, timestamp);
-    const eventId = payload["event_id"];
-    const sessionId = payload["session_id"];
-    const webhookType = payload["webhook_type"];
-    const providerStatus = payload["status"];
+    const data = payload["data"] !== null && typeof payload["data"] === "object" ? (payload["data"] as Record<string, unknown>) : {};
+    const eventId = payload["event_id"] ?? data["event_id"];
+    const sessionId = payload["session_id"] ?? data["session_id"];
+    const webhookType = payload["webhook_type"] ?? data["webhook_type"];
+    const providerStatus = payload["status"] ?? data["status"];
     if (
       typeof eventId !== "string" ||
       typeof sessionId !== "string" ||
