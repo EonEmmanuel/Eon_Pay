@@ -174,7 +174,7 @@ export class RetailerKybService {
       email: data.profile.contactEmail,
       phone: data.profile.contactPhone,
       language: input.language,
-      metadata: { tenant_id: tenantId, entity_type: "retailer" },
+      metadata: { tenant_id: tenantId, entity_type: "retailer", session_kind: "kyb" },
     });
     return this.database.withTenantTransaction(
       context.user.id,

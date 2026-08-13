@@ -67,6 +67,7 @@ export class DiditProvider {
         workflow_id: workflowId,
         vendor_data: input.vendorData,
         language: input.language,
+        session_kind: input.kind ?? "kyc",
         metadata: input.metadata,
         contact_details: {
           email: input.email,
@@ -170,17 +171,15 @@ export class DiditProvider {
   private callbackConfiguration(
     kind: "kyc" | "kyb",
     dynamicCallbackUrl?: string,
-  ): { callback: string; callback_method: "completer" } | Record<string, never> {
+  ): { callback: string; callback_method: "initiator" } | Record<string, never> {
     const callback =
       dynamicCallbackUrl ??
       this.config.get(
         kind === "kyb" ? "DIDIT_KYB_CALLBACK_URL" : "DIDIT_CALLBACK_URL",
         { infer: true },
       );
-    // "completer" = only the tab/device that finishes the KYC flow redirects.
-    // Since we open Didit in a new tab, this ensures only that tab redirects
-    // after completion, not the original tab that initiated the session.
-    return callback === undefined ? {} : { callback, callback_method: "completer" };
+    // "initiator" = the device that started the flow redirects (the desktop browser).
+    return callback === undefined ? {} : { callback, callback_method: "initiator" };
   }
 
   private async authorizedRequest(
