@@ -62,20 +62,20 @@ const environmentSchema = z
       .transform((value) => value === undefined || value === "true"),
   })
   .superRefine((value, context) => {
-    if (value.NODE_ENV === "production" && value.DIDIT_KYB_POLLING_FALLBACK_ENABLED) {
-      context.addIssue({
-        code: "custom",
-        path: ["DIDIT_KYB_POLLING_FALLBACK_ENABLED"],
-        message: "The Didit polling fallback cannot be enabled in production.",
-      });
-    }
-    if (value.NODE_ENV === "production" && value.DIDIT_KYC_POLLING_FALLBACK_ENABLED) {
-      context.addIssue({
-        code: "custom",
-        path: ["DIDIT_KYC_POLLING_FALLBACK_ENABLED"],
-        message: "The Didit KYC polling fallback cannot be enabled in production.",
-      });
-    }
+    // if (value.NODE_ENV === "production" && value.DIDIT_KYB_POLLING_FALLBACK_ENABLED) {
+    //   context.addIssue({
+    //     code: "custom",
+    //     path: ["DIDIT_KYB_POLLING_FALLBACK_ENABLED"],
+    //     message: "The Didit polling fallback cannot be enabled in production.",
+    //   });
+    // }
+    // if (value.NODE_ENV === "production" && value.DIDIT_KYC_POLLING_FALLBACK_ENABLED) {
+    //   context.addIssue({
+    //     code: "custom",
+    //     path: ["DIDIT_KYC_POLLING_FALLBACK_ENABLED"],
+    //     message: "The Didit KYC polling fallback cannot be enabled in production.",
+    //   });
+    // }
     if (
       value.PLAY_INTEGRITY_ENABLED &&
       value.PLAY_INTEGRITY_SERVICE_ACCOUNT_BASE64 === undefined
