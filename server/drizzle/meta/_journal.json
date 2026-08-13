@@ -197,6 +197,13 @@
       "when": 1785880800002,
       "tag": "0027_grant_app_provider_functions",
       "breakpoints": false
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1785880800003,
+      "tag": "0028_fix_provider_applications_select",
+      "breakpoints": false
     }
   ]
 }
