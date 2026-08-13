@@ -112,8 +112,10 @@ export class KycService {
       vendorData: application.id,
       phone: application.applicant.phone,
       language: input.language,
-      callbackUrl: input.callbackUrl,
       metadata: { tenant_id: tenantId, application_id: application.id },
+      ...(input.callbackUrl === undefined
+        ? {}
+        : { callbackUrl: input.callbackUrl }),
       ...(application.applicant.email === undefined
         ? {}
         : { email: application.applicant.email }),
