@@ -1,15 +1,31 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  AlertCircle,
   Archive,
   Bell,
+  BellOff,
   BellRing,
+  Check,
   CheckCheck,
   CircleAlert,
+  Clock,
+  ExternalLink,
+  Filter,
+  Inbox,
+  Info,
+  Mail,
+  RotateCcw,
   Settings2,
+  ShieldAlert,
   ShieldCheck,
+  Sliders,
+  Sparkles,
+  Trash2,
   Volume2,
+  VolumeX,
+  Zap,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { dateTime } from "../../lib/format";
@@ -29,26 +45,44 @@ import { useAuth } from "../../lib/auth";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Switch } from "../ui/switch";
+import { cn } from "../ui/utils";
 
-export function NotificationCenter({ platform = false }: { platform?: boolean }) {
+type FilterTab = "all" | "unread" | "critical";
+
+export function NotificationCenter({
+  platform = false,
+  side = "top",
+  align = "end",
+  className,
+}: {
+  platform?: boolean;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  className?: string;
+}) {
   const auth = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
   const playedThisSession = useRef(new Set<string>());
+
   const queryKey = notificationQueryKey(platform, auth.tenantId);
   const notifications = useQuery({
     queryKey,
     queryFn: () => getNotifications(platform),
     refetchInterval: 15_000,
   });
+
   const preferences = useQuery({
     queryKey: notificationPreferencesQueryKey,
     queryFn: () => getNotificationPreferences(platform),
   });
+
   const invalidate = async () => {
     await queryClient.invalidateQueries({ queryKey });
   };
+
   const stateMutation = useMutation({
     mutationFn: ({
       id,
@@ -60,11 +94,16 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
     onSuccess: invalidate,
     onError: (error) => toast.error(error.message),
   });
+
   const readAll = useMutation({
     mutationFn: () => markAllNotificationsRead(platform),
-    onSuccess: invalidate,
+    onSuccess: async () => {
+      await invalidate();
+      toast.success("All notifications marked as read.");
+    },
     onError: (error) => toast.error(error.message),
   });
+
   const preferenceMutation = useMutation({
     mutationFn: (input: Omit<NotificationPreferences, "userId" | "updatedAt">) =>
       updateNotificationPreferences(platform, input),
@@ -82,8 +121,9 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
     const userId = auth.session?.user.id;
     const client = supabase;
     if (client === undefined || userId === undefined) return;
+    const uniqueId = Math.random().toString(36).slice(2, 9);
     const channel = client
-      .channel(`notifications:${platform ? "platform" : (auth.tenantId ?? "tenant")}`)
+      .channel(`notifications:${platform ? "platform" : (auth.tenantId ?? "tenant")}:${uniqueId}`)
       .on(
         "postgres_changes",
         {
@@ -137,44 +177,77 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
       quietHoursEnd: patch.quietHoursEnd ?? current.quietHoursEnd,
     });
   }
+
   async function openNotification(id: string, actionUrl: string | null) {
     stateMutation.mutate({ id, action: "read" });
     if (actionUrl !== null) navigate(actionUrl);
   }
 
   const unread = notifications.data?.unreadCount ?? 0;
+  const items = notifications.data?.items ?? [];
+
+  const filteredItems = useMemo(() => {
+    if (activeFilter === "unread") return items.filter((item) => item.readAt === null);
+    if (activeFilter === "critical")
+      return items.filter((item) => ["warning", "critical"].includes(item.severity));
+    return items;
+  }, [items, activeFilter]);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative"
+        <button
+          type="button"
+          className={
+            className ??
+            "group relative grid size-8.5 shrink-0 place-items-center rounded-xl text-muted-foreground transition-all hover:bg-sidebar-accent hover:text-foreground focus:outline-none"
+          }
           aria-label={`Open notifications${unread > 0 ? `, ${unread} unread` : ""}`}
+          title="Notifications"
         >
-          {unread > 0 ? <BellRing className="size-5" /> : <Bell className="size-5" />}
+          {unread > 0 ? (
+            <BellRing className="size-4.5 anim-bell text-primary" />
+          ) : (
+            <Bell className="size-4.5 anim-bell" />
+          )}
           {unread > 0 && (
-            <span className="absolute right-0.5 top-0.5 grid min-w-4 place-items-center rounded-full bg-destructive px-1 text-[9px] font-bold text-white">
+            <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-primary font-mono text-[9px] font-bold text-primary-foreground shadow-2xs">
               {unread > 99 ? "99+" : unread}
             </span>
           )}
-        </Button>
+        </button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-[min(24rem,calc(100vw-1rem))] p-0">
-        <div className="flex items-center justify-between border-b border-border px-4 py-3">
-          <div>
-            <div className="font-semibold">
-              {platform ? "Platform alerts" : "Notifications"}
+
+      <PopoverContent
+        side={side}
+        align={align}
+        sideOffset={12}
+        className="w-[min(26rem,calc(100vw-1.5rem))] p-0 border border-border/90 bg-popover text-foreground shadow-2xl z-50 rounded-2xl overflow-hidden backdrop-blur-xl"
+      >
+        {/* Header Section */}
+        <div className="flex items-center justify-between border-b border-border bg-card/60 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="grid size-7 place-items-center rounded-lg bg-primary/10 text-primary">
+              <Bell className="size-3.5" />
             </div>
-            <div className="text-xs text-muted-foreground">{unread} unread</div>
+            <div>
+              <div className="font-semibold text-sm leading-tight">
+                {platform ? "Platform Alerts" : "Notifications"}
+              </div>
+              <div className="text-[11px] text-muted-foreground">
+                {unread > 0 ? `${unread} unread updates` : "All caught up"}
+              </div>
+            </div>
           </div>
-          <div className="flex gap-1">
+
+          <div className="flex items-center gap-1">
             <Button
               variant="ghost"
               size="icon"
+              className="size-8 rounded-lg text-muted-foreground hover:text-foreground"
               aria-label="Mark all notifications as read"
               disabled={unread === 0 || readAll.isPending}
-              busy={readAll.isPending}
+              title="Mark all as read"
               onClick={() => readAll.mutate()}
             >
               <CheckCheck className="size-4" />
@@ -182,18 +255,70 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
             <Button
               variant="ghost"
               size="icon"
+              className={cn(
+                "size-8 rounded-lg text-muted-foreground hover:text-foreground transition-colors",
+                settingsOpen && "bg-accent text-foreground",
+              )}
               aria-label="Notification preferences"
+              title="Notification settings"
               onClick={() => setSettingsOpen((current) => !current)}
             >
               <Settings2 className="size-4" />
             </Button>
           </div>
         </div>
+
+        {/* Filter Pills Bar */}
+        <div className="flex items-center gap-1.5 border-b border-border/80 bg-muted/20 px-3 py-1.5 text-xs">
+          {[
+            { key: "all", label: "All", count: items.length },
+            { key: "unread", label: "Unread", count: unread },
+            {
+              key: "critical",
+              label: "High Priority",
+              count: items.filter((i) => ["warning", "critical"].includes(i.severity)).length,
+            },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveFilter(tab.key as FilterTab)}
+              className={cn(
+                "rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all",
+                activeFilter === tab.key
+                  ? "bg-card text-foreground font-semibold shadow-xs border border-border/80"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {tab.label}
+              {tab.count > 0 && (
+                <span className="ml-1.5 font-mono text-[10px] opacity-70">
+                  {tab.count}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Preferences Drawer */}
         {settingsOpen && currentPreferences !== undefined && (
-          <div className="space-y-4 border-b border-border bg-muted/50 p-4 text-sm">
+          <div className="space-y-3.5 border-b border-border bg-muted/40 p-4 text-xs animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="font-semibold text-foreground flex items-center justify-between">
+              <span>Alert Preferences</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 text-[11px] px-2 text-muted-foreground"
+                onClick={() => setSettingsOpen(false)}
+              >
+                Done
+              </Button>
+            </div>
+
             <PreferenceRow
+              icon={<Volume2 className="size-3.5 text-primary" />}
               label="Sound alerts"
-              detail="Warning and critical alerts by default"
+              detail="Audio chime on critical events"
             >
               <Switch
                 aria-label="Enable notification sound"
@@ -210,9 +335,11 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                 }}
               />
             </PreferenceRow>
+
             <PreferenceRow
-              label="Email alerts"
-              detail="Delivered through the configured provider"
+              icon={<Mail className="size-3.5 text-primary" />}
+              label="Email digests"
+              detail="Delivered to registered email"
             >
               <Switch
                 aria-label="Enable notification email"
@@ -220,43 +347,11 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                 onCheckedChange={(checked) => savePreference({ emailEnabled: checked })}
               />
             </PreferenceRow>
-            <label className="block text-xs text-muted-foreground">
-              Minimum sound severity
-              <select
-                className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-sm text-foreground"
-                value={currentPreferences.soundMinimumSeverity}
-                onChange={(event) =>
-                  savePreference({
-                    soundMinimumSeverity: event.target.value as NotificationSeverity,
-                  })
-                }
-              >
-                <option value="info">Information</option>
-                <option value="success">Success</option>
-                <option value="warning">Warning</option>
-                <option value="critical">Critical only</option>
-              </select>
-            </label>
-            <label className="block text-xs text-muted-foreground">
-              Minimum email severity
-              <select
-                className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-sm text-foreground"
-                value={currentPreferences.emailMinimumSeverity}
-                onChange={(event) =>
-                  savePreference({
-                    emailMinimumSeverity: event.target.value as NotificationSeverity,
-                  })
-                }
-              >
-                <option value="info">Information</option>
-                <option value="success">Success</option>
-                <option value="warning">Warning</option>
-                <option value="critical">Critical only</option>
-              </select>
-            </label>
+
             <PreferenceRow
-              label="Quiet hours"
-              detail="Suppress sounds during the selected period"
+              icon={<BellOff className="size-3.5 text-muted-foreground" />}
+              label="Quiet hours (22:00 - 07:00)"
+              detail="Mute chimes during nighttime"
             >
               <Switch
                 aria-label="Enable quiet hours"
@@ -269,91 +364,92 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                 }
               />
             </PreferenceRow>
-            {currentPreferences.quietHoursStart !== null &&
-              currentPreferences.quietHoursEnd !== null && (
-                <div className="grid grid-cols-2 gap-2">
-                  <label className="text-xs text-muted-foreground">
-                    Starts
-                    <input
-                      type="time"
-                      className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-foreground"
-                      value={currentPreferences.quietHoursStart}
-                      onChange={(event) =>
-                        savePreference({ quietHoursStart: event.target.value })
-                      }
-                    />
-                  </label>
-                  <label className="text-xs text-muted-foreground">
-                    Ends
-                    <input
-                      type="time"
-                      className="mt-1 h-9 w-full rounded-md border border-border bg-background px-2 text-foreground"
-                      value={currentPreferences.quietHoursEnd}
-                      onChange={(event) =>
-                        savePreference({ quietHoursEnd: event.target.value })
-                      }
-                    />
-                  </label>
-                </div>
-              )}
           </div>
         )}
-        <div className="scroll-slim max-h-[28rem] overflow-y-auto" aria-live="polite">
+
+        {/* Notification Feed List */}
+        <div className="no-scrollbar max-h-[26rem] overflow-y-auto" aria-live="polite">
           {notifications.isPending ? (
-            <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-              Loading notifications…
+            <div className="flex flex-col items-center justify-center py-10 text-xs text-muted-foreground gap-2">
+              <RotateCcw className="size-4 animate-spin text-primary" />
+              <span>Loading notifications...</span>
             </div>
           ) : notifications.isError ? (
-            <div className="px-4 py-6 text-center text-sm text-destructive">
+            <div className="py-8 text-center text-xs text-destructive">
               Notifications could not be loaded.
             </div>
-          ) : notifications.data?.items.length === 0 ? (
-            <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-              You are all caught up.
+          ) : filteredItems.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+              <div className="grid size-12 place-items-center rounded-2xl bg-muted/60 text-muted-foreground mb-2.5">
+                <Inbox className="size-6 stroke-[1.5]" />
+              </div>
+              <div className="font-semibold text-xs text-foreground">No notifications</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">
+                {activeFilter === "unread"
+                  ? "You have reviewed all current notifications."
+                  : "New ledger alerts, device Knox events, and customer payouts will appear here."}
+              </div>
             </div>
           ) : (
-            notifications.data?.items.map((item) => (
+            filteredItems.map((item) => (
               <div
                 key={item.id}
-                className={`border-b border-border p-3 last:border-0 ${item.readAt === null ? "bg-primary/[0.045]" : ""}`}
+                className={cn(
+                  "group relative border-b border-border/70 p-3.5 transition-colors hover:bg-accent/40 last:border-0",
+                  item.readAt === null && "bg-primary/[0.04]",
+                )}
               >
-                <div className="flex gap-3">
-                  <span
-                    className={`mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl ${severityClass(item.severity)}`}
+                <div className="flex items-start gap-3">
+                  {/* Severity Icon Badge */}
+                  <div
+                    className={cn(
+                      "grid size-8 shrink-0 place-items-center rounded-xl border mt-0.5 shadow-2xs",
+                      severityBadgeStyle(item.severity),
+                    )}
                   >
                     {item.severity === "critical" ? (
-                      <CircleAlert className="size-4" />
-                    ) : (
+                      <ShieldAlert className="size-4" />
+                    ) : item.severity === "warning" ? (
+                      <AlertCircle className="size-4" />
+                    ) : item.severity === "success" ? (
                       <ShieldCheck className="size-4" />
+                    ) : (
+                      <Info className="size-4" />
                     )}
-                  </span>
+                  </div>
+
+                  {/* Body Content */}
                   <button
+                    type="button"
                     className="min-w-0 flex-1 text-left"
                     onClick={() => void openNotification(item.id, item.actionUrl)}
                   >
-                    <div className="flex items-start gap-2">
-                      <span className="flex-1 text-sm font-medium">{item.title}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="font-semibold text-xs text-foreground leading-tight">
+                        {item.title}
+                      </span>
                       {item.readAt === null && (
-                        <span
-                          className="mt-1.5 size-2 rounded-full bg-primary"
-                          aria-label="Unread"
-                        />
+                        <span className="size-2 shrink-0 rounded-full bg-primary mt-1" />
                       )}
                     </div>
-                    <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground line-clamp-2">
                       {item.message}
                     </p>
-                    <div className="mt-1 text-[10px] text-muted-foreground">
-                      {dateTime(item.createdAt)}
+                    <div className="mt-1.5 flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
+                      <Clock className="size-3" />
+                      <span>{dateTime(item.createdAt)}</span>
                     </div>
                   </button>
                 </div>
-                <div className="mt-2 flex justify-end gap-1">
+
+                {/* Inline Action Row */}
+                <div className="mt-2 flex items-center justify-end gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
                   {item.acknowledgedAt === null &&
                     ["warning", "critical"].includes(item.severity) && (
                       <Button
                         variant="ghost"
                         size="sm"
+                        className="h-6 rounded-md text-[10px] px-2"
                         onClick={() =>
                           stateMutation.mutate({ id: item.id, action: "acknowledge" })
                         }
@@ -364,12 +460,14 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
                   <Button
                     variant="ghost"
                     size="icon"
+                    className="size-6 rounded-md text-muted-foreground hover:text-foreground"
                     aria-label={`Archive ${item.title}`}
+                    title="Archive notification"
                     onClick={() =>
                       stateMutation.mutate({ id: item.id, action: "archive" })
                     }
                   >
-                    <Archive className="size-3.5" />
+                    <Archive className="size-3" />
                   </Button>
                 </div>
               </div>
@@ -382,19 +480,26 @@ export function NotificationCenter({ platform = false }: { platform?: boolean })
 }
 
 function PreferenceRow({
+  icon,
   label,
   detail,
   children,
 }: {
+  icon: React.ReactNode;
   label: string;
   detail: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
-      <div>
-        <div>{label}</div>
-        <div className="text-xs text-muted-foreground">{detail}</div>
+    <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-2.5 min-w-0">
+        <div className="grid size-6 shrink-0 place-items-center rounded-lg bg-card border border-border">
+          {icon}
+        </div>
+        <div>
+          <div className="font-medium text-foreground">{label}</div>
+          <div className="text-[10px] text-muted-foreground">{detail}</div>
+        </div>
       </div>
       {children}
     </div>
@@ -407,6 +512,7 @@ async function enableNotificationAudio() {
   if (audioContext.state === "suspended") await audioContext.resume();
   await playNotificationChime("success");
 }
+
 async function playNotificationChime(severity: NotificationSeverity) {
   audioContext ??= new AudioContext();
   if (audioContext.state === "suspended") return;
@@ -421,15 +527,18 @@ async function playNotificationChime(severity: NotificationSeverity) {
   oscillator.start();
   oscillator.stop(audioContext.currentTime + 0.34);
 }
+
 function severityRank(value: NotificationSeverity) {
   return { info: 1, success: 2, warning: 3, critical: 4 }[value];
 }
-function severityClass(value: NotificationSeverity) {
-  if (value === "critical") return "bg-destructive/15 text-destructive";
-  if (value === "warning") return "bg-amber-400/15 text-amber-300";
-  if (value === "success") return "bg-primary/15 text-primary";
-  return "bg-sky-400/15 text-sky-300";
+
+function severityBadgeStyle(value: NotificationSeverity) {
+  if (value === "critical") return "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30";
+  if (value === "warning") return "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
+  if (value === "success") return "bg-emerald-500/15 text-emerald-600 dark:text-[#00DF81] border-emerald-500/30";
+  return "bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30";
 }
+
 function isQuietHours(preference: NotificationPreferences) {
   if (preference.quietHoursStart === null || preference.quietHoursEnd === null)
     return false;
@@ -441,3 +550,4 @@ function isQuietHours(preference: NotificationPreferences) {
   const end = minutes(preference.quietHoursEnd);
   return start <= end ? now >= start && now < end : now >= start || now < end;
 }
+

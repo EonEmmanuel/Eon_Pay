@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router";
 import { Toaster } from "./components/ui/sonner";
 import { AppActivityIndicator } from "./components/common/AppActivityIndicator";
 import { AuthProvider } from "./lib/auth";
+import { ThemeProvider, useTheme } from "./lib/theme-provider";
 import { router } from "./router";
 
 const queryClient = new QueryClient({
@@ -16,25 +17,27 @@ const queryClient = new QueryClient({
   },
 });
 
+function ThemedApp() {
+  const { theme } = useTheme();
+  return (
+    <div className={theme}>
+      <RouterProvider router={router} />
+      <Toaster
+        theme={theme}
+        position="bottom-right"
+      />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AppActivityIndicator />
-        <div className="dark">
-          <RouterProvider router={router} />
-          <Toaster
-            theme="dark"
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: "oklch(0.21 0.03 264)",
-                border: "1px solid oklch(1 0 0 / 8%)",
-                color: "oklch(0.97 0.005 260)",
-              },
-            }}
-          />
-        </div>
+        <ThemeProvider defaultTheme="light">
+          <AppActivityIndicator />
+          <ThemedApp />
+        </ThemeProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
