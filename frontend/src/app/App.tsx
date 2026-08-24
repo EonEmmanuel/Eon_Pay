@@ -20,7 +20,7 @@ const queryClient = new QueryClient({
 function ThemedApp() {
   const { theme } = useTheme();
   return (
-    <div className={theme}>
+    <div className={`${theme} min-h-screen`}>
       <RouterProvider router={router} />
       <Toaster
         theme={theme}

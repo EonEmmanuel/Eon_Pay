@@ -50,7 +50,19 @@ import { KybQueue } from "./pages/admin/KybQueue";
 import { KybCase } from "./pages/admin/KybCase";
 
 import { InvitationAcceptance } from "./pages/InvitationAcceptance";
+import { LandingPage } from "./pages/LandingPage";
+
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+    errorElement: <RouteError />,
+  },
+  {
+    path: "/landing",
+    element: <LandingPage />,
+    errorElement: <RouteError />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -75,7 +87,6 @@ export const router = createBrowserRouter([
     errorElement: <RouteError />,
   },
   {
-    path: "/",
     element: (
       <RequireTenantAccess>
         <DashboardLayout />
@@ -83,7 +94,8 @@ export const router = createBrowserRouter([
     ),
     errorElement: <RouteError />,
     children: [
-      { index: true, element: <Overview /> },
+      { path: "overview", element: <Overview /> },
+      { path: "dashboard", element: <Overview /> },
       { path: "customers", element: <Customers /> },
       { path: "customers/:id", element: <CustomerProfile /> },
       { path: "applications", element: <Applications /> },

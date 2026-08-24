@@ -23,8 +23,7 @@ export function diditSessionKind(
     return "kyb";
   }
 
-  // Fallback to KYC if we can't determine it, since KYC is the primary volume.
-  return "kyc";
+  return undefined;
 }
 
 function recordValue(value: unknown): Record<string, unknown> {

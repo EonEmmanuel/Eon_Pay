@@ -17,7 +17,7 @@ export function Login() {
       ? auth.platformMfaRequired && !auth.platformMfaSatisfied
         ? "/mfa"
         : "/admin"
-      : "/";
+      : "/overview";
     return <Navigate to={destination} replace />;
   }
 

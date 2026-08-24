@@ -48,7 +48,7 @@ const nav = [
     section: "Operations",
     items: [
       {
-        to: "/",
+        to: "/overview",
         label: "Overview",
         icon: LayoutGrid,
         animClass: "anim-grid",
@@ -293,7 +293,7 @@ export function Sidebar({
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align={collapsed ? "center" : "start"} className="w-52 border-border bg-popover">
-            <DropdownMenuItem onClick={() => navigate("/")} className="gap-2 text-xs cursor-pointer">
+            <DropdownMenuItem onClick={() => navigate("/overview")} className="gap-2 text-xs cursor-pointer">
               <span className="size-2 rounded-full bg-primary" />
               Retailer Workspace
             </DropdownMenuItem>

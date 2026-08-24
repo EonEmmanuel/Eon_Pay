@@ -82,7 +82,7 @@ export function PlatformMfa() {
   }, [navigate, refreshAccess]);
 
   if (!auth.loading && !auth.platformAccess) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/overview" replace />;
   }
   if (
     !auth.loading &&
