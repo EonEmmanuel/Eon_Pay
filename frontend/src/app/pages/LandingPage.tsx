@@ -772,27 +772,27 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           2. HERO SECTION
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-emerald-50/40 via-white to-white border-b border-zinc-200/70">
+      <section className="relative pt-6 pb-14 sm:pt-8 sm:pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-emerald-50/40 via-white to-white border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-10 items-center">
             {/* Left Column: Hero Copy */}
-            <div className="lg:col-span-5 space-y-6 text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-extrabold tracking-[-0.03em] leading-[1.08] text-zinc-950">
+            <div className="lg:col-span-5 space-y-5 sm:space-y-6 text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold tracking-[-0.03em] leading-[1.1] text-zinc-950">
                 Sell more phones. <br />
                 <span className="text-[#00D084]">Get paid on time.</span>
               </h1>
 
-              <div className="space-y-2 text-zinc-600 text-base leading-relaxed">
+              <div className="space-y-2 text-zinc-600 text-sm sm:text-base leading-relaxed">
                 <p className="font-semibold text-zinc-900">
                   Run your entire installment business with EonPay.
                 </p>
-                <p className="text-sm sm:text-base text-zinc-600">
+                <p className="text-xs sm:text-sm md:text-base text-zinc-600">
                   EonPay empowers phone retailers to manage customers, contracts, mobile money collections, branch inventory, and financed Android devices - all in one secure platform.
                 </p>
               </div>
 
               {/* 4 Feature Cards */}
-              <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5 pt-1">
                 {[
                   { label: "Flexible financing", icon: Wallet },
                   { label: "Mobile Money ready", icon: Smartphone },
@@ -801,10 +801,10 @@ export function LandingPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs font-semibold text-zinc-800 hover:border-zinc-300 transition-colors"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl border border-zinc-200 bg-zinc-50 px-2.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold text-zinc-800 hover:border-zinc-300 transition-colors"
                   >
-                    <item.icon className="size-4 text-[#00D084] shrink-0" />
-                    <span>{item.label}</span>
+                    <item.icon className="size-3.5 sm:size-4 text-[#00D084] shrink-0" />
+                    <span className="truncate">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -814,7 +814,7 @@ export function LandingPage() {
                 <Button
                   size="lg"
                   onClick={() => setDemoModalOpen(true)}
-                  className="h-12 px-7 rounded-xl bg-[#00D084] text-slate-950 font-bold text-sm shadow-md shadow-[#00D084]/20 hover:bg-[#00B974] transition-all justify-center cursor-pointer"
+                  className="h-11 sm:h-12 px-6 sm:px-7 rounded-xl bg-[#00D084] text-slate-950 font-bold text-sm shadow-md shadow-[#00D084]/20 hover:bg-[#00B974] transition-all justify-center cursor-pointer"
                 >
                   Book a demo
                   <ArrowRight className="size-4 ml-1.5" />
@@ -823,37 +823,37 @@ export function LandingPage() {
                   size="lg"
                   variant="outline"
                   onClick={(e) => scrollToSection(e as unknown as React.MouseEvent<HTMLAnchorElement>, "workflow")}
-                  className="h-12 px-6 rounded-xl border-zinc-300 bg-white text-sm font-semibold text-zinc-800 hover:bg-zinc-50 transition-all justify-center cursor-pointer"
+                  className="h-11 sm:h-12 px-5 sm:px-6 rounded-xl border-zinc-300 bg-white text-sm font-semibold text-zinc-800 hover:bg-zinc-50 transition-all justify-center cursor-pointer"
                 >
                   Explore the platform
                 </Button>
               </div>
 
               {/* Trust Line */}
-              <div className="pt-2 flex items-center gap-2 text-xs font-semibold text-zinc-500">
-                <ShieldCheck className="size-4 text-emerald-600 shrink-0" />
+              <div className="pt-1 sm:pt-2 flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-zinc-500">
+                <ShieldCheck className="size-3.5 sm:size-4 text-emerald-600 shrink-0" />
                 <span>Secure. Compliant with CEMAC banking regulations. Built for Africa.</span>
               </div>
             </div>
 
             {/* Right Column: Hero Visual Composite */}
-            <div className="lg:col-span-7 relative">
+            <div className="lg:col-span-7 relative pt-2 sm:pt-0">
               <div className="relative">
                 {/* 1. Desktop Dashboard Screenshot Frame */}
-                <div className="relative rounded-2xl border border-zinc-200/90 bg-white shadow-2xl shadow-zinc-300/60 overflow-hidden">
-                  <div className="flex items-center justify-between border-b border-zinc-100 bg-zinc-50/90 px-3.5 py-2 text-xs">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1.5">
-                        <span className="size-2.5 rounded-full bg-red-400" />
-                        <span className="size-2.5 rounded-full bg-amber-400" />
-                        <span className="size-2.5 rounded-full bg-emerald-400" />
+                <div className="relative rounded-2xl border border-zinc-200/90 bg-white shadow-xl sm:shadow-2xl shadow-zinc-300/60 overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-zinc-100 bg-zinc-50/90 px-3 sm:px-3.5 py-2 text-xs">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <div className="flex gap-1 sm:gap-1.5">
+                        <span className="size-2 sm:size-2.5 rounded-full bg-red-400" />
+                        <span className="size-2 sm:size-2.5 rounded-full bg-amber-400" />
+                        <span className="size-2 sm:size-2.5 rounded-full bg-emerald-400" />
                       </div>
-                      <span className="ml-2 font-mono text-[10px] text-zinc-400">
-                        app.eonpay.co / portfolio / overview
+                      <span className="ml-1 sm:ml-2 font-mono text-[9px] sm:text-[10px] text-zinc-400 truncate max-w-[150px] sm:max-w-none">
+                        app.eonpay.co / portfolio
                       </span>
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
-                      Live Merchant Console
+                    <span className="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-100">
+                      Live Console
                     </span>
                   </div>
                   <img
@@ -863,18 +863,18 @@ export function LandingPage() {
                   />
                 </div>
 
-                {/* 2. Customer Mobile App Phone Frame */}
+                {/* 2. Customer Mobile App Phone Frame (hidden on small mobile, visible on sm+) */}
                 <motion.div
                   initial={{ opacity: 0, x: -20, y: 20 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="hidden sm:block absolute -bottom-6 -left-6 w-[230px] z-20"
+                  className="hidden sm:block absolute -bottom-6 -left-6 w-[200px] md:w-[230px] z-20"
                 >
-                  <div className="rounded-[36px] border-4 border-zinc-900 bg-zinc-950 p-1.5 shadow-2xl shadow-zinc-950/50">
+                  <div className="rounded-[32px] sm:rounded-[36px] border-4 border-zinc-900 bg-zinc-950 p-1.5 shadow-2xl shadow-zinc-950/50">
                     <img
                       src="./images/mobile-home.png"
                       alt="EonPay Customer Mobile App - Repayment Due"
-                      className="w-full h-auto rounded-[28px] object-cover select-none"
+                      className="w-full h-auto rounded-[24px] sm:rounded-[28px] object-cover select-none"
                     />
                   </div>
                 </motion.div>
@@ -900,17 +900,6 @@ export function LandingPage() {
                   </div>
                 </motion.div>
               </div>
-
-              {/* Mobile View Standalone Phone Render */}
-              <div className="sm:hidden mt-6 flex justify-center">
-                <div className="w-[260px] rounded-[36px] border-4 border-zinc-900 bg-zinc-950 p-1.5 shadow-2xl">
-                  <img
-                    src="/App_images/eonpay-10-home-payment-due-soon.png"
-                    alt="EonPay Customer Mobile App"
-                    className="w-full h-auto rounded-[28px] object-cover"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -919,120 +908,120 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           3. OUR HIGH-LEVEL PARTNERS (Clean Reference Inspired Design)
       ────────────────────────────────────────────────────────────── */}
-      <section id="partners" className="py-20 sm:py-24 bg-white border-b border-zinc-200/70">
+      <section id="partners" className="py-14 sm:py-20 lg:py-24 bg-white border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Framed Container */}
-          <div className="rounded-3xl bg-[#F8FAFC] border border-zinc-200/60 p-8 sm:p-12 lg:p-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="rounded-3xl bg-[#F8FAFC] border border-zinc-200/60 p-5 sm:p-10 lg:p-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-start">
               {/* Left Column: Headline & Description */}
-              <div className="lg:col-span-4 text-left space-y-5">
-                <div className="size-12 rounded-2xl bg-white border border-zinc-200/80 shadow-sm flex items-center justify-center">
-                  <Building2 className="size-5.5 text-[#00D084]" />
+              <div className="lg:col-span-4 text-left space-y-3 sm:space-y-5">
+                <div className="size-10 sm:size-12 rounded-2xl bg-white border border-zinc-200/80 shadow-sm flex items-center justify-center">
+                  <Building2 className="size-5 sm:size-5.5 text-[#00D084]" />
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-zinc-950 tracking-tight leading-[1.1]">
-                  Our high-level<br />partners
+                <h2 className="text-2xl sm:text-3xl lg:text-[44px] font-extrabold text-zinc-950 tracking-tight leading-[1.15]">
+                  Our high-level<br className="hidden sm:inline" /> partners
                 </h2>
 
-                <p className="text-[15px] text-zinc-500 leading-relaxed max-w-sm">
+                <p className="text-xs sm:text-[15px] text-zinc-500 leading-relaxed max-w-sm">
                   We integrate natively with Africa&apos;s leading telecom operators, device manufacturers, and cloud infrastructure to ensure 100% automated settlement.
                 </p>
               </div>
 
               {/* Right Column: Partner Brand Grid */}
               <div className="lg:col-span-8">
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
                   {/* MTN MoMo */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-[#FFCC00] rounded-xl px-3 py-2 shadow-sm">
-                        <span className="font-black text-sm text-[#003366] tracking-tight leading-none">MTN</span>
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="bg-[#FFCC00] rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-2 shadow-sm">
+                        <span className="font-black text-xs sm:text-sm text-[#003366] tracking-tight leading-none">MTN</span>
                       </div>
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-lg text-zinc-900 tracking-tight leading-tight">MoMo</span>
-                        <span className="text-xs text-zinc-400 font-medium">Mobile Money</span>
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-sm sm:text-lg text-zinc-900 tracking-tight leading-tight">MoMo</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">Mobile Money</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Orange Money */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="size-9 bg-[#FF7900] rounded-lg relative flex items-center justify-center shadow-sm">
-                        <div className="w-4 h-1.5 bg-white absolute bottom-1.5 left-1.5 rounded-sm" />
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="size-7 sm:size-9 bg-[#FF7900] rounded-lg relative flex items-center justify-center shadow-sm shrink-0">
+                        <div className="w-3 sm:w-4 h-1 sm:h-1.5 bg-white absolute bottom-1 sm:bottom-1.5 left-1 sm:left-1.5 rounded-xs" />
                       </div>
-                      <div className="flex flex-col leading-tight">
-                        <span className="font-bold text-base text-zinc-900">orange</span>
-                        <span className="font-bold text-base text-[#FF7900]">money</span>
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="font-bold text-xs sm:text-base text-zinc-900">orange</span>
+                        <span className="font-bold text-xs sm:text-base text-[#FF7900]">money</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Android Enterprise */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <svg className="size-8 text-[#3DDC84]" viewBox="0 0 24 24" fill="currentColor">
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <svg className="size-6 sm:size-8 text-[#3DDC84] shrink-0" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993s-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993s-.4482.9997-.9993.9997m11.4045-6.02l1.996-3.4572c.157-.272.064-.619-.208-.776-.271-.157-.618-.064-.775.207l-2.025 3.507c-1.428-.65-3.023-1.02-4.72-1.02s-3.292.37-4.72 1.02L5.4035 5.3052c-.157-.271-.504-.364-.775-.207-.272.157-.365.504-.208.776l1.996 3.4572C2.793 11.233.371 15.011 0 19.5h24c-.371-4.489-2.793-8.267-6.1185-10.1786" />
                       </svg>
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-base text-zinc-900 tracking-tight">Android</span>
-                        <span className="text-xs text-zinc-400 font-medium">Enterprise DPC</span>
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight">Android</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">Enterprise DPC</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Amazon Web Services */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-2">
-                      <svg className="h-7 w-auto" viewBox="0 0 70 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <svg className="h-5 sm:h-7 w-auto shrink-0" viewBox="0 0 70 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <text x="35" y="16" fill="#1E293B" fontSize="16" fontWeight="900" textAnchor="middle" fontFamily="system-ui, sans-serif" letterSpacing="1.5">aws</text>
                         <path d="M12 23 C 28 28, 46 28, 58 23" stroke="#FF9900" strokeWidth="3" strokeLinecap="round" fill="none" />
                         <path d="M53 21 L 58 23 L 54 26" fill="#FF9900" />
                       </svg>
-                      <span className="font-extrabold text-base text-zinc-900 tracking-tight">Cloud</span>
+                      <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight">Cloud</span>
                     </div>
                   </div>
 
                   {/* Samsung Knox */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <ShieldCheck className="size-7 text-[#1428A0]" strokeWidth={1.75} />
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-base text-zinc-900 tracking-tight">Samsung Knox</span>
-                        <span className="text-xs text-zinc-400 font-medium">Device Security</span>
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <ShieldCheck className="size-5 sm:size-7 text-[#1428A0] shrink-0" strokeWidth={1.75} />
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight truncate">Samsung Knox</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">Device Security</span>
                       </div>
                     </div>
                   </div>
 
                   {/* PostgreSQL */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <Database className="size-7 text-[#336791]" strokeWidth={1.75} />
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-base text-zinc-900 tracking-tight">PostgreSQL</span>
-                        <span className="text-xs text-zinc-400 font-medium">Row-Level Security</span>
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Database className="size-5 sm:size-7 text-[#336791] shrink-0" strokeWidth={1.75} />
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight">PostgreSQL</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">RLS Security</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Google Play Integrity */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <Shield className="size-7 text-[#34A853]" strokeWidth={1.75} />
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-base text-zinc-900 tracking-tight">Play Integrity</span>
-                        <span className="text-xs text-zinc-400 font-medium">Google Verified</span>
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Shield className="size-5 sm:size-7 text-[#34A853] shrink-0" strokeWidth={1.75} />
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight truncate">Play Integrity</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">Google Verified</span>
                       </div>
                     </div>
                   </div>
 
                   {/* CEMAC / WAEMU */}
-                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-28 sm:h-32 flex items-center justify-center px-6">
-                    <div className="flex items-center gap-3">
-                      <Globe2 className="size-7 text-[#04342C]" strokeWidth={1.75} />
-                      <div className="flex flex-col">
-                        <span className="font-extrabold text-base text-zinc-900 tracking-tight">CEMAC</span>
-                        <span className="text-xs text-zinc-400 font-medium">WAEMU Regulatory</span>
+                  <div className="rounded-2xl bg-[#EEF1F5] hover:bg-white hover:shadow-lg border border-transparent hover:border-zinc-200 transition-all duration-200 h-24 sm:h-32 flex items-center justify-center px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Globe2 className="size-5 sm:size-7 text-[#04342C] shrink-0" strokeWidth={1.75} />
+                      <div className="flex flex-col text-left">
+                        <span className="font-extrabold text-xs sm:text-base text-zinc-900 tracking-tight">CEMAC</span>
+                        <span className="text-[10px] sm:text-xs text-zinc-400 font-medium truncate">WAEMU Reg</span>
                       </div>
                     </div>
                   </div>
@@ -1109,19 +1098,19 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           5. HARDWARE DEVICE PROTECTION (Real Android DPC Software UI)
       ────────────────────────────────────────────────────────────── */}
-      <section id="protection" className="bg-[#04342C] py-20 lg:py-24 text-white border-y border-[#0F6E56]/70">
+      <section id="protection" className="bg-[#04342C] py-14 sm:py-20 lg:py-24 text-white border-y border-[#0F6E56]/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
             {/* Left: Real Smartphone Enforcer Screenshots */}
             <div className="lg:col-span-6 flex flex-col items-center">
-              <div className="mb-4 flex items-center gap-1 rounded-xl bg-[#032620] p-1 border border-[#0F6E56] text-xs font-semibold">
+              <div className="mb-4 flex items-center gap-1 rounded-xl bg-[#032620] p-1 border border-[#0F6E56] text-[11px] sm:text-xs font-semibold">
                 <button
                   type="button"
                   onClick={() => setProtectionViewMode("lock")}
                   className={
                     protectionViewMode === "lock"
-                      ? "rounded-lg bg-[#5DCAA5] text-[#04342C] px-3.5 py-1.5 font-bold cursor-pointer transition-all shadow-xs"
-                      : "rounded-lg text-[#9FE1CB] hover:text-white px-3.5 py-1.5 cursor-pointer transition-all"
+                      ? "rounded-lg bg-[#5DCAA5] text-[#04342C] px-2.5 sm:px-3.5 py-1.5 font-bold cursor-pointer transition-all shadow-xs"
+                      : "rounded-lg text-[#9FE1CB] hover:text-white px-2.5 sm:px-3.5 py-1.5 cursor-pointer transition-all"
                   }
                 >
                   DPC Soft Lock Screen
@@ -1131,15 +1120,15 @@ export function LandingPage() {
                   onClick={() => setProtectionViewMode("grace")}
                   className={
                     protectionViewMode === "grace"
-                      ? "rounded-lg bg-[#5DCAA5] text-[#04342C] px-3.5 py-1.5 font-bold cursor-pointer transition-all shadow-xs"
-                      : "rounded-lg text-[#9FE1CB] hover:text-white px-3.5 py-1.5 cursor-pointer transition-all"
+                      ? "rounded-lg bg-[#5DCAA5] text-[#04342C] px-2.5 sm:px-3.5 py-1.5 font-bold cursor-pointer transition-all shadow-xs"
+                      : "rounded-lg text-[#9FE1CB] hover:text-white px-2.5 sm:px-3.5 py-1.5 cursor-pointer transition-all"
                   }
                 >
                   Grace Period Warning
                 </button>
               </div>
 
-              <div className="relative max-w-xs sm:max-w-sm w-full">
+              <div className="relative max-w-[260px] sm:max-w-sm w-full">
                 <AnimatePresence mode="wait">
                   {protectionViewMode === "lock" ? (
                     <motion.div
@@ -1148,12 +1137,12 @@ export function LandingPage() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="rounded-[40px] border-[5px] border-zinc-950 bg-zinc-950 p-1.5 shadow-2xl"
+                      className="rounded-[36px] sm:rounded-[40px] border-[4px] sm:border-[5px] border-zinc-950 bg-zinc-950 p-1.5 shadow-2xl"
                     >
                       <img
                         src="/App_images/eonpay-12-home-device-restricted.png"
                         alt="Real EonPay DPC Device Access Restricted Soft Lock Screen"
-                        className="w-full h-auto rounded-[32px] object-cover"
+                        className="w-full h-auto rounded-[28px] sm:rounded-[32px] object-cover"
                       />
                     </motion.div>
                   ) : (
@@ -1163,12 +1152,12 @@ export function LandingPage() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="rounded-[40px] border-[5px] border-zinc-950 bg-zinc-950 p-1.5 shadow-2xl"
+                      className="rounded-[36px] sm:rounded-[40px] border-[4px] sm:border-[5px] border-zinc-950 bg-zinc-950 p-1.5 shadow-2xl"
                     >
                       <img
                         src="/App_images/eonpay-11-home-grace-period.png"
-                        alt="Real EonPay Grace Period Countdown Screen"
-                        className="w-full h-auto rounded-[32px] object-cover"
+                        alt="Real EonPay DPC Grace Period Friendly Customer Warning Screen"
+                        className="w-full h-auto rounded-[28px] sm:rounded-[32px] object-cover"
                       />
                     </motion.div>
                   )}
@@ -1176,54 +1165,50 @@ export function LandingPage() {
               </div>
             </div>
 
-            {/* Right: Authoritative Hardware Policy Copy */}
-            <div className="lg:col-span-6 space-y-6 text-left">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#E1F5EE] leading-tight tracking-tight">
-                Protection that works throughout the repayment period.
-              </h2>
+            {/* Right: Technical Explanation */}
+            <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
+              <div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#E1F5EE] leading-tight">
+                  Uncompromised hardware protection with native Android DPC
+                </h2>
+                <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-[#9FE1CB] leading-relaxed">
+                  Eliminate default risk. When an installment becomes overdue, the device automatically shifts to a non-intrusive soft restriction mode, keeping emergency dialers and payment channels accessible.
+                </p>
+              </div>
 
-              <p className="text-[#9FE1CB] text-sm sm:text-base leading-relaxed">
-                Enroll financed smartphones into Android Device Owner management. When a customer defaults past their scheduled grace period, EonPay automatically transitions the device into a soft or hard lock kiosk.
-              </p>
-
-              <div className="space-y-3.5 pt-2">
+              <div className="space-y-3 sm:space-y-4">
                 {[
                   {
-                    title: "Cryptographically Signed Ed25519 Tokens",
-                    desc: "Device policies are signed with asymmetric keys and verified locally in hardware Keystore.",
+                    title: "Dual Soft & Hard Lock State Engine",
+                    desc: "Friendly overdue reminders give borrowers 48 hours grace before soft lock activates. Hard lock is reserved for severe arrears.",
                   },
                   {
-                    title: "Soft & Hard Lock Enforcement",
-                    desc: "Restricts non-essential apps while keeping emergency calling and payment apps accessible.",
+                    title: "Cryptographic Offline Heartbeat",
+                    desc: "Ed25519 asymmetric signatures prevent borrowers from avoiding locks by turning off WiFi or removing SIM cards.",
                   },
                   {
-                    title: "Instant Mobile Money Restoration",
-                    desc: "As soon as MTN MoMo or Orange Money settlement clears, the phone unlocks automatically in seconds.",
-                  },
-                  {
-                    title: "Anti-Tamper & Persistent Factory Reset Defense",
-                    desc: "Safe boot is disabled and uninstallation is blocked for the enrolled device controller.",
+                    title: "Automated Instant Unlock on Payment",
+                    desc: "Upon MTN MoMo or Orange Money settlement, device restriction is lifted automatically in under 5 seconds with zero clerk intervention.",
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex items-start gap-3">
-                    <div className="size-5 rounded-md bg-[#5DCAA5]/20 text-[#5DCAA5] grid place-items-center shrink-0 mt-1">
-                      <Check className="size-3.5 stroke-[3]" />
+                  <div key={item.title} className="flex gap-3 sm:gap-4 items-start">
+                    <div className="size-5 sm:size-6 rounded-full bg-[#0F6E56] text-[#5DCAA5] grid place-items-center shrink-0 mt-0.5">
+                      <Check className="size-3 sm:size-3.5 stroke-[2.5]" />
                     </div>
                     <div>
-                      <div className="text-sm text-[#E1F5EE] font-bold">{item.title}</div>
-                      <div className="text-xs text-[#9FE1CB] mt-0.5">{item.desc}</div>
+                      <h4 className="font-bold text-xs sm:text-sm text-[#E1F5EE]">{item.title}</h4>
+                      <p className="text-[11px] sm:text-xs text-[#9FE1CB] leading-relaxed mt-0.5">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2 sm:pt-4 flex flex-wrap gap-2 sm:gap-3">
                 <Button
                   onClick={() => setDemoModalOpen(true)}
-                  className="rounded-xl bg-[#5DCAA5] text-[#04342C] font-bold text-sm h-11 px-6 hover:bg-[#5DCAA5]/90 transition-all cursor-pointer"
+                  className="rounded-xl bg-[#5DCAA5] text-[#04342C] font-bold text-xs h-10 px-5 hover:bg-[#5DCAA5]/90 transition-all cursor-pointer shadow-md"
                 >
-                  Learn more about device protection
-                  <ArrowRight className="size-4 ml-1.5" />
+                  Request device lock live demo →
                 </Button>
               </div>
             </div>
@@ -1234,21 +1219,21 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           6. IN-STORE FINANCING ORIGINATION WORKFLOW (6 Steps)
       ────────────────────────────────────────────────────────────── */}
-      <section id="workflow" className="py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
+      <section id="workflow" className="py-14 sm:py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
               Origination in under <span className="text-[#00D084]">3 minutes</span>
             </h2>
-            <p className="text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
               Designed for high-speed store environments. Clerks can onboard borrowers, reserve IMEI inventory, collect down payments, and provision devices in a streamlined 6-step flow.
             </p>
           </div>
 
           {/* Interactive 6-Step Workflow Console */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-3xl border border-zinc-200/90 p-6 sm:p-8 lg:p-10 shadow-lg">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center bg-white rounded-3xl border border-zinc-200/90 p-4 sm:p-8 lg:p-10 shadow-lg">
             {/* Left Column: 6 Interactive Step Selectors */}
-            <div className="lg:col-span-6 space-y-3">
+            <div className="lg:col-span-6 space-y-2.5 sm:space-y-3">
               {originationSteps.map((step, idx) => {
                 const isSelected = idx === activeOriginationStep;
                 return (
@@ -1257,26 +1242,26 @@ export function LandingPage() {
                     onClick={() => setActiveOriginationStep(idx)}
                     className={
                       isSelected
-                        ? "p-4 rounded-2xl bg-[#04342C] text-white shadow-md cursor-pointer transition-all border border-[#0F6E56]"
-                        : "p-4 rounded-2xl bg-zinc-50 hover:bg-zinc-100 text-zinc-800 cursor-pointer transition-all border border-zinc-200/70"
+                        ? "p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#04342C] text-white shadow-md cursor-pointer transition-all border border-[#0F6E56]"
+                        : "p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 hover:bg-zinc-100 text-zinc-800 cursor-pointer transition-all border border-zinc-200/70"
                     }
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
                         <div
                           className={
                             isSelected
-                              ? "size-8 rounded-lg bg-[#0F6E56] text-[#5DCAA5] font-bold text-xs grid place-items-center font-mono"
-                              : "size-8 rounded-lg bg-zinc-200 text-zinc-700 font-bold text-xs grid place-items-center font-mono"
+                              ? "size-7 sm:size-8 rounded-lg bg-[#0F6E56] text-[#5DCAA5] font-bold text-xs grid place-items-center font-mono shrink-0"
+                              : "size-7 sm:size-8 rounded-lg bg-zinc-200 text-zinc-700 font-bold text-xs grid place-items-center font-mono shrink-0"
                           }
                         >
                           {step.number}
                         </div>
-                        <div>
-                          <div className={isSelected ? "font-bold text-sm text-[#E1F5EE]" : "font-bold text-sm text-zinc-900"}>
+                        <div className="text-left">
+                          <div className={isSelected ? "font-bold text-xs sm:text-sm text-[#E1F5EE]" : "font-bold text-xs sm:text-sm text-zinc-900"}>
                             {step.title}
                           </div>
-                          <div className={isSelected ? "text-xs text-[#9FE1CB]" : "text-xs text-zinc-500"}>
+                          <div className={isSelected ? "text-[11px] sm:text-xs text-[#9FE1CB]" : "text-[11px] sm:text-xs text-zinc-500"}>
                             {step.shortDesc}
                           </div>
                         </div>
@@ -1288,24 +1273,24 @@ export function LandingPage() {
             </div>
 
             {/* Right Column: Step Detail Card */}
-            <div className="lg:col-span-6 flex flex-col justify-between h-full bg-[#04342C] rounded-2xl p-7 sm:p-8 text-white text-left border border-[#0F6E56]">
+            <div className="lg:col-span-6 flex flex-col justify-between h-full bg-[#04342C] rounded-2xl p-5 sm:p-8 text-white text-left border border-[#0F6E56]">
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-[#0F6E56]">
+                <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#0F6E56]">
                   <span className="font-mono text-xs text-[#5DCAA5] font-bold">
                     STEP {originationSteps[activeOriginationStep].number} OF 06
                   </span>
                 </div>
 
-                <div className="mt-6 space-y-4">
+                <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="size-12 rounded-xl bg-[#0F6E56] text-[#5DCAA5] grid place-items-center">
+                    <div className="size-10 sm:size-12 rounded-xl bg-[#0F6E56] text-[#5DCAA5] grid place-items-center shrink-0">
                       {(() => {
                         const Icon = originationSteps[activeOriginationStep].icon;
-                        return <Icon size={24} />;
+                        return <Icon size={20} className="sm:size-6" />;
                       })()}
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#E1F5EE]">
+                      <h3 className="text-lg sm:text-xl font-bold text-[#E1F5EE]">
                         {originationSteps[activeOriginationStep].title}
                       </h3>
                       <p className="text-xs text-[#9FE1CB]">
@@ -1314,11 +1299,11 @@ export function LandingPage() {
                     </div>
                   </div>
 
-                  <p className="text-sm leading-relaxed text-[#9FE1CB] pt-2">
+                  <p className="text-xs sm:text-sm leading-relaxed text-[#9FE1CB] pt-1 sm:pt-2">
                     {originationSteps[activeOriginationStep].detail}
                   </p>
 
-                  <div className="mt-6 flex items-center gap-3">
+                  <div className="mt-4 sm:mt-6 flex items-center gap-2 sm:gap-3">
                     {originationSteps.map((_, idx) => (
                       <div
                         key={idx}
@@ -1333,7 +1318,7 @@ export function LandingPage() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-[#0F6E56] flex items-center justify-between">
+              <div className="mt-6 sm:mt-8 pt-3 sm:pt-4 border-t border-[#0F6E56] flex items-center justify-between">
                 <Button
                   variant="ghost"
                   disabled={activeOriginationStep === 0}
@@ -1432,8 +1417,8 @@ export function LandingPage() {
             </p>
           </div>
 
-          {/* Interactive Screen Selector Strip */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+          {/* Interactive Screen Selector Strip (Swipeable on mobile, centered wrap on desktop) */}
+          <div className="flex items-center gap-2 mb-8 sm:mb-10 overflow-x-auto no-scrollbar pb-2 sm:pb-0 sm:flex-wrap sm:justify-center px-1">
             {customerLifecycleScreens.map((screen, idx) => {
               const active = idx === activeCustomerScreenIndex;
               return (
@@ -1443,8 +1428,8 @@ export function LandingPage() {
                   onClick={() => setActiveCustomerScreenIndex(idx)}
                   className={
                     active
-                      ? "px-4 py-2.5 rounded-xl bg-[#04342C] text-[#5DCAA5] font-bold text-xs shadow-md border border-[#0F6E56] transition-all cursor-pointer"
-                      : "px-4 py-2.5 rounded-xl bg-white text-zinc-700 font-semibold text-xs border border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50 transition-all cursor-pointer"
+                      ? "shrink-0 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#04342C] text-[#5DCAA5] font-bold text-xs shadow-md border border-[#0F6E56] transition-all cursor-pointer whitespace-nowrap"
+                      : "shrink-0 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white text-zinc-700 font-semibold text-xs border border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50 transition-all cursor-pointer whitespace-nowrap"
                   }
                 >
                   <span>{screen.title}</span>
@@ -1454,7 +1439,7 @@ export function LandingPage() {
           </div>
 
           {/* Screen Showcase Container */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-white rounded-3xl border border-zinc-200/90 p-6 sm:p-10 shadow-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center bg-white rounded-3xl border border-zinc-200/90 p-5 sm:p-8 lg:p-10 shadow-xl">
             {/* Left Column: Phone Frame */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative max-w-[280px] sm:max-w-[300px] w-full">
@@ -1523,96 +1508,96 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           9. PORTFOLIO INTELLIGENCE & COLLECTIONS ANALYTICS
       ────────────────────────────────────────────────────────────── */}
-      <section id="analytics" className="py-20 lg:py-24 bg-white border-b border-zinc-200/70">
+      <section id="analytics" className="py-14 sm:py-20 lg:py-24 bg-white border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
               Know your portfolio before problems become expensive
             </h2>
-            <p className="text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
               Real-time ledger data provides complete visibility into collection rates, upcoming maturities, delinquent contracts, and cashier recovery performance.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Left 4 KPI Cards */}
-            <div className="lg:col-span-4 grid grid-cols-2 gap-3">
-              <div className="p-5 rounded-2xl bg-[#04342C] text-white flex flex-col justify-between col-span-2">
-                <div className="text-[11px] text-[#9FE1CB] font-semibold uppercase tracking-wide">Collection Rate</div>
-                <div className="text-4xl font-extrabold text-[#5DCAA5] font-mono mt-2">92.6%</div>
-                <div className="text-[11px] text-[#9FE1CB] mt-1">↑ +3.2% vs last month</div>
+            <div className="lg:col-span-4 grid grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#04342C] text-white flex flex-col justify-between col-span-2">
+                <div className="text-[10px] sm:text-[11px] text-[#9FE1CB] font-semibold uppercase tracking-wide">Collection Rate</div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#5DCAA5] font-mono mt-1.5 sm:mt-2">92.6%</div>
+                <div className="text-[10px] sm:text-[11px] text-[#9FE1CB] mt-1">↑ +3.2% vs last month</div>
               </div>
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between">
-                <div className="text-[11px] text-zinc-500 font-semibold uppercase">PAR &gt; 30</div>
-                <div className="text-2xl font-extrabold text-zinc-900 font-mono mt-2">7.4%</div>
-                <div className="text-[11px] text-emerald-600 font-medium mt-1">↓ -2.1%</div>
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between">
+                <div className="text-[10px] sm:text-[11px] text-zinc-500 font-semibold uppercase">PAR &gt; 30</div>
+                <div className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-mono mt-1.5 sm:mt-2">7.4%</div>
+                <div className="text-[10px] sm:text-[11px] text-emerald-600 font-medium mt-1">↓ -2.1%</div>
               </div>
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between">
-                <div className="text-[11px] text-zinc-500 font-semibold uppercase">Active</div>
-                <div className="text-2xl font-extrabold text-zinc-900 font-mono mt-2">1,248</div>
-                <div className="text-[11px] text-zinc-500 font-medium mt-1">4 branches</div>
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between">
+                <div className="text-[10px] sm:text-[11px] text-zinc-500 font-semibold uppercase">Active</div>
+                <div className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-mono mt-1.5 sm:mt-2">1,248</div>
+                <div className="text-[10px] sm:text-[11px] text-zinc-500 font-medium mt-1">4 branches</div>
               </div>
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between col-span-2">
-                <div className="text-[11px] text-zinc-500 font-semibold uppercase">Total Outstanding Portfolio</div>
-                <div className="text-2xl font-extrabold text-zinc-900 font-mono mt-2">48.6M <span className="text-xs font-normal text-zinc-500">XAF</span></div>
-                <div className="text-[11px] text-emerald-700 font-medium mt-1">100% Principal Tracked</div>
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-col justify-between col-span-2">
+                <div className="text-[10px] sm:text-[11px] text-zinc-500 font-semibold uppercase">Total Outstanding Portfolio</div>
+                <div className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-mono mt-1.5 sm:mt-2">48.6M <span className="text-xs font-normal text-zinc-500">XAF</span></div>
+                <div className="text-[10px] sm:text-[11px] text-emerald-700 font-medium mt-1">100% Principal Tracked</div>
               </div>
             </div>
 
             {/* Right: Health Breakdown */}
-            <div className="lg:col-span-8 p-7 rounded-2xl bg-[#04342C] text-white flex flex-col justify-between border border-[#0F6E56]">
+            <div className="lg:col-span-8 p-5 sm:p-7 rounded-2xl bg-[#04342C] text-white flex flex-col justify-between border border-[#0F6E56]">
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-[#0F6E56]">
-                  <h3 className="font-bold text-lg text-[#E1F5EE]">Portfolio Repayment Health Breakdown</h3>
-                  <span className="text-xs font-mono text-[#5DCAA5] bg-[#0F6E56] px-3 py-1 rounded-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 sm:pb-4 border-b border-[#0F6E56] gap-2">
+                  <h3 className="font-bold text-base sm:text-lg text-[#E1F5EE]">Portfolio Repayment Health Breakdown</h3>
+                  <span className="text-xs font-mono text-[#5DCAA5] bg-[#0F6E56] px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full self-start sm:self-auto">
                     Audited Daily
                   </span>
                 </div>
 
-                <div className="mt-6 space-y-5">
+                <div className="mt-5 sm:mt-6 space-y-4 sm:space-y-5">
                   <div>
-                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-2 font-medium">
+                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-1.5 sm:mb-2 font-medium">
                       <span>On-Time Active Servicing (82.4%)</span>
                       <span className="text-[#5DCAA5] font-bold">1,028 Devices</span>
                     </div>
-                    <div className="w-full h-3 rounded-full bg-[#032620] overflow-hidden">
+                    <div className="w-full h-2.5 sm:h-3 rounded-full bg-[#032620] overflow-hidden">
                       <div className="h-full bg-[#5DCAA5] rounded-full w-[82.4%]" />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-2 font-medium">
+                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-1.5 sm:mb-2 font-medium">
                       <span>In Grace Period / Friendly Warning (10.2%)</span>
                       <span className="text-amber-400 font-bold">127 Devices</span>
                     </div>
-                    <div className="w-full h-3 rounded-full bg-[#032620] overflow-hidden">
+                    <div className="w-full h-2.5 sm:h-3 rounded-full bg-[#032620] overflow-hidden">
                       <div className="h-full bg-amber-400 rounded-full w-[10.2%]" />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-2 font-medium">
+                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-1.5 sm:mb-2 font-medium">
                       <span>Soft Lock / Restricted Kiosk (5.2%)</span>
                       <span className="text-orange-400 font-bold">65 Devices</span>
                     </div>
-                    <div className="w-full h-3 rounded-full bg-[#032620] overflow-hidden">
+                    <div className="w-full h-2.5 sm:h-3 rounded-full bg-[#032620] overflow-hidden">
                       <div className="h-full bg-orange-400 rounded-full w-[5.2%]" />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-2 font-medium">
+                    <div className="flex justify-between text-xs text-[#9FE1CB] mb-1.5 sm:mb-2 font-medium">
                       <span>Hard Lock / Severe Arrears (2.2%)</span>
                       <span className="text-red-400 font-bold">28 Devices</span>
                     </div>
-                    <div className="w-full h-3 rounded-full bg-[#032620] overflow-hidden">
+                    <div className="w-full h-2.5 sm:h-3 rounded-full bg-[#032620] overflow-hidden">
                       <div className="h-full bg-red-400 rounded-full w-[2.2%]" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#0F6E56] flex items-center justify-between text-xs text-[#9FE1CB]">
+              <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-[#0F6E56] flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-[#9FE1CB] gap-1">
                 <span>Automatic Double-Entry Journal Reconciliation</span>
                 <span className="text-[#5DCAA5] font-semibold">Zero Default Write-Off Leaks</span>
               </div>
@@ -1624,36 +1609,36 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           10. INTERACTIVE FINANCING CALCULATOR
       ────────────────────────────────────────────────────────────── */}
-      <section id="calculator" className="py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
+      <section id="calculator" className="py-14 sm:py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[760px]">
-            <div className="mb-8 text-center space-y-2">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+            <div className="mb-6 sm:mb-8 text-center space-y-2">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
                 Simulate customer plans in real time
               </h2>
-              <p className="mx-auto max-w-[500px] text-sm text-zinc-600 leading-relaxed">
+              <p className="mx-auto max-w-[500px] text-xs sm:text-sm text-zinc-600 leading-relaxed">
                 See how flexible down payments and terms lower customer friction while keeping your cash flow fully protected.
               </p>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-zinc-200/90 bg-white shadow-xl">
-              <div className="flex items-center justify-between border-b border-zinc-200/80 bg-zinc-50/90 px-6 py-4">
-                <div className="flex items-center gap-2 text-xs text-zinc-700 font-semibold">
-                  <span className="inline-block h-2 w-2 rounded-full bg-[#00D084]" />
+              <div className="flex items-center justify-between border-b border-zinc-200/80 bg-zinc-50/90 px-4 sm:px-6 py-3 sm:py-4">
+                <div className="flex items-center gap-2 text-xs text-zinc-700 font-semibold truncate">
+                  <span className="inline-block h-2 w-2 rounded-full bg-[#00D084] shrink-0" />
                   <span>EonPay Installment Engine</span>
-                  <span className="text-zinc-400">| CEMAC / WAEMU Standard</span>
+                  <span className="text-zinc-400 hidden sm:inline">| CEMAC / WAEMU Standard</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {/* Left: Inputs */}
-                <div className="bg-white p-7 text-left space-y-6">
+                <div className="bg-white p-5 sm:p-7 text-left space-y-5 sm:space-y-6">
                   <div>
                     <div className="mb-2 text-xs font-bold tracking-wider text-zinc-500 uppercase">
                       1. Financed Phone Model
                     </div>
                     <select
-                      className="w-full rounded-xl border border-zinc-300 bg-zinc-50/80 p-3 text-xs font-bold text-zinc-900 outline-none focus:border-[#00D084] transition-colors"
+                      className="w-full rounded-xl border border-zinc-300 bg-zinc-50/80 p-2.5 sm:p-3 text-xs font-bold text-zinc-900 outline-none focus:border-[#00D084] transition-colors"
                       value={phonePrice}
                       onChange={(e) => setPhonePrice(Number(e.target.value))}
                     >
@@ -1683,7 +1668,7 @@ export function LandingPage() {
                       onChange={(e) => setDownPaymentPct(Number(e.target.value))}
                       className="w-full accent-[#04342C] cursor-pointer h-2 bg-zinc-200 rounded-lg"
                     />
-                    <div className="mt-1.5 flex justify-between text-[11px] text-zinc-400 font-medium font-mono">
+                    <div className="mt-1.5 flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium font-mono">
                       <span>15%</span>
                       <span>20%</span>
                       <span>25%</span>
@@ -1696,7 +1681,7 @@ export function LandingPage() {
                     <div className="mb-2 text-xs font-bold tracking-wider text-zinc-500 uppercase">
                       3. Repayment Tenor
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5 sm:gap-2">
                       {TENORS.map((m) => {
                         const active = m === tenorMonths;
                         return (
@@ -1706,8 +1691,8 @@ export function LandingPage() {
                             onClick={() => setTenorMonths(m)}
                             className={
                               active
-                                ? "flex-1 rounded-xl bg-[#04342C] py-2.5 text-xs font-bold text-[#E1F5EE] shadow-xs cursor-pointer transition-all"
-                                : "flex-1 rounded-xl border border-zinc-200 bg-zinc-50/70 py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 cursor-pointer transition-all"
+                                ? "flex-1 rounded-xl bg-[#04342C] py-2 sm:py-2.5 text-xs font-bold text-[#E1F5EE] shadow-xs cursor-pointer transition-all"
+                                : "flex-1 rounded-xl border border-zinc-200 bg-zinc-50/70 py-2 sm:py-2.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 cursor-pointer transition-all"
                             }
                           >
                             {m} mos
@@ -1719,13 +1704,13 @@ export function LandingPage() {
                 </div>
 
                 {/* Right: Summary */}
-                <div className="flex flex-col justify-between bg-[#04342C] p-7 text-left border-t md:border-t-0 md:border-l border-[#0F6E56]">
+                <div className="flex flex-col justify-between bg-[#04342C] p-5 sm:p-7 text-left border-t md:border-t-0 md:border-l border-[#0F6E56]">
                   <div>
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-3 sm:mb-4 flex items-center justify-between">
                       <span className="text-xs font-medium text-[#E1F5EE]">
                         Customer installment plan
                       </span>
-                      <span className="rounded-full bg-[#0F6E56] px-2.5 py-1 text-[10px] font-medium text-[#9FE1CB]">
+                      <span className="rounded-full bg-[#0F6E56] px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] font-medium text-[#9FE1CB]">
                         {tenorMonths} monthly installments
                       </span>
                     </div>
@@ -1733,16 +1718,16 @@ export function LandingPage() {
                       Calculated monthly installment
                     </div>
                     <div className="mb-1.5 flex items-baseline gap-1.5">
-                      <span className="text-[36px] font-extrabold text-[#5DCAA5] tracking-tight font-mono">
+                      <span className="text-3xl sm:text-[36px] font-extrabold text-[#5DCAA5] tracking-tight font-mono">
                         {Math.round(monthlyInstallment).toLocaleString("en-US")}
                       </span>
                       <span className="text-xs text-[#9FE1CB]">XAF / mo</span>
                     </div>
-                    <div className="mb-6 text-[11px] text-[#9FE1CB] leading-relaxed">
+                    <div className="mb-4 sm:mb-6 text-[11px] text-[#9FE1CB] leading-relaxed">
                       Auto-collected via MTN MoMo and Orange Money
                     </div>
 
-                    <div className="flex flex-col gap-3 border-t border-[#0F6E56] pt-4 font-medium">
+                    <div className="flex flex-col gap-2.5 sm:gap-3 border-t border-[#0F6E56] pt-3 sm:pt-4 font-medium">
                       <div className="flex justify-between text-xs">
                         <span className="text-[#9FE1CB]">Retail Phone Price:</span>
                         <span className="text-[#E1F5EE] font-mono">{formatXaf(phonePrice)}</span>
@@ -1761,9 +1746,9 @@ export function LandingPage() {
                   <button
                     type="button"
                     onClick={() => setDemoModalOpen(true)}
-                    className="mt-6 w-full rounded-xl bg-[#5DCAA5] py-3 text-xs font-bold text-[#04342C] hover:bg-[#5DCAA5]/90 transition-all cursor-pointer shadow-sm"
+                    className="mt-5 sm:mt-6 w-full rounded-xl bg-[#5DCAA5] py-2.5 sm:py-3 text-xs font-bold text-[#04342C] hover:bg-[#5DCAA5]/90 transition-all cursor-pointer shadow-sm"
                   >
-                    Configure for your store inventory →
+                    Simulate this plan in live demo →
                   </button>
                 </div>
               </div>
@@ -1775,19 +1760,19 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           11. INSTITUTIONAL PERFORMANCE DRIVERS (Animated Stats)
       ────────────────────────────────────────────────────────────── */}
-      <section id="impact" className="py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
+      <section id="impact" className="py-14 sm:py-20 lg:py-24 bg-[#FBFBFC] border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             ref={statsSectionRef}
-            className="rounded-3xl bg-[#04342C] px-8 py-14 text-center md:px-14 shadow-2xl border border-[#0F6E56]"
+            className="rounded-3xl bg-[#04342C] px-5 sm:px-8 py-10 sm:py-14 text-center md:px-14 shadow-2xl border border-[#0F6E56]"
           >
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#E1F5EE] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#E1F5EE] tracking-tight">
               Engineered for retailer profit and portfolio safety
             </h2>
-            <p className="mx-auto mt-2 max-w-lg text-sm text-[#9FE1CB] leading-relaxed">
+            <p className="mx-auto mt-2 max-w-lg text-xs sm:text-sm text-[#9FE1CB] leading-relaxed">
               Replaces unmanaged informal store credit with automated KYC, mobile money reconciliation, and hardware-backed DPC enforcement.
             </p>
-            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl bg-[#0F6E56] shadow-md">
+            <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl bg-[#0F6E56] shadow-md">
               {stats.map((stat) => (
                 <StatCard key={stat.label} stat={stat} active={statsActive} />
               ))}
@@ -1799,18 +1784,18 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           12. SECURITY, TRUST & COMPLIANCE
       ────────────────────────────────────────────────────────────── */}
-      <section id="security" className="py-20 lg:py-24 bg-gradient-to-b from-slate-50/60 via-white to-slate-50/40 border-b border-zinc-200/70">
+      <section id="security" className="py-14 sm:py-20 lg:py-24 bg-gradient-to-b from-slate-50/60 via-white to-slate-50/40 border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
               Built with security at the core
             </h2>
-            <p className="text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
               EonPay handles sensitive customer identities, financial contracts, and remote device policies with cryptographic guarantees.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left">
             {[
               {
                 icon: Database,
@@ -1849,11 +1834,11 @@ export function LandingPage() {
                 iconStyle: "bg-indigo-50 text-indigo-700 border border-indigo-100",
               },
             ].map((sec) => (
-              <div key={sec.title} className="p-6 rounded-2xl border border-zinc-200/90 bg-white hover:border-zinc-300 hover:shadow-md transition-all">
-                <div className={`size-10 rounded-xl grid place-items-center mb-4 ${sec.iconStyle}`}>
+              <div key={sec.title} className="p-5 sm:p-6 rounded-2xl border border-zinc-200/90 bg-white hover:border-zinc-300 hover:shadow-md transition-all">
+                <div className={`size-10 rounded-xl grid place-items-center mb-3 sm:mb-4 ${sec.iconStyle}`}>
                   <sec.icon className="size-5" />
                 </div>
-                <h3 className="font-bold text-base text-zinc-950 mb-1.5">{sec.title}</h3>
+                <h3 className="font-bold text-sm sm:text-base text-zinc-950 mb-1 sm:mb-1.5">{sec.title}</h3>
                 <p className="text-xs text-zinc-600 leading-relaxed">{sec.desc}</p>
               </div>
             ))}
@@ -1864,27 +1849,27 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           13. PRODUCT ROADMAP
       ────────────────────────────────────────────────────────────── */}
-      <section id="roadmap" className="bg-zinc-950 py-20 lg:py-24 text-white border-b border-zinc-800">
+      <section id="roadmap" className="bg-zinc-950 py-14 sm:py-20 lg:py-24 text-white border-b border-zinc-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
               We&apos;re building the future of retail financing
             </h2>
-            <p className="text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
               EonPay is expanding to provide phone retailers with smarter automation, deeper analytics, and regional scale.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left">
             {/* Column 1: Available Now */}
-            <div className="rounded-2xl border border-emerald-500/30 bg-[#04342C]/80 p-7 space-y-4">
+            <div className="rounded-2xl border border-emerald-500/30 bg-[#04342C]/80 p-5 sm:p-7 space-y-3.5 sm:space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#0F6E56]">
-                <h3 className="font-bold text-lg text-[#E1F5EE]">Available Now</h3>
+                <h3 className="font-bold text-base sm:text-lg text-[#E1F5EE]">Available Now</h3>
                 <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-[#5DCAA5] text-[#04342C]">
                   Live
                 </span>
               </div>
-              <ul className="space-y-3 text-xs text-[#9FE1CB]">
+              <ul className="space-y-2.5 sm:space-y-3 text-xs text-[#9FE1CB]">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="size-4 text-[#5DCAA5] shrink-0" />
                   <span>Customer KYC & identity verification</span>
@@ -1909,14 +1894,14 @@ export function LandingPage() {
             </div>
 
             {/* Column 2: Coming Soon */}
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/90 p-7 space-y-4">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/90 p-5 sm:p-7 space-y-3.5 sm:space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
-                <h3 className="font-bold text-lg text-white">Coming Soon</h3>
+                <h3 className="font-bold text-base sm:text-lg text-white">Coming Soon</h3>
                 <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
                   Q3-Q4 2026
                 </span>
               </div>
-              <ul className="space-y-3 text-xs text-zinc-300">
+              <ul className="space-y-2.5 sm:space-y-3 text-xs text-zinc-300">
                 <li className="flex items-center gap-2">
                   <Clock className="size-4 text-blue-400 shrink-0" />
                   <span>WhatsApp automated repayment reminder bots</span>
@@ -1937,14 +1922,14 @@ export function LandingPage() {
             </div>
 
             {/* Column 3: Future Vision */}
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-7 space-y-4">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 sm:p-7 space-y-3.5 sm:space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
-                <h3 className="font-bold text-lg text-zinc-300">Future Vision</h3>
+                <h3 className="font-bold text-base sm:text-lg text-zinc-300">Future Vision</h3>
                 <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">
                   Planned
                 </span>
               </div>
-              <ul className="space-y-3 text-xs text-zinc-400">
+              <ul className="space-y-2.5 sm:space-y-3 text-xs text-zinc-400">
                 <li className="flex items-center gap-2">
                   <Sparkles className="size-4 text-purple-400 shrink-0" />
                   <span>Retailer working capital financing liquidity pool</span>
@@ -1966,20 +1951,20 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           14. MERCHANT PROOF & CASE STUDIES
       ────────────────────────────────────────────────────────────── */}
-      <section className="py-20 lg:py-24 bg-gradient-to-b from-[#F8FAFC] to-white border-b border-zinc-200/70">
+      <section className="py-14 sm:py-20 lg:py-24 bg-gradient-to-b from-[#F8FAFC] to-white border-b border-zinc-200/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
               Trusted by leading phone retailers across Cameroon
             </h2>
-            <p className="text-base text-zinc-600">
+            <p className="text-xs sm:text-base text-zinc-600">
               Real store operators scaling their monthly sales without taking on default losses.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left">
             {/* Story 1 */}
-            <div className="rounded-2xl border border-zinc-200/90 bg-white p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-5 relative overflow-hidden">
+            <div className="rounded-2xl border border-zinc-200/90 bg-white p-5 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 sm:space-y-5 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00D084] to-emerald-600" />
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between">
@@ -1988,7 +1973,7 @@ export function LandingPage() {
                       <Star key={i} className="size-3.5 fill-emerald-600 text-emerald-600" />
                     ))}
                   </div>
-                  <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
                     +40% Volume
                   </span>
                 </div>
@@ -1997,13 +1982,13 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-zinc-100 flex items-center gap-3">
-                <div className="size-9 rounded-xl bg-emerald-950 text-[#5DCAA5] font-bold text-xs grid place-items-center">
+              <div className="pt-3 sm:pt-4 border-t border-zinc-100 flex items-center gap-3">
+                <div className="size-8 sm:size-9 rounded-xl bg-emerald-950 text-[#5DCAA5] font-bold text-xs grid place-items-center">
                   JM
                 </div>
                 <div>
                   <div className="font-bold text-xs text-zinc-900">Jean-Paul Mbarga</div>
-                  <div className="text-[11px] text-zinc-500 flex items-center gap-1">
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 flex items-center gap-1">
                     <MapPin className="size-3 text-[#00D084]" /> Akwa Smart Telecom, Douala
                   </div>
                 </div>
@@ -2011,7 +1996,7 @@ export function LandingPage() {
             </div>
 
             {/* Story 2 */}
-            <div className="rounded-2xl border border-zinc-200/90 bg-white p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-5 relative overflow-hidden">
+            <div className="rounded-2xl border border-zinc-200/90 bg-white p-5 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 sm:space-y-5 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-600" />
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between">
@@ -2020,7 +2005,7 @@ export function LandingPage() {
                       <Star key={i} className="size-3.5 fill-emerald-600 text-emerald-600" />
                     ))}
                   </div>
-                  <span className="text-[11px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                     95.8% Repaid
                   </span>
                 </div>
@@ -2029,13 +2014,13 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-zinc-100 flex items-center gap-3">
-                <div className="size-9 rounded-xl bg-indigo-950 text-indigo-300 font-bold text-xs grid place-items-center">
+              <div className="pt-3 sm:pt-4 border-t border-zinc-100 flex items-center gap-3">
+                <div className="size-8 sm:size-9 rounded-xl bg-indigo-950 text-indigo-300 font-bold text-xs grid place-items-center">
                   BN
                 </div>
                 <div>
                   <div className="font-bold text-xs text-zinc-900">Brigitte Nde</div>
-                  <div className="text-[11px] text-zinc-500 flex items-center gap-1">
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 flex items-center gap-1">
                     <MapPin className="size-3 text-blue-600" /> Mokolo Mobile Hub, Yaoundé
                   </div>
                 </div>
@@ -2043,7 +2028,7 @@ export function LandingPage() {
             </div>
 
             {/* Story 3 */}
-            <div className="rounded-2xl border border-zinc-200/90 bg-white p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-5 relative overflow-hidden">
+            <div className="rounded-2xl border border-zinc-200/90 bg-white p-5 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 sm:space-y-5 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-600" />
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between">
@@ -2052,7 +2037,7 @@ export function LandingPage() {
                       <Star key={i} className="size-3.5 fill-emerald-600 text-emerald-600" />
                     ))}
                   </div>
-                  <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">
                     3 Store Branches
                   </span>
                 </div>
@@ -2061,13 +2046,13 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-zinc-100 flex items-center gap-3">
-                <div className="size-9 rounded-xl bg-amber-950 text-amber-300 font-bold text-xs grid place-items-center">
+              <div className="pt-3 sm:pt-4 border-t border-zinc-100 flex items-center gap-3">
+                <div className="size-8 sm:size-9 rounded-xl bg-amber-950 text-amber-300 font-bold text-xs grid place-items-center">
                   ET
                 </div>
                 <div>
                   <div className="font-bold text-xs text-zinc-900">Emmanuel Tagne</div>
-                  <div className="text-[11px] text-zinc-500 flex items-center gap-1">
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 flex items-center gap-1">
                     <MapPin className="size-3 text-amber-600" /> West Digital Devices, Bafoussam
                   </div>
                 </div>
@@ -2080,18 +2065,18 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           15. FREQUENTLY ASKED QUESTIONS (Accordion)
       ────────────────────────────────────────────────────────────── */}
-      <section id="faq" className="py-20 lg:py-24 bg-gradient-to-b from-white to-slate-50/70 border-b border-zinc-200/70">
+      <section id="faq" className="py-14 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-slate-50/70 border-b border-zinc-200/70">
         <div className="mx-auto max-w-[760px] px-4 sm:px-6">
-          <div className="mb-10 text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
+          <div className="mb-8 sm:mb-10 text-center space-y-2">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-950 tracking-tight">
               Frequently asked questions
             </h2>
-            <p className="mx-auto max-w-[460px] text-sm text-zinc-600 leading-relaxed">
+            <p className="mx-auto max-w-[460px] text-xs sm:text-sm text-zinc-600 leading-relaxed">
               Everything you need to know about EonPay&apos;s retail financing workflow and Android hardware protection.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2.5 sm:gap-3">
             {faqs.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
@@ -2099,8 +2084,8 @@ export function LandingPage() {
                   key={faq.question}
                   className={
                     isOpen
-                      ? "rounded-2xl border border-emerald-500/40 bg-white p-6 shadow-sm transition-all"
-                      : "rounded-2xl border border-zinc-200/80 bg-white p-6 hover:border-zinc-300 transition-all"
+                      ? "rounded-2xl border border-emerald-500/40 bg-white p-4 sm:p-6 shadow-sm transition-all"
+                      : "rounded-2xl border border-zinc-200/80 bg-white p-4 sm:p-6 hover:border-zinc-300 transition-all"
                   }
                 >
                   <button
@@ -2110,21 +2095,21 @@ export function LandingPage() {
                     aria-expanded={isOpen}
                   >
                     <div>
-                      <div className="text-[15px] font-bold text-zinc-950">
+                      <div className="text-sm sm:text-[15px] font-bold text-zinc-950">
                         {faq.question}
                       </div>
                     </div>
                     <div
                       className={
                         isOpen
-                          ? "flex size-7 flex-shrink-0 items-center justify-center rounded-full bg-[#E1F5EE]"
-                          : "flex size-7 flex-shrink-0 items-center justify-center rounded-full bg-zinc-100"
+                          ? "flex size-6 sm:size-7 flex-shrink-0 items-center justify-center rounded-full bg-[#E1F5EE]"
+                          : "flex size-6 sm:size-7 flex-shrink-0 items-center justify-center rounded-full bg-zinc-100"
                       }
                     >
                       {isOpen ? (
-                        <Minus size={14} className="text-[#04342C]" />
+                        <Minus size={13} className="text-[#04342C]" />
                       ) : (
-                        <Plus size={14} className="text-zinc-500" />
+                        <Plus size={13} className="text-zinc-500" />
                       )}
                     </div>
                   </button>
@@ -2136,7 +2121,7 @@ export function LandingPage() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <div className="mt-3.5 border-t border-zinc-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-zinc-600">
+                        <div className="mt-3 sm:mt-3.5 border-t border-zinc-100 pt-3 sm:pt-3.5 text-xs sm:text-sm leading-relaxed text-zinc-600">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -2152,30 +2137,30 @@ export function LandingPage() {
       {/* ─────────────────────────────────────────────────────────────
           16. HIGH-IMPACT CLOSING CTA & DUAL FOOTER
       ────────────────────────────────────────────────────────────── */}
-      <footer id="footer" className="p-4 sm:p-6 lg:p-8 bg-[#FBFBFC] text-xs">
+      <footer id="footer" className="p-3 sm:p-6 lg:p-8 bg-[#FBFBFC] text-xs">
         <div className="mx-auto max-w-7xl">
           {/* Upper Dark Closing CTA Panel (#04342C) */}
-          <div className="mb-4 grid grid-cols-1 items-center gap-8 rounded-3xl bg-[#04342C] p-8 md:p-12 md:grid-cols-[1fr_auto] shadow-xl text-left border border-[#0F6E56]">
+          <div className="mb-4 grid grid-cols-1 items-center gap-6 sm:gap-8 rounded-3xl bg-[#04342C] p-5 sm:p-8 md:p-12 md:grid-cols-[1fr_auto] shadow-xl text-left border border-[#0F6E56]">
             <div>
-              <h2 className="mb-2 text-2xl font-extrabold text-[#E1F5EE] md:text-3xl tracking-tight">
+              <h2 className="mb-2 text-xl sm:text-2xl font-extrabold text-[#E1F5EE] md:text-3xl tracking-tight">
                 Ready to transform your installment business?
               </h2>
-              <p className="max-w-[480px] text-sm leading-relaxed text-[#9FE1CB]">
+              <p className="max-w-[480px] text-xs sm:text-sm leading-relaxed text-[#9FE1CB]">
                 Join hundreds of smartphone retailers across Cameroon already using EonPay to sell more phones, reduce risk, and get paid on time.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row flex-shrink-0 gap-3">
+            <div className="flex flex-col sm:flex-row flex-shrink-0 gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={() => setDemoModalOpen(true)}
-                className="rounded-xl bg-[#5DCAA5] px-6 py-3 text-sm font-bold text-[#04342C] hover:bg-[#5DCAA5]/90 transition-all cursor-pointer shadow-md"
+                className="rounded-xl bg-[#5DCAA5] px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-[#04342C] hover:bg-[#5DCAA5]/90 transition-all cursor-pointer shadow-md"
               >
                 Book a live demo →
               </button>
               <button
                 type="button"
                 onClick={() => navigate("/login")}
-                className="rounded-xl border border-[#0F6E56] bg-transparent px-6 py-3 text-sm font-semibold text-[#E1F5EE] hover:bg-[#0F6E56]/30 transition-all cursor-pointer"
+                className="rounded-xl border border-[#0F6E56] bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-[#E1F5EE] hover:bg-[#0F6E56]/30 transition-all cursor-pointer"
               >
                 Access Merchant Console
               </button>
@@ -2183,10 +2168,10 @@ export function LandingPage() {
           </div>
 
           {/* Lower Lighter Links Panel */}
-          <div className="rounded-3xl bg-white border border-zinc-200/90 px-8 md:px-12 pb-8 pt-10 text-left shadow-xs">
-            <div className="mb-10 grid grid-cols-2 gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+          <div className="rounded-3xl bg-white border border-zinc-200/90 px-5 sm:px-8 md:px-12 py-6 sm:py-8 text-left shadow-xs">
+            <div className="mb-8 sm:mb-10 grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
               {/* Brand Column */}
-              <div className="col-span-2 md:col-span-1 space-y-3">
+              <div className="col-span-2 md:col-span-1 space-y-2.5 sm:space-y-3">
                 <div className="flex items-center gap-2 text-lg font-extrabold text-zinc-950">
                   <div className="size-7 rounded-lg bg-[#00D084] text-black grid place-items-center">
                     <Zap size={16} className="fill-black text-black stroke-[2.5]" />
@@ -2201,10 +2186,10 @@ export function LandingPage() {
               {/* 4 Link Columns */}
               {footerLinkColumns.map((col) => (
                 <div key={col.heading}>
-                  <div className="mb-3.5 text-xs font-bold tracking-wider text-zinc-900 uppercase">
+                  <div className="mb-2.5 sm:mb-3.5 text-xs font-bold tracking-wider text-zinc-900 uppercase">
                     {col.heading}
                   </div>
-                  <div className="flex flex-col gap-2.5 text-xs text-zinc-600">
+                  <div className="flex flex-col gap-2 sm:gap-2.5 text-xs text-zinc-600">
                     {col.links.map((link) => (
                       <a
                         key={link.label}
@@ -2228,7 +2213,7 @@ export function LandingPage() {
             </div>
 
             {/* Bottom Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-200/80 pt-6 gap-3 text-xs text-zinc-500">
+            <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-200/80 pt-5 sm:pt-6 gap-2.5 sm:gap-3 text-xs text-zinc-500">
               <div>
                 © {new Date().getFullYear()} EonPay Technologies, Inc. All rights reserved.
               </div>
@@ -2368,11 +2353,11 @@ export function LandingPage() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-40 flex size-12 items-center justify-center rounded-2xl bg-zinc-950 text-white shadow-2xl backdrop-blur-md border border-zinc-800/80 hover:bg-[#00D084] hover:text-slate-950 hover:border-[#00D084] transition-colors cursor-pointer group"
+            className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex size-11 sm:size-12 items-center justify-center rounded-2xl bg-zinc-950 text-white shadow-2xl backdrop-blur-md border border-zinc-800/80 hover:bg-[#00D084] hover:text-slate-950 hover:border-[#00D084] transition-colors cursor-pointer group"
             aria-label="Scroll back to top"
             title="Scroll to top"
           >
-            <ArrowUp className="size-5 transition-transform group-hover:-translate-y-0.5" />
+            <ArrowUp className="size-4.5 sm:size-5 transition-transform group-hover:-translate-y-0.5" />
           </motion.button>
         )}
       </AnimatePresence>
